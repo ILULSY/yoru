@@ -1,0 +1,1363 @@
+{
+  "version": 1,
+  "updatedAt": "2026-10-12T17:47:38.954Z",
+  "products": [
+    {
+      "slug": "pokemon-30th-celebration-booster",
+      "name": "Booster Pokémon 30th Celebration",
+      "status": "published",
+      "category": "cartes",
+      "type": "Booster",
+      "license": "pokemon",
+      "price": 695,
+      "currency": "CHF",
+      "availability": "in_stock",
+      "stock": 240,
+      "image": {
+        "src": "/images/shop/pokemon-30th-celebration-booster.webp",
+        "width": 780,
+        "height": 1426,
+        "alt": "Booster Pokémon 30th Celebration : Pikachu, Mew et Mewtwo sur l'emballage doré du 30e anniversaire"
+      },
+      "visual": "booster",
+      "badges": [
+        "nouveau",
+        "best-seller"
+      ],
+      "description": "Le booster de l'extension anniversaire 30th Celebration du jeu de cartes Pokémon, avec Pikachu, Mew et Mewtwo en couverture. Édition anglaise.",
+      "details": [
+        [
+          "Extension",
+          "30th Celebration"
+        ],
+        [
+          "Contenu",
+          "5 cartes de jeu (selon l'emballage)"
+        ],
+        [
+          "Langue",
+          "Anglais"
+        ],
+        [
+          "Âge conseillé",
+          "6 ans et plus"
+        ]
+      ],
+      "tags": [
+        "TCG",
+        "booster",
+        "30 ans",
+        "Pikachu",
+        "Mew",
+        "Mewtwo"
+      ],
+      "popularity": 990,
+      "addedAt": "2026-10-11",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "pokemon-30e-anniversaire-lot-de-boosters",
+      "name": "Lot de 6 boosters Pokémon 30e anniversaire",
+      "status": "published",
+      "category": "cartes",
+      "type": "Lot de boosters",
+      "license": "pokemon",
+      "price": 3495,
+      "currency": "CHF",
+      "availability": "in_stock",
+      "stock": 60,
+      "image": {
+        "src": "/images/shop/pokemon-30e-anniversaire-lot-boosters.webp",
+        "width": 1200,
+        "height": 1760,
+        "alt": "Boîte « Lot de boosters » Pokémon 30e anniversaire contenant 6 boosters, avec Pikachu, Mew et Mewtwo"
+      },
+      "visual": "coffret",
+      "badges": [
+        "nouveau"
+      ],
+      "description": "Le lot de boosters du 30e anniversaire du jeu de cartes Pokémon, en version française : 6 boosters réunis dans une boîte aux couleurs de Pikachu, Mew et Mewtwo. Idéal à offrir… ou à ouvrir en une seule fois.",
+      "details": [
+        [
+          "Édition",
+          "30e anniversaire"
+        ],
+        [
+          "Contenu",
+          "6 boosters"
+        ],
+        [
+          "Langue",
+          "Français"
+        ],
+        [
+          "Âge conseillé",
+          "6 ans et plus"
+        ]
+      ],
+      "tags": [
+        "TCG",
+        "lot",
+        "bundle",
+        "30 ans",
+        "Pikachu"
+      ],
+      "popularity": 960,
+      "addedAt": "2026-10-11",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "pokemon-display-36-boosters",
+      "name": "Display Pokémon (36 boosters)",
+      "status": "published",
+      "category": "cartes",
+      "type": "Display",
+      "license": "pokemon",
+      "price": 18900,
+      "availability": "preorder",
+      "stock": 40,
+      "releaseDate": "2026-11-14",
+      "visual": "display",
+      "badges": [
+        "nouveau"
+      ],
+      "description": "Une boîte scellée de 36 boosters, le format préféré des collectionneurs qui veulent ouvrir une extension complète… ou la garder fermée. Livraison à la date de sortie.",
+      "details": [
+        [
+          "Contenu",
+          "36 boosters scellés"
+        ],
+        [
+          "Langue",
+          "Français"
+        ],
+        [
+          "Sortie prévue",
+          "14 novembre 2026"
+        ]
+      ],
+      "tags": [
+        "TCG",
+        "display",
+        "scellé"
+      ],
+      "popularity": 720,
+      "addedAt": "2026-10-01",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "pokemon-coffret-dresseur-elite",
+      "name": "Coffret Dresseur d'élite Pokémon",
+      "status": "published",
+      "category": "cartes",
+      "type": "Coffret",
+      "license": "pokemon",
+      "price": 5990,
+      "availability": "in_stock",
+      "stock": 18,
+      "visual": "coffret",
+      "badges": [],
+      "description": "Le coffret complet pour démarrer ou jouer en tournoi : boosters, pochettes de protection, dés, marqueurs et guide de l'extension.",
+      "details": [
+        [
+          "Contenu",
+          "9 boosters, 65 pochettes, accessoires de jeu"
+        ],
+        [
+          "Langue",
+          "Français"
+        ]
+      ],
+      "tags": [
+        "TCG",
+        "coffret",
+        "accessoires"
+      ],
+      "popularity": 610,
+      "addedAt": "2026-08-20",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "one-piece-card-game-op17-booster",
+      "name": "Booster One Piece Card Game OP-17 « Les Guerriers les plus puissants au monde »",
+      "status": "published",
+      "category": "cartes",
+      "type": "Booster",
+      "license": "one-piece",
+      "price": 695,
+      "currency": "CHF",
+      "availability": "in_stock",
+      "stock": 300,
+      "image": {
+        "src": "/images/shop/one-piece-op17-booster.webp",
+        "width": 547,
+        "height": 964,
+        "alt": "Booster One Piece Card Game OP-17 « Les Guerriers les plus puissants au monde », édition française 4th Anniversary, avec Luffy casqué"
+      },
+      "visual": "booster",
+      "badges": [
+        "nouveau",
+        "best-seller"
+      ],
+      "description": "Le booster de l'extension OP-17 « Les Guerriers les plus puissants au monde » du One Piece Card Game, en français, aux couleurs du 4e anniversaire du jeu. Chaque booster contient 12 cartes.",
+      "details": [
+        [
+          "Extension",
+          "OP-17 · Les Guerriers les plus puissants au monde"
+        ],
+        [
+          "Édition",
+          "4th Anniversary"
+        ],
+        [
+          "Contenu",
+          "12 cartes par booster"
+        ],
+        [
+          "Cartes de l'extension",
+          "131 + 4 types (selon l'emballage)"
+        ],
+        [
+          "Langue",
+          "Français"
+        ],
+        [
+          "Âge conseillé",
+          "6 ans et plus"
+        ]
+      ],
+      "tags": [
+        "TCG",
+        "booster",
+        "OP-17",
+        "Luffy",
+        "4th Anniversary"
+      ],
+      "popularity": 970,
+      "addedAt": "2026-10-11",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "one-piece-card-game-starter-deck",
+      "name": "Starter deck One Piece Card Game",
+      "status": "published",
+      "category": "cartes",
+      "type": "Deck de démarrage",
+      "license": "one-piece",
+      "price": 1499,
+      "availability": "in_stock",
+      "stock": 55,
+      "visual": "deck",
+      "badges": [],
+      "description": "Un deck de 51 cartes prêt à jouer, avec une carte Leader et un livret de règles pour apprendre en une partie.",
+      "details": [
+        [
+          "Contenu",
+          "51 cartes, tapis de jeu papier, règles"
+        ],
+        [
+          "Langue",
+          "Anglais"
+        ]
+      ],
+      "tags": [
+        "TCG",
+        "deck",
+        "débutant"
+      ],
+      "popularity": 530,
+      "addedAt": "2026-07-15",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "dragon-ball-card-game-booster",
+      "name": "Booster Dragon Ball Card Game",
+      "status": "published",
+      "category": "cartes",
+      "type": "Booster",
+      "license": "dragon-ball-z",
+      "price": 695,
+      "currency": "CHF",
+      "availability": "in_stock",
+      "stock": 180,
+      "visual": "booster",
+      "badges": [],
+      "description": "Un booster de 12 cartes du jeu de cartes Dragon Ball : guerriers, techniques et transformations pour vos combats sur table.",
+      "details": [
+        [
+          "Contenu",
+          "12 cartes aléatoires"
+        ],
+        [
+          "Langue",
+          "Anglais"
+        ]
+      ],
+      "tags": [
+        "TCG",
+        "booster",
+        "Goku"
+      ],
+      "popularity": 610,
+      "addedAt": "2026-08-28",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "dragon-ball-card-game-starter-deck",
+      "name": "Starter deck Dragon Ball Card Game",
+      "status": "published",
+      "category": "cartes",
+      "type": "Deck de démarrage",
+      "license": "dragon-ball-z",
+      "price": 1299,
+      "availability": "out_of_stock",
+      "stock": 0,
+      "visual": "deck",
+      "badges": [],
+      "description": "Un deck préconstruit pour découvrir le jeu de cartes Dragon Ball, avec ses cartes Leader et son guide de démarrage.",
+      "details": [
+        [
+          "Contenu",
+          "50 cartes, guide de démarrage"
+        ],
+        [
+          "Langue",
+          "Anglais"
+        ]
+      ],
+      "tags": [
+        "TCG",
+        "deck",
+        "débutant"
+      ],
+      "popularity": 380,
+      "addedAt": "2026-06-30",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "yu-gi-oh-booster",
+      "name": "Booster Yu-Gi-Oh!",
+      "status": "published",
+      "category": "cartes",
+      "type": "Booster",
+      "license": "yu-gi-oh",
+      "price": 695,
+      "currency": "CHF",
+      "availability": "in_stock",
+      "stock": 160,
+      "visual": "booster",
+      "badges": [],
+      "description": "Un booster de 9 cartes Yu-Gi-Oh! : monstres, magies et pièges pour faire évoluer votre deck.",
+      "details": [
+        [
+          "Contenu",
+          "9 cartes aléatoires"
+        ],
+        [
+          "Langue",
+          "Français"
+        ]
+      ],
+      "tags": [
+        "TCG",
+        "booster",
+        "duel"
+      ],
+      "popularity": 470,
+      "addedAt": "2026-09-05",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "yu-gi-oh-structure-deck",
+      "name": "Structure deck Yu-Gi-Oh!",
+      "status": "published",
+      "category": "cartes",
+      "type": "Deck de démarrage",
+      "license": "yu-gi-oh",
+      "price": 1199,
+      "availability": "in_stock",
+      "stock": 42,
+      "visual": "deck",
+      "badges": [],
+      "description": "Un deck thématique prêt à dueller, construit autour d'une stratégie claire. Parfait pour reprendre le jeu.",
+      "details": [
+        [
+          "Contenu",
+          "44 cartes, règles"
+        ],
+        [
+          "Langue",
+          "Français"
+        ]
+      ],
+      "tags": [
+        "TCG",
+        "deck"
+      ],
+      "popularity": 310,
+      "addedAt": "2026-07-01",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "pochettes-protection-x100",
+      "name": "Pochettes de protection YORU (×100)",
+      "status": "published",
+      "category": "cartes",
+      "type": "Accessoire",
+      "license": null,
+      "price": 790,
+      "availability": "in_stock",
+      "stock": 500,
+      "visual": "sleeves",
+      "badges": [
+        "exclusif"
+      ],
+      "description": "100 pochettes mates, sans PVC ni acide, au format standard des jeux de cartes (66 × 91 mm). Dos aux couleurs YORU, parfait pour le jeu comme pour la collection.",
+      "details": [
+        [
+          "Format",
+          "66 × 91 mm"
+        ],
+        [
+          "Matière",
+          "Polypropylène sans PVC"
+        ],
+        [
+          "Quantité",
+          "100 pochettes"
+        ]
+      ],
+      "tags": [
+        "protection",
+        "sleeves",
+        "accessoire"
+      ],
+      "popularity": 690,
+      "addedAt": "2026-05-12",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "classeur-9-cases-yoru",
+      "name": "Classeur 9 cases YORU",
+      "status": "published",
+      "category": "cartes",
+      "type": "Accessoire",
+      "license": null,
+      "price": 2490,
+      "availability": "in_stock",
+      "stock": 75,
+      "visual": "binder",
+      "badges": [
+        "exclusif"
+      ],
+      "description": "Un classeur à pochettes intégrées (chargement latéral) pour 360 cartes : pas d'anneaux qui marquent les cartes, une fermeture élastique et une couverture pop art.",
+      "details": [
+        [
+          "Capacité",
+          "360 cartes (20 pages × 18)"
+        ],
+        [
+          "Pochettes",
+          "Chargement latéral, sans PVC"
+        ]
+      ],
+      "tags": [
+        "classeur",
+        "rangement",
+        "accessoire"
+      ],
+      "popularity": 540,
+      "addedAt": "2026-06-02",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "figurine-son-goku-super-saiyan",
+      "name": "Figurine Son Goku Super Saiyan",
+      "status": "published",
+      "category": "figurines",
+      "type": "Figurine PVC",
+      "license": "dragon-ball-z",
+      "character": "Son Goku",
+      "price": 3490,
+      "availability": "in_stock",
+      "stock": 24,
+      "visual": "figure",
+      "badges": [
+        "best-seller"
+      ],
+      "description": "Son Goku en Super Saiyan, cheveux dressés et aura prête à exploser, sculpté en pleine charge de ki.",
+      "details": [
+        [
+          "Hauteur",
+          "18 cm"
+        ],
+        [
+          "Matière",
+          "PVC, ABS"
+        ],
+        [
+          "Socle",
+          "Inclus"
+        ]
+      ],
+      "tags": [
+        "Goku",
+        "Super Saiyan",
+        "PVC"
+      ],
+      "popularity": 990,
+      "addedAt": "2026-08-01",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "figurine-vegeta",
+      "name": "Figurine Vegeta",
+      "status": "published",
+      "category": "figurines",
+      "type": "Figurine PVC",
+      "license": "dragon-ball-z",
+      "character": "Vegeta",
+      "price": 3490,
+      "availability": "in_stock",
+      "stock": 9,
+      "visual": "figure",
+      "badges": [],
+      "description": "Le prince des Saiyans, bras croisés et regard de défi : la pose iconique du rival de toujours.",
+      "details": [
+        [
+          "Hauteur",
+          "17 cm"
+        ],
+        [
+          "Matière",
+          "PVC, ABS"
+        ]
+      ],
+      "tags": [
+        "Vegeta",
+        "Saiyan",
+        "PVC"
+      ],
+      "popularity": 760,
+      "addedAt": "2026-08-01",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "figurine-articulee-piccolo",
+      "name": "Figurine articulée Piccolo",
+      "status": "published",
+      "category": "figurines",
+      "type": "Figurine articulée",
+      "license": "dragon-ball-z",
+      "character": "Piccolo",
+      "price": 6990,
+      "availability": "preorder",
+      "stock": 30,
+      "releaseDate": "2027-01-20",
+      "visual": "figure",
+      "badges": [
+        "nouveau"
+      ],
+      "description": "Une figurine articulée avec mains et visages interchangeables pour reproduire les poses les plus célèbres de Piccolo.",
+      "details": [
+        [
+          "Hauteur",
+          "16 cm"
+        ],
+        [
+          "Articulations",
+          "Plus de 20 points"
+        ],
+        [
+          "Accessoires",
+          "Mains et visages interchangeables"
+        ],
+        [
+          "Sortie prévue",
+          "20 janvier 2027"
+        ]
+      ],
+      "tags": [
+        "Piccolo",
+        "articulée"
+      ],
+      "popularity": 450,
+      "addedAt": "2026-10-03",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "figurine-gon-freecss",
+      "name": "Figurine Gon Freecss",
+      "status": "published",
+      "category": "figurines",
+      "type": "Figurine PVC",
+      "license": "hunter-x-hunter",
+      "character": "Gon",
+      "price": 2990,
+      "availability": "in_stock",
+      "stock": 20,
+      "visual": "figure",
+      "badges": [
+        "best-seller"
+      ],
+      "description": "Gon et sa canne à pêche, prêt pour l'examen de Hunter : une figurine pleine d'énergie, fidèle au trait du manga.",
+      "details": [
+        [
+          "Hauteur",
+          "16 cm"
+        ],
+        [
+          "Matière",
+          "PVC"
+        ]
+      ],
+      "tags": [
+        "Gon",
+        "Hunter",
+        "PVC"
+      ],
+      "popularity": 870,
+      "addedAt": "2026-07-20",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "figurine-killua-zoldyck",
+      "name": "Figurine Killua Zoldyck",
+      "status": "published",
+      "category": "figurines",
+      "type": "Figurine PVC",
+      "license": "hunter-x-hunter",
+      "character": "Killua",
+      "price": 2990,
+      "availability": "in_stock",
+      "stock": 4,
+      "visual": "figure",
+      "badges": [],
+      "description": "Killua crépitant d'électricité, en pleine accélération : la meilleure moitié du duo, en version vitrine.",
+      "details": [
+        [
+          "Hauteur",
+          "16 cm"
+        ],
+        [
+          "Matière",
+          "PVC"
+        ]
+      ],
+      "tags": [
+        "Killua",
+        "Zoldyck",
+        "PVC"
+      ],
+      "popularity": 910,
+      "addedAt": "2026-07-20",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "statue-hisoka-edition-limitee",
+      "name": "Statue Hisoka — édition limitée",
+      "status": "published",
+      "category": "figurines",
+      "type": "Statue",
+      "license": "hunter-x-hunter",
+      "character": "Hisoka",
+      "price": 14900,
+      "availability": "in_stock",
+      "stock": 3,
+      "visual": "statue",
+      "badges": [
+        "edition-limitee"
+      ],
+      "description": "Une statue en résine numérotée, avec son socle décoré de cartes à jouer. Pour les collectionneurs qui aiment les méchants charismatiques.",
+      "details": [
+        [
+          "Hauteur",
+          "24 cm"
+        ],
+        [
+          "Matière",
+          "Résine peinte à la main"
+        ],
+        [
+          "Tirage",
+          "Numéroté, série limitée"
+        ]
+      ],
+      "tags": [
+        "Hisoka",
+        "statue",
+        "résine"
+      ],
+      "popularity": 520,
+      "addedAt": "2026-09-15",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "figurine-luffy-gear-5",
+      "name": "Figurine Monkey D. Luffy Gear 5",
+      "status": "published",
+      "category": "figurines",
+      "type": "Figurine PVC",
+      "license": "one-piece",
+      "character": "Luffy",
+      "price": 3990,
+      "availability": "in_stock",
+      "stock": 15,
+      "visual": "figure",
+      "badges": [
+        "best-seller"
+      ],
+      "description": "Luffy dans sa forme Gear 5, éclatant de rire au milieu des nuages : la figurine la plus joyeuse de votre vitrine.",
+      "details": [
+        [
+          "Hauteur",
+          "20 cm"
+        ],
+        [
+          "Matière",
+          "PVC, ABS"
+        ],
+        [
+          "Socle",
+          "Inclus"
+        ]
+      ],
+      "tags": [
+        "Luffy",
+        "Gear 5",
+        "PVC"
+      ],
+      "popularity": 1000,
+      "addedAt": "2026-09-01",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "figurine-roronoa-zoro",
+      "name": "Figurine Roronoa Zoro",
+      "status": "published",
+      "category": "figurines",
+      "type": "Figurine PVC",
+      "license": "one-piece",
+      "character": "Zoro",
+      "price": 3990,
+      "availability": "out_of_stock",
+      "stock": 0,
+      "visual": "figure",
+      "badges": [],
+      "description": "Zoro et ses trois sabres, prêt à trancher : une pose de combat tout en tension.",
+      "details": [
+        [
+          "Hauteur",
+          "19 cm"
+        ],
+        [
+          "Matière",
+          "PVC, ABS"
+        ]
+      ],
+      "tags": [
+        "Zoro",
+        "sabres",
+        "PVC"
+      ],
+      "popularity": 830,
+      "addedAt": "2026-06-15",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "figurine-naruto-uzumaki",
+      "name": "Figurine Naruto Uzumaki",
+      "status": "published",
+      "category": "figurines",
+      "type": "Figurine PVC",
+      "license": "naruto",
+      "character": "Naruto",
+      "price": 2790,
+      "availability": "in_stock",
+      "stock": 26,
+      "visual": "figure",
+      "badges": [],
+      "description": "Naruto en position de combat, prêt à lancer sa technique favorite : un classique indémodable.",
+      "details": [
+        [
+          "Hauteur",
+          "16 cm"
+        ],
+        [
+          "Matière",
+          "PVC"
+        ]
+      ],
+      "tags": [
+        "Naruto",
+        "ninja",
+        "PVC"
+      ],
+      "popularity": 690,
+      "addedAt": "2026-05-20",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "figurine-tanjiro-kamado",
+      "name": "Figurine Tanjirō Kamado",
+      "status": "published",
+      "category": "figurines",
+      "type": "Figurine PVC",
+      "license": "demon-slayer",
+      "character": "Tanjirō",
+      "price": 3290,
+      "availability": "in_stock",
+      "stock": 12,
+      "visual": "figure",
+      "badges": [],
+      "description": "Tanjirō, sabre au clair et haori à damier, saisi au cœur d'une technique de respiration.",
+      "details": [
+        [
+          "Hauteur",
+          "17 cm"
+        ],
+        [
+          "Matière",
+          "PVC"
+        ]
+      ],
+      "tags": [
+        "Tanjiro",
+        "pourfendeur",
+        "PVC"
+      ],
+      "popularity": 640,
+      "addedAt": "2026-08-12",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "figurine-satoru-gojo",
+      "name": "Figurine Satoru Gojo",
+      "status": "published",
+      "category": "figurines",
+      "type": "Figurine PVC",
+      "license": "jujutsu-kaisen",
+      "character": "Gojo",
+      "price": 3690,
+      "availability": "preorder",
+      "stock": 35,
+      "releaseDate": "2026-12-05",
+      "visual": "figure",
+      "badges": [
+        "nouveau"
+      ],
+      "description": "Le plus puissant des exorcistes, bandeau sur les yeux et sourire en coin, dans une pose pleine d'assurance.",
+      "details": [
+        [
+          "Hauteur",
+          "19 cm"
+        ],
+        [
+          "Matière",
+          "PVC"
+        ],
+        [
+          "Sortie prévue",
+          "5 décembre 2026"
+        ]
+      ],
+      "tags": [
+        "Gojo",
+        "exorciste",
+        "PVC"
+      ],
+      "popularity": 880,
+      "addedAt": "2026-10-05",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "figurine-pikachu-vinyle",
+      "name": "Figurine Pikachu en vinyle",
+      "status": "published",
+      "category": "figurines",
+      "type": "Figurine vinyle",
+      "license": "pokemon",
+      "character": "Pikachu",
+      "price": 1990,
+      "availability": "in_stock",
+      "stock": 60,
+      "visual": "figure",
+      "badges": [],
+      "description": "Une petite figurine en vinyle aux formes rondes, pour avoir un compagnon électrique sur son bureau.",
+      "details": [
+        [
+          "Hauteur",
+          "10 cm"
+        ],
+        [
+          "Matière",
+          "Vinyle"
+        ]
+      ],
+      "tags": [
+        "Pikachu",
+        "vinyle",
+        "bureau"
+      ],
+      "popularity": 720,
+      "addedAt": "2026-04-18",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "mug-kame-house",
+      "name": "Mug Kame House",
+      "status": "published",
+      "category": "produits-derives",
+      "type": "Mug",
+      "license": "dragon-ball-z",
+      "price": 1490,
+      "availability": "in_stock",
+      "stock": 80,
+      "visual": "mug",
+      "badges": [],
+      "description": "Un mug en céramique de 350 ml aux couleurs de la célèbre maison rose de Tortue Géniale. Passe au lave-vaisselle.",
+      "details": [
+        [
+          "Contenance",
+          "350 ml"
+        ],
+        [
+          "Matière",
+          "Céramique"
+        ],
+        [
+          "Entretien",
+          "Lave-vaisselle et micro-ondes"
+        ]
+      ],
+      "tags": [
+        "mug",
+        "cuisine"
+      ],
+      "popularity": 420,
+      "addedAt": "2026-03-10",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "t-shirt-goku-kanji",
+      "name": "T-shirt Goku « Kanji »",
+      "status": "published",
+      "category": "produits-derives",
+      "type": "T-shirt",
+      "license": "dragon-ball-z",
+      "price": 2490,
+      "availability": "in_stock",
+      "stock": 64,
+      "visual": "tshirt",
+      "badges": [],
+      "description": "Un t-shirt en coton bio, coupe unisexe, avec un grand kanji façon tenue d'entraînement imprimé dans le dos.",
+      "details": [
+        [
+          "Matière",
+          "100 % coton biologique"
+        ],
+        [
+          "Tailles",
+          "S à XXL"
+        ],
+        [
+          "Coupe",
+          "Unisexe"
+        ]
+      ],
+      "tags": [
+        "textile",
+        "t-shirt"
+      ],
+      "popularity": 580,
+      "addedAt": "2026-06-05",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "sweat-hunter-association",
+      "name": "Sweat à capuche Hunter Association",
+      "status": "published",
+      "category": "produits-derives",
+      "type": "Sweat à capuche",
+      "license": "hunter-x-hunter",
+      "price": 4990,
+      "availability": "in_stock",
+      "stock": 22,
+      "visual": "hoodie",
+      "badges": [
+        "nouveau"
+      ],
+      "description": "Un sweat molletonné épais, brodé sur la poitrine, pour passer l'examen de Hunter au chaud.",
+      "details": [
+        [
+          "Matière",
+          "80 % coton, 20 % polyester"
+        ],
+        [
+          "Tailles",
+          "S à XXL"
+        ],
+        [
+          "Finition",
+          "Broderie"
+        ]
+      ],
+      "tags": [
+        "textile",
+        "sweat",
+        "hiver"
+      ],
+      "popularity": 610,
+      "addedAt": "2026-09-25",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "poster-greed-island",
+      "name": "Poster Greed Island (50 × 70 cm)",
+      "status": "published",
+      "category": "produits-derives",
+      "type": "Poster",
+      "license": "hunter-x-hunter",
+      "price": 1490,
+      "availability": "in_stock",
+      "stock": 40,
+      "visual": "poster",
+      "badges": [],
+      "description": "Une affiche imprimée sur papier mat 200 g, inspirée du jeu vidéo mystérieux de l'arc Greed Island. Livrée roulée.",
+      "details": [
+        [
+          "Format",
+          "50 × 70 cm"
+        ],
+        [
+          "Papier",
+          "Mat 200 g/m²"
+        ],
+        [
+          "Livraison",
+          "En tube"
+        ]
+      ],
+      "tags": [
+        "déco",
+        "poster"
+      ],
+      "popularity": 350,
+      "addedAt": "2026-05-30",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "peluche-chopper",
+      "name": "Peluche Tony Tony Chopper",
+      "status": "published",
+      "category": "produits-derives",
+      "type": "Peluche",
+      "license": "one-piece",
+      "character": "Chopper",
+      "price": 2490,
+      "availability": "in_stock",
+      "stock": 33,
+      "visual": "plush",
+      "badges": [],
+      "description": "Le médecin de l'équipage en peluche toute douce, chapeau compris. Câlins garantis, même pour les pirates les plus endurcis.",
+      "details": [
+        [
+          "Hauteur",
+          "25 cm"
+        ],
+        [
+          "Matière",
+          "Polyester"
+        ],
+        [
+          "Âge conseillé",
+          "3 ans et plus"
+        ]
+      ],
+      "tags": [
+        "peluche",
+        "kawaii"
+      ],
+      "popularity": 700,
+      "addedAt": "2026-07-08",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "drapeau-pirate-90x60",
+      "name": "Drapeau pirate (90 × 60 cm)",
+      "status": "published",
+      "category": "produits-derives",
+      "type": "Drapeau",
+      "license": "one-piece",
+      "price": 1690,
+      "availability": "in_stock",
+      "stock": 50,
+      "visual": "flag",
+      "badges": [],
+      "description": "Un drapeau en polyester avec œillets métalliques, pour hisser les couleurs de votre équipage sur un mur ou un balcon.",
+      "details": [
+        [
+          "Format",
+          "90 × 60 cm"
+        ],
+        [
+          "Matière",
+          "Polyester"
+        ],
+        [
+          "Fixation",
+          "2 œillets métalliques"
+        ]
+      ],
+      "tags": [
+        "déco",
+        "drapeau"
+      ],
+      "popularity": 390,
+      "addedAt": "2026-04-02",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "bandeau-ninja-konoha",
+      "name": "Bandeau ninja du village",
+      "status": "published",
+      "category": "produits-derives",
+      "type": "Accessoire cosplay",
+      "license": "naruto",
+      "price": 1290,
+      "availability": "in_stock",
+      "stock": 70,
+      "visual": "headband",
+      "badges": [],
+      "description": "Le bandeau frontal à plaque métallique gravée, réglable, pour compléter un cosplay ou afficher son appartenance au village.",
+      "details": [
+        [
+          "Plaque",
+          "Métal gravé"
+        ],
+        [
+          "Bandeau",
+          "Tissu réglable"
+        ]
+      ],
+      "tags": [
+        "cosplay",
+        "accessoire"
+      ],
+      "popularity": 560,
+      "addedAt": "2026-03-28",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "peluche-pikachu-30cm",
+      "name": "Peluche Pikachu (30 cm)",
+      "status": "published",
+      "category": "produits-derives",
+      "type": "Peluche",
+      "license": "pokemon",
+      "character": "Pikachu",
+      "price": 2990,
+      "availability": "in_stock",
+      "stock": 45,
+      "visual": "plush",
+      "badges": [
+        "best-seller"
+      ],
+      "description": "La mascotte électrique en grand format, ultra douce et aux joues bien rouges.",
+      "details": [
+        [
+          "Hauteur",
+          "30 cm"
+        ],
+        [
+          "Matière",
+          "Polyester"
+        ],
+        [
+          "Âge conseillé",
+          "Dès la naissance"
+        ]
+      ],
+      "tags": [
+        "peluche",
+        "Pikachu"
+      ],
+      "popularity": 850,
+      "addedAt": "2026-02-14",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "porte-cles-nezuko",
+      "name": "Porte-clés Nezuko",
+      "status": "published",
+      "category": "produits-derives",
+      "type": "Porte-clés",
+      "license": "demon-slayer",
+      "character": "Nezuko",
+      "price": 790,
+      "availability": "in_stock",
+      "stock": 120,
+      "visual": "keychain",
+      "badges": [],
+      "description": "Un porte-clés en acrylique double face, avec mousqueton, pour garder la petite sœur de Tanjirō toujours avec vous.",
+      "details": [
+        [
+          "Dimensions",
+          "6 cm"
+        ],
+        [
+          "Matière",
+          "Acrylique, métal"
+        ]
+      ],
+      "tags": [
+        "porte-clés",
+        "petit prix"
+      ],
+      "popularity": 480,
+      "addedAt": "2026-08-30",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "tapis-souris-xxl-jujutsu",
+      "name": "Tapis de souris XXL Jujutsu Kaisen",
+      "status": "published",
+      "category": "produits-derives",
+      "type": "Tapis de souris",
+      "license": "jujutsu-kaisen",
+      "price": 2290,
+      "availability": "in_stock",
+      "stock": 38,
+      "visual": "mat",
+      "badges": [],
+      "description": "Un tapis de bureau 90 × 40 cm, base antidérapante et bords cousus, pour un setup gaming hanté par les fléaux.",
+      "details": [
+        [
+          "Format",
+          "90 × 40 cm"
+        ],
+        [
+          "Épaisseur",
+          "4 mm"
+        ],
+        [
+          "Bords",
+          "Cousus"
+        ]
+      ],
+      "tags": [
+        "gaming",
+        "bureau",
+        "setup"
+      ],
+      "popularity": 500,
+      "addedAt": "2026-09-18",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "tapis-de-jeu-yu-gi-oh",
+      "name": "Tapis de jeu Yu-Gi-Oh!",
+      "status": "published",
+      "category": "produits-derives",
+      "type": "Tapis de jeu",
+      "license": "yu-gi-oh",
+      "price": 1990,
+      "availability": "in_stock",
+      "stock": 28,
+      "visual": "mat",
+      "badges": [],
+      "description": "Un tapis de jeu en néoprène avec zones de cartes imprimées : pour dueller sans abîmer vos cartes.",
+      "details": [
+        [
+          "Format",
+          "60 × 35 cm"
+        ],
+        [
+          "Matière",
+          "Néoprène, surface tissu"
+        ]
+      ],
+      "tags": [
+        "duel",
+        "tapis",
+        "accessoire"
+      ],
+      "popularity": 330,
+      "addedAt": "2026-05-05",
+      "demo": true,
+      "updatedAt": "2026-10-12T08:00:00.000Z"
+    },
+    {
+      "slug": "tote-bag-yoru",
+      "name": "Tote bag YORU « Pop Art »",
+      "status": "published",
+      "category": "produits-derives",
+      "type": "Sac",
+      "license": null,
+      "price": 1500,
+      "availability": "in_stock",
+      "stock": 150,
+      "visual": "tote",
+      "badges": [
+        "exclusif"
+      ],
+      "description": "Le sac en toile épaisse YORU, sérigraphié en trois couleurs : assez grand pour un display, quelques mangas et un sandwich.",
+      "details": [
+        [
+          "Dimensions",
+          "38 × 42 cm"
+        ],
+        [
+          "Matière",
+          "Coton épais 280 g/m²"
+        ],
+        [
+          "Impression",
+          "Sérigraphie 3 couleurs"
+        ]
+      ],
+      "tags": [
+        "sac",
+        "YORU"
+      ],
+      "popularity": 410,
+      "addedAt": "2026-09-28",
+      "demo": true,
+      "updatedAt": "2026-10-12T17:47:38.953Z"
+    }
+  ]
+}
