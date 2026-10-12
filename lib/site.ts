@@ -10,7 +10,11 @@ export const SITE = {
     "YORU, le média pop culture : cinéma, séries, anime, manga, jeux vidéo, comics, science-fiction, cartes à collectionner, figurines et culture geek.",
   locale: "fr_FR",
   lang: "fr",
-  url: (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, ""),
+  // Adresse publique : NEXT_PUBLIC_SITE_URL, sinon l'adresse de production fournie par Vercel, sinon le local.
+  url: (
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}` : "http://localhost:3000")
+  ).replace(/\/$/, ""),
   /**
    * Réseaux sociaux : laissez `url` à null tant que le compte n'existe pas.
    * Le footer n'affiche que les réseaux configurés (pas de faux liens).

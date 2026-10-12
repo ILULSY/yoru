@@ -5,6 +5,7 @@ import { requireAdmin } from "@/lib/server/admin-auth";
 import { getStore } from "@/lib/shop/store";
 import { buttonClasses } from "@/components/ui/Button";
 import { ProductTable } from "@/components/admin/ProductTable";
+import { onSaleNow } from "@/lib/shop/catalog";
 
 export const metadata: Metadata = { title: "Produits" };
 
@@ -21,21 +22,36 @@ const ERR: Record<string, string> = {
   suppression: "La suppression a échoué : le produit n'a pas été modifié.",
   statut: "Le changement de statut a échoué : rechargez la page et réessayez.",
   introuvable: "Ce produit n'existe plus.",
+  solde: "Solde non appliqué : indiquez une remise entre 1 et 90 % et sélectionnez au moins un produit.",
+  "solde-dates": "Solde non appliqué : la fin doit être après le début.",
+  "lecture-seule": "Modifications impossibles : le stockage est en lecture seule.",
 };
 
 export default async function AdminProductsPage({ searchParams }: Props) {
   await requireAdmin();
-  const { ok, erreur, produit, nom } = await searchParams;
+  const params = await searchParams;
+  const { ok, erreur, produit, nom, n, remise, echecs } = params;
   const { products, problems } = await getStore().readFresh();
 
   const name = (slug: unknown) => products.find((p) => p.slug === slug)?.name ?? (typeof nom === "string" ? nom : String(slug ?? ""));
-  const flash = typeof ok === "string" && OK[ok] ? OK[ok](name(produit)) : null;
+  const count = Number(n) || 0;
+  const plural = count > 1 ? "s" : "";
+  const flash =
+    ok === "solde"
+      ? `${count} produit${plural} mis en solde (−${remise} %).`
+      : ok === "solde-retire"
+        ? `Solde retiré sur ${count} produit${plural} : le prix normal est rétabli.`
+        : typeof ok === "string" && OK[ok]
+          ? OK[ok](name(produit))
+          : null;
+  const failures = typeof echecs === "string" ? echecs : null;
   const error = typeof erreur === "string" ? (ERR[erreur] ?? "L'opération a échoué.") : null;
 
   const published = products.filter((p) => p.status === "published");
   const stats = [
     { label: "Produits", value: products.length },
     { label: "En boutique", value: published.length },
+    { label: "En solde", value: published.filter(onSaleNow).length },
     { label: "Brouillons", value: products.length - published.length },
     { label: "Ruptures ou stock ≤ 5", value: published.filter((p) => p.availability !== "preorder" && p.stock <= 5).length },
   ];
@@ -62,7 +78,7 @@ export default async function AdminProductsPage({ searchParams }: Props) {
         </p>
       )}
 
-      <dl className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
+      <dl className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
         {stats.map((s) => (
           <div key={s.label} className="border-[3px] border-ink bg-paper p-4">
             <dt className="font-mono text-[11px] font-bold tracking-widest text-muted uppercase">{s.label}</dt>
@@ -70,6 +86,13 @@ export default async function AdminProductsPage({ searchParams }: Props) {
           </div>
         ))}
       </dl>
+
+      {failures && (
+        <p role="alert" className="mt-3 flex items-start gap-2 border-[3px] border-ink bg-yellow p-3 text-sm font-semibold">
+          <TriangleAlert className="mt-0.5 size-4 shrink-0" aria-hidden />
+          Non modifiés (fiche invalide ou modifiée entre-temps) : {failures}
+        </p>
+      )}
 
       {problems.length > 0 && (
         <details className="mt-6 border-[3px] border-ink bg-yellow p-4">
@@ -85,7 +108,8 @@ export default async function AdminProductsPage({ searchParams }: Props) {
         </details>
       )}
 
-      <ProductTable products={products} />
+      {/* Nouvelle clé après chaque action : la sélection et les fenêtres se referment. */}
+      <ProductTable key={JSON.stringify(params)} products={products} />
     </>
   );
 }

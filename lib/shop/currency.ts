@@ -1,4 +1,5 @@
-import type { Currency, Product } from "@/types/shop";
+import type { Currency } from "@/types/shop";
+import { currentPricing, type PriceFields } from "@/lib/shop/pricing";
 
 /**
  * Conversion EUR ⇄ CHF.
@@ -27,12 +28,9 @@ export function convert(cents: number, from: Currency, to: Currency, rates: Rate
   return from === "EUR" ? roundTo5(cents * rates.CHF) : Math.round(cents / rates.CHF);
 }
 
-export function priceIn(p: Pick<Product, "price" | "currency">, to: Currency, rates: Rates): number {
-  return convert(p.price, p.currency ?? "EUR", to, rates);
-}
-
-export function compareAtIn(p: Pick<Product, "compareAtPrice" | "currency">, to: Currency, rates: Rates): number | undefined {
-  return p.compareAtPrice === undefined ? undefined : convert(p.compareAtPrice, p.currency ?? "EUR", to, rates);
+/** Prix à payer (solde en cours compris), converti dans la devise demandée. */
+export function priceIn(p: PriceFields, to: Currency, rates: Rates, now = Date.now()): number {
+  return convert(currentPricing(p, now).price, p.currency ?? "EUR", to, rates);
 }
 
 const FORMATTERS: Record<Currency, Intl.NumberFormat> = {

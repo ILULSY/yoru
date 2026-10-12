@@ -41,6 +41,12 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  // Le catalogue est lu à l'exécution (pages régénérées, recherche, paiement) : il doit
+  // accompagner le code sur les hébergements serverless (Vercel).
+  outputFileTracingIncludes: {
+    "/": ["./data/shop/catalog.json"],
+    "/**": ["./data/shop/catalog.json"],
+  },
   images: {
     // Les photos Unsplash passent par un loader dédié (CDN imgix d'Unsplash),
     // ce motif sert de garde-fou si l'optimiseur Next est utilisé.

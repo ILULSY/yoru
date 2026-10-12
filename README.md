@@ -181,6 +181,12 @@ site, pages `noindex`, sans l'en-tête ni le pied de page publics).
   (conversion affichée), prix barré, disponibilité, stock, date de sortie (précommande), photo, description,
   caractéristiques, mots-clés, badges, mise en avant, mention « démo ». **Aperçu en direct** de la carte boutique,
   avertissement avant de quitter sans enregistrer, raccourci Ctrl/⌘ + S.
+- **Soldes** : dans la fiche (« Mettre ce produit en solde ») ou depuis la liste, sur un ou plusieurs produits
+  sélectionnés (« Mettre en solde… », « Retirer le solde »). Remise en % (arrondie aux 5 centimes en CHF) ou prix soldé,
+  avec début et fin facultatifs à l'heure de Suisse et de France. Le prix normal est conservé et revient seul à la fin.
+  Côté client : prix soldé, prix barré, pastille « −20 % », date de fin sur la fiche, filtre « En solde » ; le panier, la
+  recherche et le paiement utilisent le même prix. Un solde qui commence ou se termine est pris en compte à la minute
+  dans le navigateur, sans régénérer les pages (calcul partagé : `lib/shop/pricing.ts`).
 - **Brouillon / En boutique** : un brouillon n'apparaît nulle part côté client (fiche en 404, absent des listes, de la
   recherche, du plan du site et du panier) ; il ne peut pas être payé.
 - **Photos** : JPEG, PNG, WebP ou AVIF jusqu'à 12 Mo. Le serveur les redresse, retire les métadonnées (GPS…), les réduit à
@@ -191,6 +197,10 @@ site, pages `noindex`, sans l'en-tête ni le pied de page publics).
   Deux personnes qui modifient la même fiche ne s'écrasent pas : la seconde est prévenue et doit recharger.
 - Après chaque modification, les pages publiques sont régénérées (`revalidatePath`) : le changement est visible tout
   de suite, sans nouveau build (vérifié en production locale avec `next start`).
+
+**Adresse dédiée (facultatif)** : avec `ADMIN_HOST=admin.votre-domaine.fr` (et ce sous-domaine pointé vers le même
+hébergement), l'espace édition n'est joignable que sur cette adresse : `admin.votre-domaine.fr` mène directement aux
+produits, et `/admin` renvoie une page introuvable sur le site public. Même code, mêmes données : rien à synchroniser.
 
 **Où sont stockés les produits ?** (`PRODUCTS_SOURCE`)
 
@@ -253,6 +263,7 @@ Copiez `.env.example` en `.env.local`. Toutes sont facultatives.
 | `STRIPE_SECRET_KEY`                              | Active le paiement (Stripe Checkout)                      |
 | `STRIPE_WEBHOOK_SECRET`                          | Vérifie les webhooks Stripe (`/api/stripe/webhook`)       |
 | `ADMIN_PASSWORD`, `ADMIN_SESSION_SECRET`         | Ouvre l'espace édition `/admin` (voir §6)                 |
+| `ADMIN_HOST`                                     | Adresse dédiée facultative de l'espace édition             |
 | `PRODUCTS_SOURCE`                                | Catalogue : `file` (défaut) ou `supabase`                 |
 | `SUPABASE_SERVICE_ROLE_KEY`, `SUPABASE_PRODUCTS_BUCKET` | Requis si `PRODUCTS_SOURCE=supabase` (serveur uniquement) |
 | `CONTENT_SOURCE`                                 | `local` (défaut) ou `supabase`                            |
@@ -296,8 +307,18 @@ envoyée au navigateur.
 
 ## 8. Déploiement
 
-**Vercel** (le plus simple) : importez le dépôt, définissez les variables d'environnement, déployez. Pour modifier
-les produits en ligne depuis l'espace édition, utilisez le stockage Supabase (le disque de Vercel est en lecture seule). Le build génère
+**Vercel** (relié au dépôt GitHub) :
+1. Sur vercel.com, connectez-vous avec GitHub, « Add New… → Project », importez `ILULSY/yoru`, puis « Deploy » (aucun
+   réglage requis : Next.js est détecté).
+2. Chaque envoi sur la branche `main` met le site à jour ; les autres branches obtiennent une adresse d'aperçu.
+3. Variables (Project → Settings → Environment Variables), puis « Redeploy » : `ADMIN_PASSWORD` et
+   `ADMIN_SESSION_SECRET` pour l'espace édition, `NEXT_PUBLIC_SITE_URL` une fois votre nom de domaine branché (sinon
+   l'adresse `*.vercel.app` du projet est utilisée), puis les clés Stripe, Brevo, Resend au besoin.
+4. Le disque de Vercel est en lecture seule : l'espace édition s'affiche mais signale qu'il ne peut pas enregistrer tant
+   que le stockage Supabase n'est pas activé (`PRODUCTS_SOURCE=supabase`, voir §6).
+
+L'offre gratuite de Vercel (Hobby) est réservée à un usage personnel et non commercial : pour vendre réellement, passez
+à l'offre Pro ou à un autre hébergeur. Le build génère
 toutes les pages statiques ; `/recherche` et les routes `/api/*` sont rendues à la demande.
 
 **Serveur Node** : `npm ci && npm run build && npm run start` (port 3000 par défaut, `PORT` pour le changer), derrière un
@@ -350,7 +371,7 @@ Ces mesures n'ont pas fait l'objet d'un audit de sécurité indépendant.
 | Gestion des commandes et du stock après paiement        | ⚙️ À brancher (point d'intégration dans le webhook)            |
 | News : 12 brèves réelles vérifiées + fil RSS en direct de 11 médias (ISR 30 min), filtres univers/langue | ✅ Opérationnel |
 | Recherche étendue aux produits de la boutique           | ✅ Opérationnel                                               |
-| Espace édition `/admin` : connexion, ajout, modification, duplication, brouillon/publication, suppression, photos (fond blanc retiré sur demande) | ✅ Opérationnel en stockage fichier — **nécessite `ADMIN_PASSWORD` et `ADMIN_SESSION_SECRET`** |
+| Espace édition `/admin` : connexion, ajout, modification, duplication, brouillon/publication, soldes (un ou plusieurs produits, dates de début et de fin), suppression, photos (fond blanc retiré sur demande) | ✅ Opérationnel en stockage fichier — **nécessite `ADMIN_PASSWORD` et `ADMIN_SESSION_SECRET`** |
 | Espace édition avec Supabase (serverless)               | ⚙️ Adaptateur, schéma et import fournis — **non testé contre un projet réel** |
 
 ## 11. Vérifications effectuées

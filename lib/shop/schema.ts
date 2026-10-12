@@ -64,6 +64,13 @@ export const productSchema = z
     price: cents("Prix"),
     currency: z.enum(CURRENCIES).optional(),
     compareAtPrice: cents("Prix barré").optional(),
+    sale: z
+      .object({
+        price: cents("Prix soldé"),
+        startsAt: z.string().refine((s) => !Number.isNaN(Date.parse(s)), { error: "Début du solde invalide." }).optional(),
+        endsAt: z.string().refine((s) => !Number.isNaN(Date.parse(s)), { error: "Fin du solde invalide." }).optional(),
+      })
+      .optional(),
     availability: z.enum(AVAILABILITIES, { error: "Disponibilité inconnue." }),
     stock: z
       .number({ error: "Stock : nombre invalide." })
@@ -94,6 +101,12 @@ export const productSchema = z
   .superRefine((p, ctx) => {
     if (p.compareAtPrice !== undefined && p.compareAtPrice <= p.price) {
       ctx.addIssue({ code: "custom", path: ["compareAtPrice"], message: "Le prix barré doit être supérieur au prix de vente." });
+    }
+    if (p.sale && p.sale.price >= p.price) {
+      ctx.addIssue({ code: "custom", path: ["sale"], message: "Le prix soldé doit être inférieur au prix normal." });
+    }
+    if (p.sale?.startsAt && p.sale.endsAt && Date.parse(p.sale.endsAt) <= Date.parse(p.sale.startsAt)) {
+      ctx.addIssue({ code: "custom", path: ["sale"], message: "La fin du solde doit être après son début." });
     }
     if (p.availability === "out_of_stock" && p.stock > 0) {
       ctx.addIssue({ code: "custom", path: ["stock"], message: "En rupture : mettez le stock à 0, ou choisissez « En stock »." });

@@ -78,7 +78,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         </a>
         <MotionProvider>
           <CurrencyProvider rates={rates}>
-            <CatalogProvider products={catalog}>
+            <CatalogProvider products={catalog.products} renderedAt={catalog.at}>
               <ToastProvider>
                 <PublicOnly>
                   <Header />

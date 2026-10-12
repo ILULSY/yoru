@@ -1,4 +1,5 @@
 import type { Availability, Currency, Product, ProductBadge, ProductCategory, ProductStatus, VisualKind } from "@/types/shop";
+import { isoToZurichInput, salePriceFromPercent, zurichInputToIso } from "@/lib/shop/pricing";
 
 /**
  * Brouillon de fiche produit tel qu'il est saisi dans l'espace édition
@@ -17,6 +18,13 @@ export interface ProductDraft {
   price: string;
   currency: Currency;
   compareAtPrice: string;
+  /** Solde : remise en % ou prix soldé, dates à l'heure suisse (champs datetime-local). */
+  saleEnabled: boolean;
+  saleMode: "percent" | "price";
+  salePercent: string;
+  salePrice: string;
+  saleStartsAt: string;
+  saleEndsAt: string;
   availability: Availability;
   stock: string;
   releaseDate: string;
@@ -48,6 +56,12 @@ export function emptyDraft(): ProductDraft {
     price: "",
     currency: "CHF",
     compareAtPrice: "",
+    saleEnabled: false,
+    saleMode: "percent",
+    salePercent: "20",
+    salePrice: "",
+    saleStartsAt: "",
+    saleEndsAt: "",
     availability: "in_stock",
     stock: "",
     releaseDate: "",
@@ -77,6 +91,12 @@ export function productToDraft(p: Product): ProductDraft {
     price: money(p.price),
     currency: p.currency ?? "EUR",
     compareAtPrice: money(p.compareAtPrice),
+    saleEnabled: Boolean(p.sale),
+    saleMode: p.sale ? "price" : "percent",
+    salePercent: p.sale ? String(Math.round((1 - p.sale.price / p.price) * 100)) : "20",
+    salePrice: money(p.sale?.price),
+    saleStartsAt: isoToZurichInput(p.sale?.startsAt),
+    saleEndsAt: isoToZurichInput(p.sale?.endsAt),
     availability: p.availability,
     stock: String(p.stock),
     releaseDate: p.releaseDate ?? "",
@@ -106,6 +126,15 @@ function parseIntStrict(input: string): number {
 
 const opt = (s: string) => (s.trim() ? s.trim() : undefined);
 
+/** Prix soldé saisi (en % ou en montant), NaN si la saisie est invalide. */
+export function draftSalePrice(d: ProductDraft): number {
+  const regular = parseMoney(d.price);
+  if (d.saleMode === "price") return parseMoney(d.salePrice);
+  const pct = Number(d.salePercent.replace(",", "."));
+  if (!Number.isFinite(regular) || !Number.isFinite(pct) || pct <= 0 || pct >= 100) return Number.NaN;
+  return salePriceFromPercent(regular, pct, d.currency);
+}
+
 export function draftToProduct(d: ProductDraft, updatedAt: string): Product {
   return {
     slug: d.slug.trim(),
@@ -118,6 +147,13 @@ export function draftToProduct(d: ProductDraft, updatedAt: string): Product {
     price: parseMoney(d.price),
     currency: d.currency,
     compareAtPrice: d.compareAtPrice.trim() ? parseMoney(d.compareAtPrice) : undefined,
+    sale: d.saleEnabled
+      ? {
+          price: draftSalePrice(d),
+          startsAt: zurichInputToIso(d.saleStartsAt) || undefined,
+          endsAt: zurichInputToIso(d.saleEndsAt) || undefined,
+        }
+      : undefined,
     availability: d.availability,
     stock: parseIntStrict(d.stock),
     releaseDate: opt(d.releaseDate),

@@ -9,6 +9,8 @@ import { CATEGORY_INFO, LICENSES } from "@/data/shop/licenses";
 import { ProductCard } from "@/components/shop/ProductCard";
 import { Burst } from "@/components/ui/Decor";
 import { formatMoney, priceIn } from "@/lib/shop/currency";
+import { saleStatus } from "@/lib/shop/pricing";
+import { useShopNow } from "@/components/shop/CatalogProvider";
 import { useCurrency, useRates } from "@/lib/stores/currency";
 import { CurrencyToggle } from "@/components/shop/Money";
 import { normalize } from "@/lib/text";
@@ -24,7 +26,7 @@ const SORTS = {
 } as const;
 type Sort = keyof typeof SORTS;
 
-const AVAIL = { tout: "Tout", stock: "En stock", precommande: "Précommandes" } as const;
+const AVAIL = { tout: "Tout", stock: "En stock", precommande: "Précommandes", soldes: "En solde" } as const;
 type Avail = keyof typeof AVAIL;
 
 /**
@@ -54,7 +56,10 @@ export function ShopExplorer({
   const avail: Avail = (Object.keys(AVAIL) as Avail[]).find((a) => a === params.get("dispo")) ?? "tout";
   const currency = useCurrency();
   const rates = useRates();
-  const priceOf = (p: Product) => priceIn(p, currency, rates);
+  const now = useShopNow();
+  const priceOf = (p: Product) => priceIn(p, currency, rates, now);
+  const onSale = (p: Product) => saleStatus(p, now) === "active";
+  const anySale = products.some(onSale);
   const maxAll = Math.max(...products.map(priceOf));
   const budget = Math.min(maxAll, Number(params.get("budget")) || maxAll);
   const urlQuery = params.get("q") ?? "";
@@ -78,6 +83,7 @@ export function ShopExplorer({
       if (license !== "all" && p.license !== license) return false;
       if (avail === "stock" && p.availability !== "in_stock") return false;
       if (avail === "precommande" && p.availability !== "preorder") return false;
+      if (avail === "soldes" && !onSale(p)) return false;
       if (priceOf(p) > budget) return false;
       if (tokens.length) {
         const lic = LICENSES.find((l) => l.slug === p.license);
@@ -94,7 +100,7 @@ export function ShopExplorer({
     // Les ruptures passent en fin de liste.
     return sorted.sort((a, b) => Number(a.availability === "out_of_stock") - Number(b.availability === "out_of_stock"));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [products, category, license, avail, budget, sort, urlQuery, currency, rates]);
+  }, [products, category, license, avail, budget, sort, urlQuery, currency, rates, now]);
 
   const counts = useMemo(() => {
     const c: Record<string, number> = {};
@@ -228,7 +234,7 @@ export function ShopExplorer({
             <fieldset>
               <legend className="font-mono text-[11px] font-bold tracking-[0.25em] text-muted uppercase">Disponibilité</legend>
               <div className="mt-2 flex flex-wrap gap-2">
-                {(Object.keys(AVAIL) as Avail[]).map((a) => (
+                {(Object.keys(AVAIL) as Avail[]).filter((a) => a !== "soldes" || anySale || avail === "soldes").map((a) => (
                   <button
                     key={a}
                     type="button"

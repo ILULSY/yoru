@@ -40,6 +40,14 @@ export type ProductBadge = (typeof PRODUCT_BADGES)[number];
 export const PRODUCT_STATUSES = ["draft", "published"] as const;
 export type ProductStatus = (typeof PRODUCT_STATUSES)[number];
 
+/** Solde d'un produit. Sans dates, il s'applique jusqu'à ce qu'on le retire. */
+export interface ProductSale {
+  /** Prix soldé TTC en centimes, dans la devise du produit. */
+  price: number;
+  startsAt?: string;
+  endsAt?: string;
+}
+
 export interface License {
   slug: string;
   name: string;
@@ -73,7 +81,13 @@ export interface Product {
   price: number;
   /** Devise de référence du prix (EUR par défaut). L'autre devise est convertie au taux BCE. */
   currency?: Currency;
+  /** Prix barré manuel (prix conseillé, ancien prix), dans `currency`. */
   compareAtPrice?: number;
+  /**
+   * Solde : prix réduit, éventuellement limité dans le temps (dates ISO).
+   * `price` reste le prix normal, rétabli automatiquement à la fin du solde.
+   */
+  sale?: ProductSale;
   availability: Availability;
   stock: number;
   /** Date de sortie prévue (précommandes), ISO. */
@@ -96,7 +110,7 @@ export interface Product {
 /** Champs utiles au panier (affiché sur toutes les pages) : pas de description ni de fiche technique. */
 export type CartProduct = Pick<
   Product,
-  "slug" | "name" | "category" | "type" | "visual" | "image" | "license" | "character" | "price" | "currency" | "availability" | "stock" | "demo"
+  "slug" | "name" | "category" | "type" | "visual" | "image" | "license" | "character" | "price" | "currency" | "compareAtPrice" | "sale" | "availability" | "stock" | "demo"
 >;
 
 export interface CartLine {

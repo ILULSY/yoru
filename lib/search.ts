@@ -4,6 +4,7 @@ import { UNIVERSE_MAP, UNIVERSES } from "@/data/universes";
 import { levenshtein, normalize } from "@/lib/text";
 import { getProducts } from "@/lib/shop/catalog";
 import { licenseOf } from "@/data/shop/licenses";
+import { currentPricing } from "@/lib/shop/pricing";
 
 
 export interface ProductHit {
@@ -39,7 +40,7 @@ async function searchProducts(tokens: string[], limit: number): Promise<ProductH
     .filter((x) => x.ok)
     .sort((a, b) => b.p.popularity - a.p.popularity)
     .slice(0, limit)
-    .map(({ p, lic }) => ({ slug: p.slug, name: p.name, price: p.price, currency: p.currency ?? "EUR", license: lic.name, color: lic.color, ink: lic.ink }));
+    .map(({ p, lic }) => ({ slug: p.slug, name: p.name, price: currentPricing(p, Date.now()).price, currency: p.currency ?? "EUR", license: lic.name, color: lic.color, ink: lic.ink }));
 }
 
 interface IndexEntry {

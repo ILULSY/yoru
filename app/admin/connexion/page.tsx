@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Lock, TriangleAlert } from "lucide-react";
 import { LogoMark } from "@/components/ui/Logo";
+import { absoluteUrl } from "@/lib/site";
 import { adminSetupProblems } from "@/lib/server/admin-session";
 import { LoginForm } from "@/components/admin/LoginForm";
 
@@ -16,13 +16,13 @@ export default async function AdminLoginPage({ searchParams }: Props) {
   return (
     <div className="grid min-h-svh place-items-center px-4 py-16">
       <div className="w-full max-w-md">
-        <Link href="/" className="group mb-8 inline-flex items-center gap-3">
+        <a href={absoluteUrl("/")} className="group mb-8 inline-flex items-center gap-3">
           <LogoMark className="size-12" />
           <span>
             <span className="display block text-3xl leading-none">Yoru</span>
             <span className="font-mono text-[11px] font-bold tracking-[0.25em] text-muted uppercase">Espace édition</span>
           </span>
-        </Link>
+        </a>
 
         <div className="border-[4px] border-ink bg-paper p-6 shadow-pop-lg sm:p-8">
           <h1 className="flex items-center gap-2 text-2xl font-extrabold">
@@ -52,7 +52,7 @@ export default async function AdminLoginPage({ searchParams }: Props) {
         </div>
 
         <p className="mt-6 text-center text-sm text-muted">
-          Cet espace est réservé à la gestion de la boutique. <Link href="/" className="font-semibold underline">Retour au site</Link>
+          Cet espace est réservé à la gestion de la boutique. <a href={absoluteUrl("/")} className="font-semibold underline">Retour au site</a>
         </p>
       </div>
     </div>

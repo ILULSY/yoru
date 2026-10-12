@@ -3,14 +3,15 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Truck } from "lucide-react";
 import { CATEGORY_INFO } from "@/data/shop/licenses";
-import { getLicense, getProduct, getProducts, relatedProducts } from "@/lib/shop/catalog";
+import { getLicense, getProduct, getProducts, pricingNow, relatedProducts } from "@/lib/shop/catalog";
 import { availabilityLabel } from "@/lib/shop/format";
 import { formatMoney } from "@/lib/shop/currency";
 import { CurrencyToggle, Money, RateNote } from "@/components/shop/Money";
 import { SHOP } from "@/lib/shop/config";
 import { absoluteUrl, SITE } from "@/lib/site";
 import { ProductMedia } from "@/components/shop/ProductMedia";
-import { Price, ProductBadges, StockBadge } from "@/components/shop/ProductBits";
+import { Price, ProductBadges, SaleBadge, SaleNote, StockBadge } from "@/components/shop/ProductBits";
+import { priceFields } from "@/lib/shop/pricing";
 import { BuyBox } from "@/components/shop/BuyBox";
 import { ProductGrid, ShopDemoNotice, ShopPerks } from "@/components/shop/ShopParts";
 import { TiltCard } from "@/components/motion/Interactive";
@@ -18,6 +19,10 @@ import { CssSplit } from "@/components/motion/CssSplit";
 import { Reveal } from "@/components/motion/Reveal";
 
 type Props = { params: Promise<{ slug: string }> };
+
+// Le prix des données structurées et de la description suit les soldes : régénération au plus toutes les 15 min.
+// (Le prix affiché, lui, est recalculé dans le navigateur.)
+export const revalidate = 900;
 
 export async function generateStaticParams() {
   return (await getProducts()).map((p) => ({ slug: p.slug }));
@@ -30,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const lic = getLicense(p.license);
   return {
     title: `${p.name} — ${lic.name}`,
-    description: `${p.description.slice(0, 150)} ${formatMoney(p.price, p.currency ?? "EUR")} TTC.`,
+    description: `${p.description.slice(0, 150)} ${formatMoney(pricingNow(p).price, p.currency ?? "EUR")} TTC.`,
     alternates: { canonical: `/boutique/produit/${p.slug}` },
     // Les fiches de démonstration ne doivent pas être indexées comme de vraies offres.
     robots: p.demo ? { index: false, follow: true } : undefined,
@@ -44,6 +49,7 @@ export default async function ProductPage({ params }: Props) {
   const lic = getLicense(product.license);
   const category = CATEGORY_INFO[product.category];
   const related = await relatedProducts(product, 4);
+  const pricing = pricingNow(product);
 
   // Données structurées Product : uniquement pour un produit réel (prix et stock vérifiés).
   const jsonLd = product.demo
@@ -59,7 +65,8 @@ export default async function ProductPage({ params }: Props) {
           "@type": "Offer",
           url: absoluteUrl(`/boutique/produit/${product.slug}`),
           priceCurrency: product.currency ?? "EUR",
-          price: (product.price / 100).toFixed(2),
+          price: (pricing.price / 100).toFixed(2),
+          ...(pricing.onSale && pricing.endsAt ? { priceValidUntil: pricing.endsAt.slice(0, 10) } : {}),
           availability:
             product.availability === "in_stock"
               ? "https://schema.org/InStock"
@@ -99,8 +106,9 @@ export default async function ProductPage({ params }: Props) {
           <div>
             <div className="slide-in-card lg:sticky lg:top-24" style={{ "--r": "-1deg", "--d": "0.05s" } as React.CSSProperties}>
               <TiltCard max={7} holo={product.category === "cartes"}>
-                <div className="overflow-hidden border-[4px] border-ink shadow-[12px_12px_0_0_var(--color-ink)]">
+                <div className="relative overflow-hidden border-[4px] border-ink shadow-[12px_12px_0_0_var(--color-ink)]">
                   <ProductMedia product={product} idSuffix="main" sizes="(min-width: 1024px) 45vw, 92vw" priority />
+                  <SaleBadge product={priceFields(product)} className="absolute top-4 right-4" size="lg" />
                 </div>
               </TiltCard>
               <p className="mt-3 text-sm text-muted">
@@ -131,11 +139,12 @@ export default async function ProductPage({ params }: Props) {
 
             <div className="rise-in mt-6" style={{ "--d": "0.2s" } as React.CSSProperties}>
               <div className="flex flex-wrap items-end justify-between gap-4">
-                <Price product={product} size="lg" />
+                <Price product={priceFields(product)} size="lg" />
                 <CurrencyToggle />
               </div>
               <p className="mt-2 text-sm text-muted">Prix TTC, hors frais de livraison.</p>
               <RateNote className="mt-1" />
+              <SaleNote product={priceFields(product)} className="mt-3 mr-2" />
               <StockBadge product={product} className="mt-3" />
             </div>
 

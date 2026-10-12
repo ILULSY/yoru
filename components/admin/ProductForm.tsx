@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { startTransition, useActionState, useEffect, useId, useMemo, useRef, useState } from "react";
-import { ArrowLeft, Eye, EyeOff, ImagePlus, LoaderCircle, Plus, Save, Trash2, TriangleAlert, X } from "lucide-react";
+import { ArrowLeft, Eye, EyeOff, ImagePlus, LoaderCircle, Percent, Plus, Save, Trash2, TriangleAlert, X } from "lucide-react";
 import {
   AVAILABILITIES,
   CURRENCIES,
@@ -17,7 +17,9 @@ import {
 } from "@/types/shop";
 import { CATEGORY_INFO, LICENSES } from "@/data/shop/licenses";
 import { BADGE_LABELS } from "@/lib/shop/format";
-import { draftToProduct, parseMoney, slugify, type ProductDraft } from "@/lib/shop/draft";
+import { draftSalePrice, draftToProduct, parseMoney, slugify, type ProductDraft } from "@/lib/shop/draft";
+import { formatSaleDate, saleStatus, zurichInputToIso } from "@/lib/shop/pricing";
+import { useShopNow } from "@/components/shop/CatalogProvider";
 import { convert, formatMoney } from "@/lib/shop/currency";
 import { useRates } from "@/lib/stores/currency";
 import { saveProductAction, type SaveState } from "@/app/admin/actions";
@@ -350,6 +352,7 @@ export function ProductForm({ mode, initial, previousSlug, expectedUpdatedAt, ty
                 </Field>
               )}
             </div>
+            <SaleFields draft={draft} setDraft={setDraft} error={errors.sale} idPrefix={id("sale")} />
           </Section>
 
           {/* ── Photo ── */}
@@ -672,6 +675,171 @@ function ImageField({
         </div>
       )}
       {!draft.image && <FieldError id={`${altProps.id}-error`} message={error} />}
+    </div>
+  );
+}
+
+/** Solde : remise en % ou prix soldé, avec dates de début et de fin facultatives (heure suisse). */
+function SaleFields({
+  draft,
+  setDraft,
+  error,
+  idPrefix,
+}: {
+  draft: ProductDraft;
+  setDraft: React.Dispatch<React.SetStateAction<ProductDraft>>;
+  error?: string;
+  idPrefix: string;
+}) {
+  const now = useShopNow();
+  const set = <K extends keyof ProductDraft>(key: K, value: ProductDraft[K]) => setDraft((d) => ({ ...d, [key]: value }));
+  const regular = parseMoney(draft.price);
+  const salePrice = draftSalePrice(draft);
+  const valid = Number.isFinite(regular) && Number.isFinite(salePrice) && salePrice > 0 && salePrice < regular;
+  const percent = valid ? Math.round((1 - salePrice / regular) * 100) : null;
+  const startsAt = zurichInputToIso(draft.saleStartsAt);
+  const endsAt = zurichInputToIso(draft.saleEndsAt);
+  const status = saleStatus({ sale: { price: 1, startsAt: startsAt || undefined, endsAt: endsAt || undefined } }, now);
+
+  return (
+    <div className={cn("border-[3px] border-ink p-4", draft.saleEnabled ? "bg-[#ffe1f0]" : "bg-paper-2/50")}>
+      <label className="flex cursor-pointer items-center gap-3">
+        <input
+          type="checkbox"
+          checked={draft.saleEnabled}
+          onChange={(e) => set("saleEnabled", e.target.checked)}
+          className="size-5 accent-[#c4006b]"
+        />
+        <span className="flex items-center gap-1.5 font-bold">
+          <Percent className="size-4" aria-hidden /> Mettre ce produit en solde
+        </span>
+      </label>
+
+      {draft.saleEnabled && (
+        <div className="mt-4 space-y-4">
+          <div role="radiogroup" aria-label="Type de solde" className="inline-flex border-[3px] border-ink bg-paper">
+            {(
+              [
+                ["percent", "Remise en %"],
+                ["price", "Prix soldé"],
+              ] as const
+            ).map(([mode, label]) => (
+              <button
+                key={mode}
+                type="button"
+                role="radio"
+                aria-checked={draft.saleMode === mode}
+                onClick={() =>
+                  setDraft((d) => ({
+                    ...d,
+                    saleMode: mode,
+                    // On reporte la valeur calculée pour ne pas repartir de zéro.
+                    salePrice: mode === "price" && valid ? (salePrice / 100).toFixed(2).replace(".", ",") : d.salePrice,
+                    salePercent: mode === "percent" && percent !== null ? String(percent) : d.salePercent,
+                  }))
+                }
+                className={cn("h-10 px-3 text-sm font-bold", draft.saleMode === mode && "bg-ink text-paper")}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+
+          {draft.saleMode === "percent" ? (
+            <div className="flex flex-wrap items-center gap-2">
+              <label htmlFor={`${idPrefix}-percent`} className="sr-only">
+                Remise en pourcentage
+              </label>
+              <div className="flex">
+                <input
+                  id={`${idPrefix}-percent`}
+                  value={draft.salePercent}
+                  inputMode="numeric"
+                  onChange={(e) => set("salePercent", e.target.value.replace(/[^\d,.]/g, ""))}
+                  className={cn(inputClasses(Boolean(error)), "h-11 w-24")}
+                />
+                <span className="grid place-items-center border-[3px] border-l-0 border-ink bg-paper px-3 font-bold">%</span>
+              </div>
+              {[10, 20, 30, 50].map((p) => (
+                <button
+                  key={p}
+                  type="button"
+                  onClick={() => set("salePercent", String(p))}
+                  className={cn("h-11 border-2 border-ink px-3 text-sm font-bold", draft.salePercent === String(p) ? "bg-yellow" : "bg-paper hover:bg-yellow")}
+                >
+                  −{p} %
+                </button>
+              ))}
+            </div>
+          ) : (
+            <div>
+              <label htmlFor={`${idPrefix}-price`} className="mb-1.5 block text-sm font-bold">
+                Prix soldé ({draft.currency === "EUR" ? "€" : "CHF"})
+              </label>
+              <input
+                id={`${idPrefix}-price`}
+                value={draft.salePrice}
+                inputMode="decimal"
+                onChange={(e) => set("salePrice", e.target.value)}
+                className={cn(inputClasses(Boolean(error)), "h-11 w-40")}
+                placeholder="5,55"
+              />
+            </div>
+          )}
+
+          <p className="font-semibold" aria-live="polite">
+            {valid ? (
+              <>
+                {formatMoney(salePrice, draft.currency)} au lieu de {formatMoney(regular, draft.currency)}{" "}
+                <span className="bg-[#c4006b] px-1.5 text-paper">−{percent} %</span>
+                {draft.currency === "CHF" && draft.saleMode === "percent" && <span className="text-sm font-normal text-muted"> (arrondi aux 5 centimes)</span>}
+              </>
+            ) : (
+              <span className="text-[#b0005a]">Indiquez un prix normal, puis une remise ou un prix soldé inférieur.</span>
+            )}
+          </p>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label htmlFor={`${idPrefix}-start`} className="mb-1.5 block text-sm font-bold">
+                Début
+              </label>
+              <input
+                id={`${idPrefix}-start`}
+                type="datetime-local"
+                value={draft.saleStartsAt}
+                onChange={(e) => set("saleStartsAt", e.target.value)}
+                className={cn(inputClasses(), "h-11")}
+              />
+              <p className="pt-1 text-sm text-muted">Vide : dès l&apos;enregistrement.</p>
+            </div>
+            <div>
+              <label htmlFor={`${idPrefix}-end`} className="mb-1.5 block text-sm font-bold">
+                Fin
+              </label>
+              <input
+                id={`${idPrefix}-end`}
+                type="datetime-local"
+                value={draft.saleEndsAt}
+                onChange={(e) => set("saleEndsAt", e.target.value)}
+                className={cn(inputClasses(), "h-11")}
+              />
+              <p className="pt-1 text-sm text-muted">Vide : jusqu&apos;à ce que vous le retiriez. Heure de Suisse et de France.</p>
+            </div>
+          </div>
+
+          <p className="text-sm font-semibold">
+            {status === "scheduled" && startsAt
+              ? `Programmé : le solde commencera le ${formatSaleDate(startsAt)}.`
+              : status === "ended" && endsAt
+                ? `Terminé le ${formatSaleDate(endsAt)} : le prix normal s'applique.`
+                : endsAt
+                  ? `Solde actif (dès l'enregistrement s'il est nouveau) jusqu'au ${formatSaleDate(endsAt)}.`
+                  : "Solde actif (dès l'enregistrement s'il est nouveau), sans date de fin."}
+          </p>
+          <FieldError id={`${idPrefix}-error`} message={error} />
+        </div>
+      )}
     </div>
   );
 }

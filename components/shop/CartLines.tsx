@@ -4,7 +4,8 @@ import Link from "next/link";
 import { AnimatePresence, m } from "motion/react";
 import { Info, LoaderCircle, Lock, Minus, Plus, Trash } from "lucide-react";
 import type { CartLine, CartProduct } from "@/types/shop";
-import { useCatalog } from "@/components/shop/CatalogProvider";
+import { useCatalog, useShopNow } from "@/components/shop/CatalogProvider";
+import { currentPricing } from "@/lib/shop/pricing";
 import { ProductMedia } from "@/components/shop/ProductMedia";
 import { useCart } from "@/lib/stores/cart";
 import { isPurchasable } from "@/lib/shop/format";
@@ -46,12 +47,14 @@ export function QtyStepper({ product, qty, compact }: { product: CartProduct; qt
 export function CartItems({ compact, onNavigate }: { compact?: boolean; onNavigate?: () => void }) {
   const { lines, remove } = useCart();
   const catalog = useCatalog();
+  const now = useShopNow();
   const items = resolveLines(lines, catalog);
   return (
     <ul className="divide-y-2 divide-ink/15">
       <AnimatePresence initial={false}>
         {items.map(({ line, product }) => {
           const unavailable = !isPurchasable(product);
+          const pricing = currentPricing(product, now);
           return (
             <m.li
               key={product.slug}
@@ -84,12 +87,12 @@ export function CartItems({ compact, onNavigate }: { compact?: boolean; onNaviga
                   </button>
                 </div>
                 <p className="font-mono text-xs text-muted">
-                  <Money amount={product.price} from={product.currency ?? "EUR"} /> l&apos;unité{product.availability === "preorder" && " · précommande"}
+                  <Money amount={pricing.price} from={product.currency ?? "EUR"} /> l&apos;unité{pricing.onSale && " · soldé"}{product.availability === "preorder" && " · précommande"}
                 </p>
                 {unavailable && <p className="mt-1 text-xs font-bold text-[#b0005a]">Ce produit n&apos;est plus disponible.</p>}
                 <div className="mt-auto flex items-center justify-between gap-2 pt-2">
                   <QtyStepper product={product} qty={line.qty} compact={compact} />
-                  <Money amount={product.price * line.qty} from={product.currency ?? "EUR"} className="font-display text-xl" />
+                  <Money amount={pricing.price * line.qty} from={product.currency ?? "EUR"} className="font-display text-xl" />
                 </div>
               </div>
             </m.li>
@@ -108,8 +111,9 @@ export function CartSummary({ className }: { className?: string }) {
   const items = resolveLines(lines, catalog);
   const currency = useCurrency();
   const rates = useRates();
+  const now = useShopNow();
   // Totaux recalculés dans la devise choisie (le serveur refait le même calcul au paiement).
-  const subtotal = items.reduce((s, { line, product }) => s + priceIn(product, currency, rates) * line.qty, 0);
+  const subtotal = items.reduce((s, { line, product }) => s + priceIn(product, currency, rates, now) * line.qty, 0);
   const shipping = shippingFor(subtotal, currency);
   const freeFrom = SHOP.shipping[currency].freeFrom;
   const remaining = Math.max(0, freeFrom - subtotal);

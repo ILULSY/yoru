@@ -3,6 +3,7 @@ import { cache } from "react";
 import type { CartProduct, Product, ProductCategory } from "@/types/shop";
 import { LICENSES } from "@/data/shop/licenses";
 import { getStore } from "@/lib/shop/store";
+import { currentPricing, saleStatus, type PriceFields } from "@/lib/shop/pricing";
 
 /**
  * Accès au catalogue pour les pages publiques : seuls les produits publiés
@@ -51,10 +52,19 @@ export async function licensesWithCounts() {
   return LICENSES.map((l) => ({ ...l, count: products.filter((p) => p.license === l.slug).length })).filter((l) => l.count > 0);
 }
 
-/** Catalogue allégé transmis au panier (layout racine). */
-export async function getCartCatalog(): Promise<CartProduct[]> {
-  return (await getProducts()).map(
-    ({ slug, name, category, type, visual, image, license, character, price, currency, availability, stock, demo }) => ({
+/** Prix effectif au moment de la requête (pages serveur : métadonnées, données structurées). */
+export function pricingNow(p: PriceFields) {
+  return currentPricing(p, Date.now());
+}
+
+export function onSaleNow(p: PriceFields) {
+  return saleStatus(p, Date.now()) === "active";
+}
+
+/** Catalogue allégé transmis au panier (layout racine), avec l'heure à laquelle il a été lu. */
+export async function getCartCatalog(): Promise<{ products: CartProduct[]; at: number }> {
+  const products = (await getProducts()).map(
+    ({ slug, name, category, type, visual, image, license, character, price, currency, compareAtPrice, sale, availability, stock, demo }) => ({
       slug,
       name,
       category,
@@ -65,9 +75,12 @@ export async function getCartCatalog(): Promise<CartProduct[]> {
       character,
       price,
       currency,
+      compareAtPrice,
+      sale,
       availability,
       stock,
       demo,
     }),
   );
+  return { products, at: Date.now() };
 }

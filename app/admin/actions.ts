@@ -9,6 +9,7 @@ import { clientIp, rateLimit } from "@/lib/server/rate-limit";
 import { draftToProduct, type ProductDraft } from "@/lib/shop/draft";
 import { issuesByField, productSchema, SLUG_RE, type ProductIssues } from "@/lib/shop/schema";
 import { getStore, PRODUCTS_TAG, StoreError } from "@/lib/shop/store";
+import { salePriceFromPercent, zurichInputToIso } from "@/lib/shop/pricing";
 import type { Product } from "@/types/shop";
 
 /* ── Connexion ─────────────────────────────────────────────────── */
@@ -131,4 +132,69 @@ export async function toggleStatusAction(formData: FormData) {
   }
   refreshShop();
   redirect(`/admin?ok=${next.status === "published" ? "publie" : "masque"}&produit=${slug}`);
+}
+
+/* ── Soldes (un ou plusieurs produits) ─────────────────────────── */
+
+function slugsFrom(formData: FormData): string[] {
+  try {
+    const list = JSON.parse(String(formData.get("slugs") ?? "[]")) as unknown;
+    return Array.isArray(list) ? [...new Set(list.filter((s): s is string => typeof s === "string" && SLUG_RE.test(s)))].slice(0, 500) : [];
+  } catch {
+    return [];
+  }
+}
+
+/** Applique ou retire un solde sur une sélection ; chaque fiche est revalidée avant d'être enregistrée. */
+async function updateSales(slugs: string[], change: (p: Product) => Product["sale"]) {
+  const store = getStore();
+  if (!(await store.health()).writable) redirect("/admin?erreur=lecture-seule");
+  const { products } = await store.readFresh();
+  let done = 0;
+  const failed: string[] = [];
+  for (const slug of slugs) {
+    const p = products.find((x) => x.slug === slug);
+    if (!p) continue;
+    const parsed = productSchema.safeParse({ ...p, sale: change(p), updatedAt: new Date().toISOString() });
+    if (!parsed.success) {
+      failed.push(p.name);
+      continue;
+    }
+    try {
+      await store.save(parsed.data, { previousSlug: slug, expectedUpdatedAt: p.updatedAt });
+      done++;
+    } catch (e) {
+      console.error("[admin] solde", slug, e);
+      failed.push(p.name);
+    }
+  }
+  if (done) refreshShop();
+  return { done, failed };
+}
+
+const failedParam = (failed: string[]) => (failed.length ? `&echecs=${encodeURIComponent(failed.join(" · ").slice(0, 400))}` : "");
+
+export async function applySaleAction(formData: FormData) {
+  await requireAdmin();
+  const slugs = slugsFrom(formData);
+  const percent = Number(String(formData.get("percent") ?? "").replace(",", "."));
+  if (!slugs.length || !(percent >= 1 && percent <= 90)) redirect("/admin?erreur=solde");
+  const startsAt = zurichInputToIso(String(formData.get("startsAt") ?? "")) || undefined;
+  const endsAt = zurichInputToIso(String(formData.get("endsAt") ?? "")) || undefined;
+  if (startsAt && endsAt && Date.parse(endsAt) <= Date.parse(startsAt)) redirect("/admin?erreur=solde-dates");
+
+  const { done, failed } = await updateSales(slugs, (p) => ({
+    price: salePriceFromPercent(p.price, percent, p.currency ?? "EUR"),
+    startsAt,
+    endsAt,
+  }));
+  redirect(`/admin?ok=solde&n=${done}&remise=${percent}${failedParam(failed)}`);
+}
+
+export async function removeSaleAction(formData: FormData) {
+  await requireAdmin();
+  const slugs = slugsFrom(formData);
+  if (!slugs.length) redirect("/admin?erreur=solde");
+  const { done, failed } = await updateSales(slugs, () => undefined);
+  redirect(`/admin?ok=solde-retire&n=${done}${failedParam(failed)}`);
 }

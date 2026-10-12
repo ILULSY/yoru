@@ -5,6 +5,7 @@ import { getStore } from "@/lib/shop/store";
 import { logoutAction } from "@/app/admin/actions";
 import { LogoMark } from "@/components/ui/Logo";
 import { buttonClasses } from "@/components/ui/Button";
+import { absoluteUrl } from "@/lib/site";
 
 /** Habillage des pages protégées de l'espace édition. */
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -28,7 +29,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
               <Plus className="size-4" aria-hidden /> Nouveau produit
             </Link>
             <Link
-              href="/boutique"
+              href={absoluteUrl("/boutique")}
               target="_blank"
               className="inline-flex h-10 items-center gap-1.5 border-2 border-paper/40 px-3 text-sm font-semibold hover:border-paper"
             >

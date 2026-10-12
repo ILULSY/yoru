@@ -3,7 +3,8 @@ import type { Product } from "@/types/shop";
 import { CATEGORY_INFO, licenseOf } from "@/data/shop/licenses";
 import { ProductMedia } from "@/components/shop/ProductMedia";
 import { AddToCartButton } from "@/components/shop/AddToCartButton";
-import { Price, ProductBadges, StockBadge } from "@/components/shop/ProductBits";
+import { Price, ProductBadges, SaleBadge, StockBadge } from "@/components/shop/ProductBits";
+import { priceFields } from "@/lib/shop/pricing";
 import { cn } from "@/lib/utils";
 
 /**
@@ -23,6 +24,7 @@ export function ProductCard({ product, className, idSuffix }: { product: Product
             <ProductMedia product={product} idSuffix={idSuffix} />
           </div>
           <ProductBadges product={product} className="absolute top-2 left-2" />
+          <SaleBadge product={priceFields(product)} className="absolute top-2 right-2" />
           <span
             className="absolute right-2 bottom-2 translate-y-2 border-2 border-ink px-2 py-0.5 font-mono text-[10px] font-bold tracking-widest uppercase opacity-0 transition-[transform,opacity] duration-300 group-hover:translate-y-0 group-hover:opacity-100"
             style={{ background: lic.color, color: lic.ink }}
@@ -36,7 +38,7 @@ export function ProductCard({ product, className, idSuffix }: { product: Product
           </p>
           <h3 className="mt-1 leading-snug font-extrabold transition-transform duration-300 group-hover:translate-x-1">{product.name}</h3>
           <div className="mt-auto pt-3">
-            <Price product={product} />
+            <Price product={priceFields(product)} />
             <StockBadge product={product} className="mt-2" />
           </div>
         </div>

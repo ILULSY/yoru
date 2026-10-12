@@ -1,40 +1,8 @@
 import type { Product } from "@/types/shop";
 import { availabilityLabel, BADGE_LABELS } from "@/lib/shop/format";
-import { Money } from "@/components/shop/Money";
 import { cn } from "@/lib/utils";
 
-/**
- * Prix TTC dans la devise choisie (€ ou CHF), avec l'équivalent dans l'autre
- * devise en dessous et le prix barré éventuel.
- */
-export function Price({
-  product,
-  className,
-  size = "md",
-}: {
-  product: Pick<Product, "price" | "compareAtPrice" | "currency">;
-  className?: string;
-  size?: "md" | "lg";
-}) {
-  const from = product.currency ?? "EUR";
-  return (
-    <div className={className}>
-      <p className="flex flex-wrap items-baseline gap-x-2">
-        <Money amount={product.price} from={from} className={cn("font-display leading-none", size === "lg" ? "text-5xl" : "text-2xl")} />
-        {product.compareAtPrice && (
-          <span className="text-sm text-muted line-through">
-            <span className="sr-only">au lieu de </span>
-            <Money amount={product.compareAtPrice} from={from} />
-          </span>
-        )}
-        <span className="sr-only">TTC</span>
-      </p>
-      <p className={cn("mt-1 font-mono text-muted", size === "lg" ? "text-sm" : "text-[11px]")}>
-        soit <Money amount={product.price} from={from} alt />
-      </p>
-    </div>
-  );
-}
+export { Price, SaleBadge, SaleNote } from "@/components/shop/Price";
 
 const TONES = {
   ok: "bg-lime",
