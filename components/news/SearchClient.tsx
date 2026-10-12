@@ -13,6 +13,7 @@ import { Burst } from "@/components/ui/Decor";
 import { useDebounced } from "@/lib/hooks";
 import { SPRING } from "@/lib/motion";
 import { cn } from "@/lib/utils";
+import { searchSite } from "@/lib/search-client";
 
 interface Data {
   query: string;
@@ -51,10 +52,10 @@ export function SearchClient({
   const first = useRef(true);
 
   useEffect(() => {
-    // Le premier rendu utilise les résultats calculés côté serveur.
+    // Le premier rendu utilise les résultats calculés côté serveur (s'il y en a).
     if (first.current) {
       first.current = false;
-      return;
+      if (initial || !debounced) return;
     }
     const sp = new URLSearchParams();
     if (debounced) sp.set("q", debounced);
@@ -64,18 +65,13 @@ export function SearchClient({
     if (debounced.length < 2) return;
     const key = `${universe}|${debounced}`;
     const ctrl = new AbortController();
-    fetch(`/api/search?${new URLSearchParams({ q: debounced, limit: "30", ...(universe !== "all" ? { univers: universe } : {}) })}`, {
-      signal: ctrl.signal,
-    })
-      .then((r) => {
-        if (!r.ok) throw new Error(String(r.status));
-        return r.json() as Promise<Data>;
-      })
+    searchSite(debounced, { limit: 30, universe: universe === "all" ? undefined : universe, signal: ctrl.signal })
       .then((d) => setLast({ key, data: d }))
       .catch((e: unknown) => {
         if ((e as Error).name !== "AbortError") setLast({ key, error: true });
       });
     return () => ctrl.abort();
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- `initial` ne sert qu'au premier rendu
   }, [debounced, universe, pathname, router]);
 
   // Statut dérivé de la saisie courante et de la dernière réponse.

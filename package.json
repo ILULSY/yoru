@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "check": "tsc --noEmit && eslint . && next build",
-    "catalog:push": "node --env-file-if-exists=.env.local scripts/catalog-push.mjs"
+    "catalog:push": "node --env-file-if-exists=.env.local scripts/catalog-push.mjs",
+    "publier": "node scripts/publish-pages.mjs"
   },
   "engines": {
     "node": ">=20.9.0"

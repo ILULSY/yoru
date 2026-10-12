@@ -13,6 +13,7 @@ import { Money } from "@/components/shop/Money";
 import { useDebounced, useFocusTrap, useScrollLock } from "@/lib/hooks";
 import { EASE, SPRING } from "@/lib/motion";
 import { frTypo } from "@/lib/text";
+import { searchSite } from "@/lib/search-client";
 import { cn } from "@/lib/utils";
 
 const SUGGESTIONS = ["One Piece", "Ghibli", "grading", "metroidvania", "Spider-Verse", "kaiju"];
@@ -42,11 +43,7 @@ export function SearchDialog({ onClose }: { onClose: () => void }) {
   useEffect(() => {
     if (query.length < 2) return;
     const ctrl = new AbortController();
-    fetch(`/api/search?q=${encodeURIComponent(query)}&limit=6`, { signal: ctrl.signal })
-      .then((r) => {
-        if (!r.ok) throw new Error(String(r.status));
-        return r.json() as Promise<Response>;
-      })
+    searchSite(query, { limit: 6, signal: ctrl.signal })
       .then((d) => {
         setLast({ query, data: d });
         setActive(0);

@@ -307,6 +307,22 @@ envoyée au navigateur.
 
 ## 8. Déploiement
 
+**GitHub Pages** (version vitrine, en ligne) : https://ilulsy.github.io/yoru/
+- Publiée depuis la branche `gh-pages`. Pour la mettre à jour après des modifications : `npm run publier` (le projet
+  est copié dans un dossier temporaire, préparé, exporté en HTML puis envoyé ; votre dossier n'est pas modifié). Le site
+  est à jour 1 à 2 minutes plus tard.
+- GitHub Pages ne sert que des fichiers : `deploy/github-pages/prepare.mjs` retire, dans la copie seulement, l'espace
+  édition, les API et le retour de paiement, puis le site est exporté (`STATIC_EXPORT=1`, préfixe `/yoru`). La recherche
+  se fait dans le navigateur (`/search-index.json`) ; formulaires de contact et newsletter et paiement affichent un
+  message « indisponible sur cette version » (`lib/static-site.ts`). Pas d'en-têtes de sécurité HTTP (non
+  configurables sur GitHub Pages).
+- Le fil d'actualités et le taux de change sont ceux du moment de la publication. Pour une mise à jour automatique (à
+  chaque envoi et toutes les 3 heures), activez le modèle `deploy/github-pages/workflow.yml` (instructions en tête du
+  fichier) : GitHub demande pour cela une autorisation supplémentaire (« workflow »).
+- Pour modifier les produits : espace édition **en local** (`npm run dev` puis `/admin`), puis `npm run publier`. Les
+  photos envoyées (`data/shop/uploads/`) sont publiées avec.
+- Un nom de domaine peut être branché dans Settings → Pages (pensez alors à adapter `PAGES_BASE_PATH`).
+
 **Vercel** (relié au dépôt GitHub) :
 1. Sur vercel.com, connectez-vous avec GitHub, « Add New… → Project », importez `ILULSY/yoru`, puis « Deploy » (aucun
    réglage requis : Next.js est détecté).

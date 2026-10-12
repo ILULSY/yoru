@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { STATIC_SITE } from "@/lib/static-site";
 import type { CartLine, Currency } from "@/types/shop";
 
 export type CheckoutResult =
@@ -17,6 +18,10 @@ export function useCheckout() {
   const [error, setError] = useState<Extract<CheckoutResult, { ok: false }> | null>(null);
 
   const checkout = async (lines: CartLine[], currency: Currency) => {
+    if (STATIC_SITE) {
+      setError({ ok: false, status: "not_configured", message: "Le paiement en ligne n'est pas disponible sur cette version du site." });
+      return;
+    }
     setPending(true);
     setError(null);
     try {

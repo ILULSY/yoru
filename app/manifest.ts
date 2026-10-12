@@ -1,6 +1,9 @@
 import type { MetadataRoute } from "next";
 import { SITE } from "@/lib/site";
 
+// Généré au build (indispensable pour la version statique du site).
+export const dynamic = "force-static";
+
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: `${SITE.name} — ${SITE.slogan}`,

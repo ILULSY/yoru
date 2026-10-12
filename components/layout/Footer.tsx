@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Rss } from "lucide-react";
 import { UNIVERSES } from "@/data/universes";
 import { SITE } from "@/lib/site";
+import { withBase } from "@/lib/static-site";
 import { LogoMark } from "@/components/ui/Logo";
 import { Sparkle } from "@/components/ui/Decor";
 import { VelocityMarquee } from "@/components/motion/Scroll";
@@ -111,7 +112,7 @@ export function Footer() {
             <ul className="mt-4 flex flex-wrap gap-2">
               <li>
                 <a
-                  href="/rss.xml"
+                  href={withBase("/rss.xml")}
                   className="inline-flex h-10 items-center gap-2 border-2 border-paper/40 px-3 text-sm font-semibold transition-colors hover:border-yellow hover:bg-yellow hover:text-ink"
                 >
                   <Rss className="size-4" aria-hidden /> Flux RSS

@@ -7,6 +7,8 @@ import { Check, Info, LoaderCircle, Send } from "lucide-react";
 import { FieldError, Honeypot, inputClasses } from "@/components/ui/Field";
 import { fieldErrors, newsletterSchema, type FormResult } from "@/lib/validation";
 import { SPRING } from "@/lib/motion";
+import { STATIC_SITE } from "@/lib/static-site";
+import { StaticNotice } from "@/components/ui/StaticNotice";
 import { cn } from "@/lib/utils";
 
 type Phase = "idle" | "submitting" | "done";
@@ -15,7 +17,19 @@ type Phase = "idle" | "submitting" | "done";
  * Inscription à la newsletter. L'état affiché reflète exactement la réponse
  * du serveur : rien n'est simulé si le fournisseur n'est pas configuré.
  */
+/** Inscription à la newsletter (sur la version statique du site, un message remplace le formulaire). */
 export function NewsletterForm() {
+  if (STATIC_SITE) {
+    return (
+      <StaticNotice title="Inscriptions bientôt ouvertes">
+        La newsletter n&apos;est pas encore disponible sur cette version du site : aucune adresse n&apos;est collectée ici.
+      </StaticNotice>
+    );
+  }
+  return <NewsletterFormLive />;
+}
+
+function NewsletterFormLive() {
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
   const [website, setWebsite] = useState("");

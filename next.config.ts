@@ -2,6 +2,14 @@ import type { NextConfig } from "next";
 
 const isProd = process.env.NODE_ENV === "production";
 
+/**
+ * Version statique pour GitHub Pages (STATIC_EXPORT=1, voir deploy/github-pages) :
+ * export HTML, servi dans un sous-dossier (PAGES_BASE_PATH, ex. /yoru), sans
+ * serveur ni optimiseur d'images.
+ */
+const isStaticExport = process.env.STATIC_EXPORT === "1";
+const basePath = isStaticExport ? (process.env.PAGES_BASE_PATH ?? "") : "";
+
 // Photos produit stockées dans Supabase Storage (PRODUCTS_SOURCE=supabase).
 const supabaseHost = (() => {
   try {
@@ -41,6 +49,11 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  ...(isStaticExport ? { output: "export" as const, basePath, trailingSlash: true } : {}),
+  env: {
+    NEXT_PUBLIC_STATIC_EXPORT: isStaticExport ? "1" : "",
+    NEXT_PUBLIC_BASE_PATH: basePath,
+  },
   // Le catalogue est lu à l'exécution (pages régénérées, recherche, paiement) : il doit
   // accompagner le code sur les hébergements serverless (Vercel).
   outputFileTracingIncludes: {
@@ -56,10 +69,16 @@ const nextConfig: NextConfig = {
     ],
     formats: ["image/avif", "image/webp"],
     qualities: [60, 70, 75, 85],
+    ...(isStaticExport ? { loader: "custom" as const, loaderFile: "./lib/image-loader.ts" } : {}),
   },
-  async headers() {
-    return [{ source: "/:path*", headers: securityHeaders }];
-  },
+  // Les en-têtes HTTP ne s'appliquent pas à un export statique (GitHub Pages ne permet pas de les définir).
+  ...(isStaticExport
+    ? {}
+    : {
+        async headers() {
+          return [{ source: "/:path*", headers: securityHeaders }];
+        },
+      }),
 };
 
 export default nextConfig;

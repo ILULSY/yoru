@@ -15,6 +15,7 @@ import { useCurrency, useRates } from "@/lib/stores/currency";
 import { CurrencyToggle, Money, RateNote } from "@/components/shop/Money";
 import { useCheckout } from "@/components/shop/useCheckout";
 import { SPRING } from "@/lib/motion";
+import { STATIC_SITE } from "@/lib/static-site";
 import { cn } from "@/lib/utils";
 
 /** Lignes du panier associées à leur produit (les produits retirés du catalogue sont ignorés). */
@@ -184,12 +185,18 @@ export function CartSummary({ className }: { className?: string }) {
       <button
         type="button"
         onClick={() => checkout(lines, currency)}
-        disabled={pending || !items.length || blocked}
+        disabled={STATIC_SITE || pending || !items.length || blocked}
         className="mt-4 inline-flex h-14 w-full items-center justify-center gap-2 border-[3px] border-ink bg-ink text-lg font-bold text-paper shadow-[5px_5px_0_0_var(--color-pink)] transition-[transform,box-shadow] duration-200 ease-[var(--ease-pop)] hover:-translate-y-0.5 hover:shadow-[7px_7px_0_0_var(--color-pink)] active:translate-y-1 active:shadow-none disabled:cursor-not-allowed disabled:opacity-60"
       >
         {pending ? <LoaderCircle className="size-5 animate-spin" aria-hidden /> : <Lock className="size-5" aria-hidden />}
-        {pending ? "Connexion au paiement…" : "Passer au paiement"}
+        {STATIC_SITE ? "Paiement indisponible" : pending ? "Connexion au paiement…" : "Passer au paiement"}
       </button>
+      {STATIC_SITE && (
+        <p className="mt-2 border-2 border-ink bg-yellow p-2 text-center text-sm font-semibold">
+          Cette version du site est une vitrine : les commandes en ligne ne sont pas encore ouvertes et aucun paiement n&apos;est
+          possible.
+        </p>
+      )}
       <p className="mt-2 text-center text-xs text-muted">
         Paiement sécurisé par Stripe, en {currency === "CHF" ? "francs suisses" : "euros"}. Prix TTC.{" "}
         <Link href="/cgv" className="underline">Conditions générales de vente</Link>

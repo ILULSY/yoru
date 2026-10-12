@@ -5,6 +5,9 @@ import { absoluteUrl } from "@/lib/site";
 import { PRODUCT_CATEGORIES } from "@/types/shop";
 import { getProducts, licensesWithCounts } from "@/lib/shop/catalog";
 
+// Généré au build (indispensable pour la version statique du site).
+export const dynamic = "force-static";
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const articles = await getAllArticles();
   const latest = articles[0]?.publishedAt ?? new Date().toISOString();

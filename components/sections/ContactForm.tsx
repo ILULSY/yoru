@@ -7,6 +7,8 @@ import { Check, Info, LoaderCircle, Send } from "lucide-react";
 import { FieldError, Honeypot, inputClasses } from "@/components/ui/Field";
 import { CONTACT_SUBJECTS, contactSchema, fieldErrors, type FormResult } from "@/lib/validation";
 import { SPRING } from "@/lib/motion";
+import { STATIC_SITE } from "@/lib/static-site";
+import { StaticNotice } from "@/components/ui/StaticNotice";
 import { cn } from "@/lib/utils";
 
 type Values = { name: string; email: string; subject: string; message: string; consent: boolean };
@@ -16,7 +18,20 @@ const EMPTY: Values = { name: "", email: "", subject: "", message: "", consent: 
  * Formulaire de contact : validation instantanée (au départ de chaque champ),
  * validation serveur, et affichage honnête de l'issue de l'envoi.
  */
+/** Formulaire de contact (sur la version statique du site, un message remplace le formulaire). */
 export function ContactForm() {
+  if (STATIC_SITE) {
+    return (
+      <StaticNotice title="Formulaire indisponible">
+        Cette version du site est une vitrine sans serveur : les messages ne peuvent pas être envoyés depuis cette page pour
+        le moment. Rien de ce que vous saisiriez ici ne nous parviendrait.
+      </StaticNotice>
+    );
+  }
+  return <ContactFormLive />;
+}
+
+function ContactFormLive() {
   const [values, setValues] = useState<Values>(EMPTY);
   const [website, setWebsite] = useState("");
   const [startedAt] = useState(() => Date.now());
