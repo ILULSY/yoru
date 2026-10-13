@@ -22,7 +22,8 @@ import { formatSaleDate, saleStatus, zurichInputToIso } from "@/lib/shop/pricing
 import { useShopNow } from "@/components/shop/CatalogProvider";
 import { convert, formatMoney } from "@/lib/shop/currency";
 import { useRates } from "@/lib/stores/currency";
-import { saveProductAction, type SaveState } from "@/app/admin/actions";
+import type { SaveState } from "@/lib/admin/types";
+import { useAdminBackend } from "@/components/admin/backend";
 import { ProductCard } from "@/components/shop/ProductCard";
 import { FieldError, inputClasses } from "@/components/ui/Field";
 import { buttonClasses } from "@/components/ui/Button";
@@ -46,7 +47,8 @@ type Props = {
 };
 
 export function ProductForm({ mode, initial, previousSlug, expectedUpdatedAt, typeSuggestions, readOnly }: Props) {
-  const [state, formAction, pending] = useActionState<SaveState, FormData>(saveProductAction, {});
+  const backend = useAdminBackend();
+  const [state, formAction, pending] = useActionState<SaveState, FormData>(backend.save, {});
   const [draft, setDraft] = useState<ProductDraft>(initial);
   const [slugTouched, setSlugTouched] = useState(mode === "edit");
   const formRef = useRef<HTMLFormElement>(null);
@@ -112,7 +114,7 @@ export function ProductForm({ mode, initial, previousSlug, expectedUpdatedAt, ty
     <div>
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="min-w-0">
-          <Link href="/admin" className="inline-flex items-center gap-1.5 text-sm font-semibold hover:underline">
+          <Link href={backend.listHref} className="inline-flex items-center gap-1.5 text-sm font-semibold hover:underline">
             <ArrowLeft className="size-4" aria-hidden /> Tous les produits
           </Link>
           <h1 className="display mt-2 truncate text-4xl sm:text-5xl">{mode === "create" ? "Nouveau produit" : initial.name}</h1>
@@ -585,21 +587,16 @@ function ImageField({
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [removeWhite, setRemoveWhite] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
+  const backend = useAdminBackend();
 
   const upload = async (file: File) => {
     setUploading(true);
     setUploadError(null);
-    const body = new FormData();
-    body.set("file", file);
-    body.set("slug", draft.slug || draft.name);
-    body.set("removeWhite", removeWhite ? "1" : "0");
     try {
-      const res = await fetch("/api/admin/upload", { method: "POST", body });
-      const data = (await res.json()) as { ok: boolean; message?: string; src?: string; width?: number; height?: number };
-      if (!data.ok || !data.src) throw new Error(data.message ?? "Envoi impossible.");
+      const data = await backend.upload(file, { slug: draft.slug || draft.name, removeWhite });
       setDraft((d) => ({
         ...d,
-        image: { src: data.src!, width: data.width!, height: data.height!, alt: d.image?.alt || (d.name ? `Photo du produit : ${d.name}` : "") },
+        image: { ...data, alt: d.image?.alt || (d.name ? `Photo du produit : ${d.name}` : "") },
       }));
     } catch (e) {
       setUploadError(e instanceof Error ? e.message : "Envoi impossible.");

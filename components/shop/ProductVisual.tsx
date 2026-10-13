@@ -352,11 +352,10 @@ function Shape({
         <g transform="rotate(3 200 220)">
           <path d="M156 150 Q156 84 200 84 Q244 84 244 150" fill="none" stroke={K} strokeWidth="12" />
           <rect x="116" y="146" width="168" height="196" fill={P} {...stroke} />
-          <text x="200" y="250" textAnchor="middle" fontSize="70" fill="#FF2D95" stroke={K} strokeWidth="3" style={display}>
-            POP
-          </text>
-          <text x="200" y="296" textAnchor="middle" fontSize="26" fill={K} style={display} letterSpacing="2">
-            VERSE
+          {/* Croissant de lune du logo */}
+          <path d="M194.24 206.64A26 26 0 1 0 225.36 237.76A22 22 0 0 1 194.24 206.64Z" fill="#8B35FF" stroke={K} strokeWidth="3" />
+          <text x="200" y="300" textAnchor="middle" fontSize="44" fill={K} style={display} letterSpacing="2">
+            YORU
           </text>
         </g>
       );

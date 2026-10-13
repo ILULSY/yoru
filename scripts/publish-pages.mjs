@@ -33,6 +33,8 @@ try {
     STATIC_EXPORT: "1",
     PAGES_BASE_PATH: `/${repo}`,
     NEXT_PUBLIC_SITE_URL: siteUrl,
+    NEXT_PUBLIC_GITHUB_REPO: `${owner}/${repo}`,
+    NEXT_PUBLIC_GITHUB_BRANCH: "main",
     NEXT_TELEMETRY_DISABLED: "1",
   });
 

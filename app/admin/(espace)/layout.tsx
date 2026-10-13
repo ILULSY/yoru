@@ -6,6 +6,7 @@ import { logoutAction } from "@/app/admin/actions";
 import { LogoMark } from "@/components/ui/Logo";
 import { buttonClasses } from "@/components/ui/Button";
 import { absoluteUrl } from "@/lib/site";
+import { ServerBackend } from "@/components/admin/ServerBackend";
 
 /** Habillage des pages protégées de l'espace édition. */
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -59,7 +60,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         </div>
       )}
 
-      <div className="mx-auto max-w-[88rem] px-4 py-8 sm:px-6 lg:px-8">{children}</div>
+      <div className="mx-auto max-w-[88rem] px-4 py-8 sm:px-6 lg:px-8">
+        <ServerBackend>{children}</ServerBackend>
+      </div>
 
       <footer className="mx-auto max-w-[88rem] px-4 pb-10 sm:px-6 lg:px-8">
         <p className="flex items-center gap-2 font-mono text-[11px] text-muted">

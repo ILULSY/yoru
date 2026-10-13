@@ -10,7 +10,7 @@ import { availabilityLabel } from "@/lib/shop/format";
 import { formatMoney } from "@/lib/shop/currency";
 import { currentPricing, formatSaleDate, saleStatus } from "@/lib/shop/pricing";
 import { normalize } from "@/lib/text";
-import { removeSaleAction, toggleStatusAction } from "@/app/admin/actions";
+import { useAdminBackend } from "@/components/admin/backend";
 import { useShopNow } from "@/components/shop/CatalogProvider";
 import { ProductMedia } from "@/components/shop/ProductMedia";
 import { SaleDialog } from "@/components/admin/SaleDialog";
@@ -67,6 +67,7 @@ function RemoveSaleButton({ count }: { count: number }) {
 }
 
 export function ProductTable({ products }: { products: Product[] }) {
+  const backend = useAdminBackend();
   const now = useShopNow();
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState<StatusFilter>("all");
@@ -174,7 +175,7 @@ export function ProductTable({ products }: { products: Product[] }) {
           <PackageOpen className="size-10" aria-hidden />
           <p className="font-bold">{products.length ? "Aucun produit ne correspond à ces filtres." : "Le catalogue est vide."}</p>
           {!products.length && (
-            <Link href="/admin/produits/nouveau" className="font-semibold underline">
+            <Link href={backend.newHref()} className="font-semibold underline">
               Ajouter le premier produit
             </Link>
           )}
@@ -214,7 +215,7 @@ export function ProductTable({ products }: { products: Product[] }) {
                       {p.availability === "preorder" ? "Précommande" : `${avail.tone === "out" ? "Rupture" : "Stock"} · ${p.stock}`}
                     </span>
                   </div>
-                  <Link href={`/admin/produits/${p.slug}`} className="mt-1 block truncate font-extrabold hover:underline">
+                  <Link href={backend.editHref(p.slug)} className="mt-1 block truncate font-extrabold hover:underline">
                     {p.name}
                   </Link>
                   <p className="truncate text-sm text-muted">
@@ -226,7 +227,7 @@ export function ProductTable({ products }: { products: Product[] }) {
                 </div>
                 <div className="col-span-2 flex flex-wrap items-center gap-1.5 sm:col-span-1">
                   <Link
-                    href={`/admin/produits/${p.slug}`}
+                    href={backend.editHref(p.slug)}
                     className="inline-flex h-9 items-center gap-1.5 border-2 border-ink bg-ink px-3 text-sm font-bold text-paper hover:bg-violet"
                   >
                     <Pencil className="size-4" aria-hidden /> Modifier
@@ -239,7 +240,7 @@ export function ProductTable({ products }: { products: Product[] }) {
                     <Percent className="size-4" aria-hidden /> Solde
                     <span className="sr-only"> {p.name}</span>
                   </button>
-                  <form action={toggleStatusAction}>
+                  <form action={backend.toggleStatus}>
                     <input type="hidden" name="slug" value={p.slug} />
                     <button type="submit" className="inline-flex h-9 items-center gap-1.5 border-2 border-ink bg-paper px-3 text-sm font-bold hover:bg-yellow">
                       {p.status === "published" ? <EyeOff className="size-4" aria-hidden /> : <Eye className="size-4" aria-hidden />}
@@ -248,7 +249,7 @@ export function ProductTable({ products }: { products: Product[] }) {
                     </button>
                   </form>
                   <Link
-                    href={`/admin/produits/nouveau?depuis=${p.slug}`}
+                    href={backend.newHref(p.slug)}
                     className="grid size-9 place-items-center border-2 border-ink bg-paper hover:bg-yellow"
                     title="Dupliquer"
                   >
@@ -288,7 +289,7 @@ export function ProductTable({ products }: { products: Product[] }) {
             >
               <Percent className="size-4" aria-hidden /> Mettre en solde…
             </button>
-            <form action={removeSaleAction}>
+            <form action={backend.removeSale}>
               <input type="hidden" name="slugs" value={JSON.stringify([...selected])} />
               <RemoveSaleButton count={selected.size} />
             </form>

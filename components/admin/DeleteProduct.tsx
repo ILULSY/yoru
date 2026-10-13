@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useFormStatus } from "react-dom";
 import { LoaderCircle, Trash2 } from "lucide-react";
-import { deleteProductAction } from "@/app/admin/actions";
+import { useAdminBackend } from "@/components/admin/backend";
 
 function ConfirmButton() {
   const { pending } = useFormStatus();
@@ -21,6 +21,7 @@ function ConfirmButton() {
 
 /** Suppression en deux temps : rien n'est effacé sans confirmation explicite. */
 export function DeleteProduct({ slug, name }: { slug: string; name: string }) {
+  const backend = useAdminBackend();
   const [confirming, setConfirming] = useState(false);
   return (
     <section aria-labelledby="zone-suppression" className="mt-12 border-[3px] border-dashed border-ink p-5 sm:p-6 lg:max-w-[calc(100%-24rem)]">
@@ -31,7 +32,7 @@ export function DeleteProduct({ slug, name }: { slug: string; name: string }) {
         La fiche disparaît de la boutique et de l&apos;espace édition. Pour la retirer temporairement, passez-la plutôt en brouillon.
       </p>
       {confirming ? (
-        <form action={deleteProductAction} className="mt-4 flex flex-wrap items-center gap-3">
+        <form action={backend.remove} className="mt-4 flex flex-wrap items-center gap-3">
           <input type="hidden" name="slug" value={slug} />
           <p className="w-full font-semibold" role="alert">
             Supprimer « {name} » ? Cette action est irréversible.

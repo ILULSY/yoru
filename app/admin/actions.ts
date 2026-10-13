@@ -7,14 +7,15 @@ import { closeSession, isAdmin, openSession, requireAdmin } from "@/lib/server/a
 import { adminConfigured, passwordMatches } from "@/lib/server/admin-session";
 import { clientIp, rateLimit } from "@/lib/server/rate-limit";
 import { draftToProduct, type ProductDraft } from "@/lib/shop/draft";
-import { issuesByField, productSchema, SLUG_RE, type ProductIssues } from "@/lib/shop/schema";
+import { issuesByField, productSchema, SLUG_RE } from "@/lib/shop/schema";
 import { getStore, PRODUCTS_TAG, StoreError } from "@/lib/shop/store";
 import { salePriceFromPercent, zurichInputToIso } from "@/lib/shop/pricing";
 import type { Product } from "@/types/shop";
 
 /* ── Connexion ─────────────────────────────────────────────────── */
 
-export type LoginState = { error?: string };
+export type { LoginState, SaveState } from "@/lib/admin/types";
+import type { LoginState, SaveState } from "@/lib/admin/types";
 
 function safeNext(value: FormDataEntryValue | null): string {
   const s = typeof value === "string" ? value : "";
@@ -50,7 +51,6 @@ export async function logoutAction() {
 
 /* ── Produits ──────────────────────────────────────────────────── */
 
-export type SaveState = { message?: string; errors?: ProductIssues };
 
 /** Toutes les pages publiques affichent des produits (accueil, boutique, recherche, panier du layout). */
 function refreshShop() {

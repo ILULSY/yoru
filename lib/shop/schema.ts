@@ -22,7 +22,7 @@ const DAY_RE = /^\d{4}-\d{2}-\d{2}$/;
 /** Fichiers du site, photos envoyées depuis l'espace édition, ou Supabase Storage. */
 export function isAllowedImageSrc(src: string): boolean {
   if (/^\/images\/shop\/[a-z0-9-]+\.(webp|png|jpg|avif)$/.test(src)) return true;
-  if (/^\/media\/shop\/[a-z0-9-]+\.webp$/.test(src)) return true;
+  if (/^\/media\/shop\/[a-z0-9-]+\.(webp|png)$/.test(src)) return true;
   const base = process.env.SUPABASE_URL?.replace(/\/$/, "");
   if (base && src.startsWith(`${base}/storage/v1/object/public/`)) {
     return /^[a-z0-9_-]+\/[a-z0-9-]+\.webp$/.test(src.slice(`${base}/storage/v1/object/public/`.length));

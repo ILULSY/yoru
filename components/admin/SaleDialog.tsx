@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { LoaderCircle, Percent, X } from "lucide-react";
 import type { Product } from "@/types/shop";
-import { applySaleAction } from "@/app/admin/actions";
+import { useAdminBackend } from "@/components/admin/backend";
 import { formatMoney } from "@/lib/shop/currency";
 import { salePriceFromPercent } from "@/lib/shop/pricing";
 import { inputClasses } from "@/components/ui/Field";
@@ -23,6 +23,7 @@ function Submit({ count }: { count: number }) {
 
 /** Mise en solde d'un ou plusieurs produits : remise en %, dates facultatives (heure suisse). */
 export function SaleDialog({ products, onClose }: { products: Product[]; onClose: () => void }) {
+  const backend = useAdminBackend();
   const ref = useRef<HTMLDialogElement>(null);
   const [percent, setPercent] = useState("20");
   const pct = Number(percent.replace(",", "."));
@@ -42,7 +43,7 @@ export function SaleDialog({ products, onClose }: { products: Product[]; onClose
       aria-labelledby="sale-dialog-title"
       className="m-auto w-[min(36rem,calc(100%-2rem))] border-[4px] border-ink bg-paper p-0 text-ink shadow-pop-lg backdrop:bg-ink/60"
     >
-      <form action={applySaleAction} className="p-5 sm:p-6">
+      <form action={backend.applySale} className="p-5 sm:p-6">
         <input type="hidden" name="slugs" value={JSON.stringify(products.map((p) => p.slug))} />
         <div className="flex items-start justify-between gap-4">
           <h2 id="sale-dialog-title" className="text-xl font-extrabold">

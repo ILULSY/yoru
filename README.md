@@ -319,8 +319,16 @@ envoyée au navigateur.
 - Le fil d'actualités et le taux de change sont ceux du moment de la publication. Pour une mise à jour automatique (à
   chaque envoi et toutes les 3 heures), activez le modèle `deploy/github-pages/workflow.yml` (instructions en tête du
   fichier) : GitHub demande pour cela une autorisation supplémentaire (« workflow »).
-- Pour modifier les produits : espace édition **en local** (`npm run dev` puis `/admin`), puis `npm run publier`. Les
-  photos envoyées (`data/shop/uploads/`) sont publiées avec.
+- **Espace édition en ligne** : https://ilulsy.github.io/yoru/admin/ (mêmes écrans que la version complète). Le site étant
+  statique, chaque enregistrement est un commit dans le dépôt (`data/shop/catalog.json`, photos dans
+  `data/shop/uploads/`), fait depuis le navigateur avec une **clé GitHub personnelle** limitée au dépôt (permission
+  *Contents : Read and write*, et *Actions : Read-only* pour suivre les publications). À la première connexion, la clé est
+  vérifiée puis chiffrée dans le navigateur avec un mot de passe (PBKDF2 + AES-GCM, `lib/admin/vault.ts`) : ensuite, seul
+  le mot de passe est demandé. La vraie protection est la clé : sans elle, personne ne peut écrire dans le dépôt. Photos
+  préparées dans le navigateur (`lib/admin/image-client.ts`). Code : `lib/admin/github-backend.ts`,
+  `components/admin/static/`. Le site public est reconstruit par GitHub Actions après chaque enregistrement.
+- Espace édition **en local** (`npm run dev` puis `/admin`) : toujours disponible ; ses modifications partent en ligne avec
+  un envoi sur GitHub.
 - Un nom de domaine peut être branché dans Settings → Pages (pensez alors à adapter `PAGES_BASE_PATH`).
 
 **Vercel** (relié au dépôt GitHub) :

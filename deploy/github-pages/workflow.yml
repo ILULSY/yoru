@@ -50,6 +50,9 @@ jobs:
           STATIC_EXPORT: "1"
           PAGES_BASE_PATH: ${{ steps.pages.outputs.base_path }}
           NEXT_PUBLIC_SITE_URL: ${{ steps.pages.outputs.base_url }}
+          # Dépôt dans lequel l'espace édition en ligne enregistre les modifications
+          NEXT_PUBLIC_GITHUB_REPO: ${{ github.repository }}
+          NEXT_PUBLIC_GITHUB_BRANCH: ${{ github.ref_name }}
           NEXT_TELEMETRY_DISABLED: "1"
 
       - uses: actions/upload-pages-artifact@v3
