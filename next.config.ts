@@ -53,6 +53,8 @@ const nextConfig: NextConfig = {
   env: {
     NEXT_PUBLIC_STATIC_EXPORT: isStaticExport ? "1" : "",
     NEXT_PUBLIC_BASE_PATH: basePath,
+    // Construit par GitHub Actions : chaque enregistrement de l'espace édition en ligne republie le site.
+    NEXT_PUBLIC_PAGES_AUTOPUBLISH: isStaticExport && process.env.GITHUB_ACTIONS === "true" ? "1" : "",
   },
   // Le catalogue est lu à l'exécution (pages régénérées, recherche, paiement) : il doit
   // accompagner le code sur les hébergements serverless (Vercel).

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, Calendar, Clock, PenLine } from "lucide-react";
+import { ArrowLeft, ArrowRight, BadgeCheck, Calendar, Clock, ExternalLink, PenLine } from "lucide-react";
 import { getAllArticles, getArticle, getPrevNext, getRelated, getToc, readingMinutes } from "@/lib/content";
 import { getMedia } from "@/data/media";
 import { UNIVERSE_MAP, ARTICLE_TYPE_LABELS } from "@/data/universes";
@@ -199,6 +199,30 @@ export default async function ArticlePage({ params }: Props) {
           )}
 
           <ArticleBody blocks={article.body} />
+
+          {article.sources && (
+            <aside aria-labelledby="article-sources" className="mt-12 border-[3px] border-ink bg-paper-2 p-5 sm:p-6">
+              <h2 id="article-sources" className="flex items-center gap-2 font-mono text-xs font-bold tracking-[0.25em] uppercase">
+                <BadgeCheck className="size-4" aria-hidden /> Sources
+              </h2>
+              <ul className="mt-3 space-y-1.5">
+                {article.sources.map((s) => (
+                  <li key={s.url}>
+                    <a href={s.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 font-semibold underline">
+                      {s.name} <ExternalLink className="size-3.5" aria-hidden />
+                      <span className="sr-only">(nouvel onglet)</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              {article.verifiedAt && (
+                <p className="mt-3 text-sm text-muted">
+                  Informations vérifiées le {formatDate(article.verifiedAt)} auprès de ces sources, et rédigées par nos soins. Les
+                  annonces de l&apos;industrie peuvent évoluer.
+                </p>
+              )}
+            </aside>
+          )}
 
           <footer className="mt-14 border-t-[4px] border-ink pt-8">
             <p className="font-mono text-xs font-bold tracking-[0.25em] uppercase">Mots-clés</p>

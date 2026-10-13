@@ -67,7 +67,10 @@ export function createGithubBackend(token: string): AdminBackend {
 
   return {
     kind: "github",
-    publishNote: "La boutique en ligne sera à jour dans 2 à 3 minutes (publication automatique par GitHub).",
+    publishNote:
+      process.env.NEXT_PUBLIC_PAGES_AUTOPUBLISH === "1"
+        ? "La boutique en ligne sera à jour dans 2 à 3 minutes (publication automatique par GitHub)."
+        : "Enregistré sur GitHub. La publication automatique n'est pas encore activée : la boutique en ligne sera mise à jour à la prochaine publication du site.",
     listHref: "/admin/",
     editHref: (slug) => `/admin/produit/?slug=${slug}`,
     newHref: (from) => (from ? `/admin/produit/?depuis=${from}` : "/admin/produit/"),

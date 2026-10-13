@@ -54,8 +54,14 @@ export const articleSchema = z.object({
   popularity: z.number().int().nonnegative(),
   demo: z.boolean(),
   rating: z.number().min(0).max(10).optional(),
+  sources: z
+    .array(z.object({ name: z.string().min(2), url: z.string().regex(/^https:\/\/[^\s]+$/, "source : adresse https attendue") }))
+    .min(1)
+    .max(8)
+    .optional(),
+  verifiedAt: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "verifiedAt : date AAAA-MM-JJ").optional(),
   body: z.array(block).min(1),
-});
+}).refine((a) => !a.sources || a.verifiedAt, { message: "verifiedAt est obligatoire quand l'article cite des sources", path: ["verifiedAt"] });
 
 /** Valide une liste d'articles et vérifie les contraintes globales. */
 export function validateArticles(input: unknown[]): Article[] {

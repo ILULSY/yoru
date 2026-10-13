@@ -110,6 +110,10 @@ export interface Article {
   demo: boolean;
   /** Note sur 10 (critiques uniquement). */
   rating?: number;
+  /** Actualités réelles : sources consultées, affichées en fin d'article. */
+  sources?: { name: string; url: string }[];
+  /** Date de vérification des informations (AAAA-MM-JJ), obligatoire avec des sources. */
+  verifiedAt?: string;
   body: Block[];
 }
 

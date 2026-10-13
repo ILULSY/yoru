@@ -2,6 +2,7 @@ import type { Article } from "@/types/content";
 import { cinemaArticles } from "./cinema";
 import { seriesArticles } from "./series";
 import { animeArticles } from "./anime";
+import { animePressArticles } from "./anime-presse";
 import { mangaArticles } from "./manga";
 import { gamingArticles } from "./jeux-video";
 import { comicsArticles } from "./comics";
@@ -17,6 +18,7 @@ export const LOCAL_ARTICLES: Article[] = [
   ...cinemaArticles,
   ...seriesArticles,
   ...animeArticles,
+  ...animePressArticles,
   ...mangaArticles,
   ...gamingArticles,
   ...comicsArticles,
