@@ -6,13 +6,30 @@ import { loginAction, type LoginState } from "@/app/admin/actions";
 import { FieldError, inputClasses } from "@/components/ui/Field";
 import { buttonClasses } from "@/components/ui/Button";
 
-export function LoginForm({ suite }: { suite: string }) {
+export function LoginForm({ suite, withEmail }: { suite: string; withEmail: boolean }) {
   const [state, action, pending] = useActionState<LoginState, FormData>(loginAction, {});
   const [show, setShow] = useState(false);
 
   return (
     <form action={action} className="mt-6 space-y-5">
       <input type="hidden" name="suite" value={suite} />
+      {withEmail && (
+        <div>
+          <label htmlFor="admin-email" className="mb-1.5 block text-sm font-bold">
+            E-mail
+          </label>
+          <input
+            id="admin-email"
+            name="email"
+            type="email"
+            required
+            autoComplete="username"
+            autoFocus
+            aria-invalid={Boolean(state.error)}
+            className={`${inputClasses(Boolean(state.error))} h-12`}
+          />
+        </div>
+      )}
       <div>
         <label htmlFor="admin-password" className="mb-1.5 block text-sm font-bold">
           Mot de passe
@@ -24,7 +41,7 @@ export function LoginForm({ suite }: { suite: string }) {
             type={show ? "text" : "password"}
             required
             autoComplete="current-password"
-            autoFocus
+            autoFocus={!withEmail}
             aria-invalid={Boolean(state.error)}
             aria-describedby={state.error ? "admin-password-error" : undefined}
             className={`${inputClasses(Boolean(state.error))} h-12 pr-12`}

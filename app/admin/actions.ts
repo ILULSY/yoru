@@ -4,7 +4,7 @@ import { revalidatePath, updateTag } from "next/cache";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { closeSession, isAdmin, openSession, requireAdmin } from "@/lib/server/admin-auth";
-import { adminConfigured, passwordMatches } from "@/lib/server/admin-session";
+import { adminConfigured, adminEmailRequired, emailMatches, passwordMatches } from "@/lib/server/admin-session";
 import { clientIp, rateLimit } from "@/lib/server/rate-limit";
 import { draftToProduct, type ProductDraft } from "@/lib/shop/draft";
 import { issuesByField, productSchema, SLUG_RE } from "@/lib/shop/schema";
@@ -34,10 +34,14 @@ export async function loginAction(_prev: LoginState, formData: FormData): Promis
   }
 
   const password = formData.get("password");
-  if (typeof password !== "string" || !passwordMatches(password)) {
+  const email = String(formData.get("email") ?? "");
+  // Les deux vérifications sont toujours faites (même durée, quel que soit le champ erroné).
+  const okEmail = emailMatches(email);
+  const okPassword = typeof password === "string" && passwordMatches(password);
+  if (!okEmail || !okPassword) {
     // Ralentit les essais en série.
     await new Promise((r) => setTimeout(r, 600));
-    return { error: "Mot de passe incorrect." };
+    return { error: adminEmailRequired() ? "E-mail ou mot de passe incorrect." : "Mot de passe incorrect." };
   }
 
   await openSession();

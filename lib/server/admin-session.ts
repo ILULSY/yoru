@@ -67,3 +67,16 @@ export function passwordMatches(input: string): boolean {
   const b = createHash("sha256").update(expected).digest();
   return timingSafeEqual(a, b);
 }
+
+/** E-mail de connexion facultatif (ADMIN_EMAIL) : s'il est défini, il est demandé avec le mot de passe. */
+export function adminEmailRequired(): boolean {
+  return Boolean(process.env.ADMIN_EMAIL?.trim());
+}
+
+export function emailMatches(input: string): boolean {
+  const expected = process.env.ADMIN_EMAIL?.trim().toLowerCase();
+  if (!expected) return true;
+  const a = createHash("sha256").update(input.trim().toLowerCase()).digest();
+  const b = createHash("sha256").update(expected).digest();
+  return timingSafeEqual(a, b);
+}

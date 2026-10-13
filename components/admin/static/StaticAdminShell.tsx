@@ -4,9 +4,9 @@ import Link from "next/link";
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { ArrowUpRight, ExternalLink, KeyRound, LoaderCircle, Lock, Plus, RefreshCw, TriangleAlert } from "lucide-react";
 import type { Product } from "@/types/shop";
-import { checkAccess, latestPublication, readCatalog, REPO } from "@/lib/admin/github";
+import { checkAccess, fetchAccounts, latestPublication, readCatalog, REPO, saveAccount } from "@/lib/admin/github";
 import { createGithubBackend } from "@/lib/admin/github-backend";
-import { forgetVault, loadVault, openToken, saveVault, sealToken, sessionToken, setSessionToken } from "@/lib/admin/vault";
+import { openAccount, passwordProblem, sealAccount, sessionToken, setSessionToken, type AccountsFile } from "@/lib/admin/vault";
 import { validateCatalog } from "@/lib/shop/schema";
 import { StoreError } from "@/lib/shop/store/types";
 import { absoluteUrl } from "@/lib/site";
@@ -18,9 +18,9 @@ import { cn } from "@/lib/utils";
 
 /**
  * Espace édition de la version en ligne (GitHub Pages).
- * Le site étant statique, l'accès en écriture repose sur une clé GitHub
- * personnelle (limitée au dépôt), chiffrée dans ce navigateur avec votre mot de
- * passe. Sans cette clé, personne ne peut rien modifier.
+ * Connexion par e-mail et mot de passe : ils déchiffrent la clé GitHub
+ * personnelle (limitée au dépôt) rangée chiffrée dans le dépôt (lib/admin/vault.ts).
+ * Sans cette clé, personne ne peut rien modifier.
  */
 
 type CatalogState = { products: Product[]; problems: string[] };
@@ -59,25 +59,40 @@ function Centered({ children }: { children: React.ReactNode }) {
   );
 }
 
-/* ── Connexion : création du coffre (première fois) ou déverrouillage ── */
+/* ── Connexion par e-mail et mot de passe, ou création de l'accès (une seule fois) ── */
 
 function Gate({ onUnlock }: { onUnlock: (token: string) => void }) {
-  const [vault, setVault] = useState(loadVault);
+  // undefined : lecture en cours ; null : aucun accès créé pour l'instant.
+  const [accounts, setAccounts] = useState<AccountsFile | null | undefined>(undefined);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [mode, setMode] = useState<"login" | "setup">("login");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [key, setKey] = useState("");
   const [confirm, setConfirm] = useState("");
+  const [key, setKey] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
 
-  const unlock = async (e: React.FormEvent) => {
+  useEffect(() => {
+    fetchAccounts()
+      .then((file) => {
+        setAccounts(file);
+        if (!file?.comptes.length) setMode("setup");
+      })
+      .catch((e: unknown) => setLoadError(e instanceof StoreError ? e.message : "Impossible de lire les accès."));
+  }, []);
+
+  const login = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!vault) return;
+    if (!accounts) return;
     setPending(true);
     setError(null);
     try {
-      onUnlock(await openToken(vault, password));
+      onUnlock(await openAccount(accounts, email, password));
     } catch {
-      setError("Mot de passe incorrect.");
+      // Petite attente : ralentit les essais en série (le calcul PBKDF2 prend déjà du temps).
+      await new Promise((r) => setTimeout(r, 400));
+      setError("E-mail ou mot de passe incorrect.");
       setPending(false);
     }
   };
@@ -85,19 +100,31 @@ function Gate({ onUnlock }: { onUnlock: (token: string) => void }) {
   const setup = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-    if (password.length < 8) return setError("Mot de passe : 8 caractères minimum.");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) return setError("Adresse e-mail invalide.");
+    const weak = passwordProblem(password, email);
+    if (weak) return setError(weak);
     if (password !== confirm) return setError("Les deux mots de passe ne correspondent pas.");
     setPending(true);
     try {
-      const { login } = await checkAccess(key.trim());
-      const sealed = await sealToken(key.trim(), password, login);
-      saveVault(sealed);
-      onUnlock(key.trim());
+      const token = key.trim();
+      const { login: githubLogin } = await checkAccess(token);
+      await saveAccount(token, await sealAccount(token, email, password, githubLogin));
+      onUnlock(token);
     } catch (err) {
       setError(err instanceof StoreError ? err.message : "Cette clé n'a pas pu être vérifiée auprès de GitHub.");
       setPending(false);
     }
   };
+
+  const field = (id: string, label: string, input: React.ReactNode, hint?: string) => (
+    <div>
+      <label htmlFor={id} className="mb-1.5 block text-sm font-bold">
+        {label}
+      </label>
+      {input}
+      {hint && <p className="pt-1 text-sm text-muted">{hint}</p>}
+    </div>
+  );
 
   return (
     <Centered>
@@ -110,40 +137,50 @@ function Gate({ onUnlock }: { onUnlock: (token: string) => void }) {
       </a>
       <div className="border-[4px] border-ink bg-paper p-6 shadow-pop-lg sm:p-8">
         <h1 className="flex items-center gap-2 text-2xl font-extrabold">
-          <Lock className="size-6" aria-hidden /> {vault ? "Connexion" : "Première connexion"}
+          <Lock className="size-6" aria-hidden /> {mode === "login" ? "Connexion" : "Créer votre accès"}
         </h1>
 
-        {vault ? (
-          <form onSubmit={unlock} className="mt-6 space-y-5">
-            <p className="text-sm text-muted">Compte GitHub : {vault.login}</p>
-            <div>
-              <label htmlFor="pw" className="mb-1.5 block text-sm font-bold">
-                Mot de passe
-              </label>
-              <input id="pw" type="password" autoFocus required autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} className={cn(inputClasses(Boolean(error)), "h-12")} />
-              <FieldError id="pw-error" message={error ?? undefined} />
-            </div>
+        {loadError ? (
+          <p role="alert" className="mt-5 flex items-start gap-2 border-[3px] border-ink bg-pink p-3 text-sm font-semibold">
+            <TriangleAlert className="mt-0.5 size-4 shrink-0" aria-hidden /> {loadError}
+          </p>
+        ) : accounts === undefined ? (
+          <p className="mt-5 flex items-center gap-2 text-sm font-semibold">
+            <LoaderCircle className="size-4 animate-spin" aria-hidden /> Chargement…
+          </p>
+        ) : mode === "login" ? (
+          <form onSubmit={login} className="mt-6 space-y-5">
+            {field(
+              "email",
+              "E-mail",
+              <input id="email" type="email" autoFocus required autoComplete="username" value={email} onChange={(e) => setEmail(e.target.value)} className={cn(inputClasses(Boolean(error)), "h-12")} />,
+            )}
+            {field(
+              "pw",
+              "Mot de passe",
+              <input id="pw" type="password" required autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} className={cn(inputClasses(Boolean(error)), "h-12")} />,
+            )}
+            <FieldError id="login-error" message={error ?? undefined} />
             <button type="submit" disabled={pending} className={buttonClasses("ink", "md", "w-full")}>
-              {pending && <LoaderCircle className="size-5 animate-spin" aria-hidden />} {pending ? "Ouverture…" : "Se connecter"}
+              {pending && <LoaderCircle className="size-5 animate-spin" aria-hidden />} {pending ? "Connexion…" : "Se connecter"}
             </button>
             <button
               type="button"
               onClick={() => {
-                forgetVault();
-                setVault(null);
-                setPassword("");
+                setMode("setup");
+                setError(null);
               }}
               className="w-full text-center text-sm font-semibold underline"
             >
-              Mot de passe oublié ? Utiliser une nouvelle clé GitHub
+              Mot de passe oublié ou nouvel accès ? (clé GitHub nécessaire)
             </button>
           </form>
         ) : (
           <form onSubmit={setup} className="mt-6 space-y-5">
             <div className="space-y-2 text-sm leading-relaxed">
               <p>
-                Le site en ligne n&apos;a pas de serveur : vos modifications sont enregistrées directement dans le dépôt GitHub{" "}
-                <strong>{REPO}</strong>. Il faut pour cela une <strong>clé GitHub</strong>, à créer une seule fois :
+                Le site en ligne n&apos;a pas de serveur : vos modifications sont enregistrées dans le dépôt GitHub <strong>{REPO}</strong>.
+                Pour créer votre accès, il faut <strong>une seule fois</strong> une clé GitHub :
               </p>
               <ol className="list-decimal space-y-1 pl-5">
                 <li>
@@ -158,31 +195,34 @@ function Gate({ onUnlock }: { onUnlock: (token: string) => void }) {
                   Accès : <em>Only select repositories</em> → <strong>{REPO.split("/")[1] ?? "le dépôt"}</strong>.
                 </li>
                 <li>
-                  Permissions : <strong>Contents</strong> → <em>Read and write</em> (et, si vous voulez suivre les publications,{" "}
-                  <strong>Actions</strong> → <em>Read-only</em>).
+                  Permissions : <strong>Contents</strong> → <em>Read and write</em> (et <strong>Actions</strong> → <em>Read-only</em> pour suivre
+                  les publications).
                 </li>
-                <li>Générez la clé et collez-la ci-dessous.</li>
+                <li>Générez la clé et collez-la ci-dessous, avec l&apos;e-mail et le mot de passe que vous utiliserez ensuite.</li>
               </ol>
             </div>
-            <div>
-              <label htmlFor="key" className="mb-1.5 block text-sm font-bold">
-                Clé GitHub
-              </label>
-              <input id="key" type="password" required autoComplete="off" spellCheck={false} value={key} onChange={(e) => setKey(e.target.value)} placeholder="github_pat_…" className={cn(inputClasses(), "h-12 font-mono text-sm")} />
-            </div>
-            <div>
-              <label htmlFor="pw-new" className="mb-1.5 block text-sm font-bold">
-                Choisissez un mot de passe
-              </label>
-              <input id="pw-new" type="password" required minLength={8} autoComplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} className={cn(inputClasses(), "h-12")} />
-              <p className="pt-1 text-sm text-muted">8 caractères minimum. Il chiffre la clé dans ce navigateur : vous ne taperez plus que lui.</p>
-            </div>
-            <div>
-              <label htmlFor="pw-confirm" className="mb-1.5 block text-sm font-bold">
-                Confirmez le mot de passe
-              </label>
-              <input id="pw-confirm" type="password" required autoComplete="new-password" value={confirm} onChange={(e) => setConfirm(e.target.value)} className={cn(inputClasses(), "h-12")} />
-            </div>
+            {field(
+              "key",
+              "Clé GitHub",
+              <input id="key" type="password" required autoComplete="off" spellCheck={false} value={key} onChange={(e) => setKey(e.target.value)} placeholder="github_pat_…" className={cn(inputClasses(), "h-12 font-mono text-sm")} />,
+            )}
+            {field(
+              "email-new",
+              "Votre e-mail",
+              <input id="email-new" type="email" required autoComplete="username" value={email} onChange={(e) => setEmail(e.target.value)} className={cn(inputClasses(), "h-12")} />,
+              "Sert d'identifiant ; il n'est ni publié ni envoyé à personne (seule une empreinte est enregistrée).",
+            )}
+            {field(
+              "pw-new",
+              "Choisissez un mot de passe",
+              <input id="pw-new" type="password" required minLength={12} autoComplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} className={cn(inputClasses(), "h-12")} />,
+              "12 caractères minimum, avec au moins trois types de caractères (ou 16 caractères et plus).",
+            )}
+            {field(
+              "pw-confirm",
+              "Confirmez le mot de passe",
+              <input id="pw-confirm" type="password" required autoComplete="new-password" value={confirm} onChange={(e) => setConfirm(e.target.value)} className={cn(inputClasses(), "h-12")} />,
+            )}
             {error && (
               <p role="alert" className="flex items-start gap-2 border-[3px] border-ink bg-pink p-3 text-sm font-semibold">
                 <TriangleAlert className="mt-0.5 size-4 shrink-0" aria-hidden /> {error}
@@ -190,11 +230,17 @@ function Gate({ onUnlock }: { onUnlock: (token: string) => void }) {
             )}
             <button type="submit" disabled={pending} className={buttonClasses("ink", "md", "w-full")}>
               {pending ? <LoaderCircle className="size-5 animate-spin" aria-hidden /> : <KeyRound className="size-5" aria-hidden />}
-              {pending ? "Vérification auprès de GitHub…" : "Enregistrer la clé et entrer"}
+              {pending ? "Vérification auprès de GitHub…" : "Créer mon accès"}
             </button>
+            {accounts?.comptes.length ? (
+              <button type="button" onClick={() => setMode("login")} className="w-full text-center text-sm font-semibold underline">
+                J&apos;ai déjà un accès : me connecter
+              </button>
+            ) : null}
             <p className="text-xs text-muted">
-              La clé n&apos;est envoyée qu&apos;à GitHub et reste chiffrée sur cet appareil. Ne la partagez avec personne ; vous pouvez la
-              révoquer à tout moment dans les réglages de GitHub.
+              La clé est chiffrée avec votre mot de passe puis rangée dans le dépôt : elle n&apos;est lisible qu&apos;avec votre e-mail et votre
+              mot de passe. Choisissez un mot de passe que vous n&apos;utilisez nulle part ailleurs. Vous pouvez révoquer la clé à tout
+              moment dans les réglages de GitHub.
             </p>
           </form>
         )}

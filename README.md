@@ -263,6 +263,7 @@ Copiez `.env.example` en `.env.local`. Toutes sont facultatives.
 | `STRIPE_SECRET_KEY`                              | Active le paiement (Stripe Checkout)                      |
 | `STRIPE_WEBHOOK_SECRET`                          | Vérifie les webhooks Stripe (`/api/stripe/webhook`)       |
 | `ADMIN_PASSWORD`, `ADMIN_SESSION_SECRET`         | Ouvre l'espace édition `/admin` (voir §6)                 |
+| `ADMIN_EMAIL`                                    | E-mail demandé avec le mot de passe (facultatif)          |
 | `ADMIN_HOST`                                     | Adresse dédiée facultative de l'espace édition             |
 | `PRODUCTS_SOURCE`                                | Catalogue : `file` (défaut) ou `supabase`                 |
 | `SUPABASE_SERVICE_ROLE_KEY`, `SUPABASE_PRODUCTS_BUCKET` | Requis si `PRODUCTS_SOURCE=supabase` (serveur uniquement) |
@@ -319,14 +320,16 @@ envoyée au navigateur.
 - Le fil d'actualités et le taux de change sont ceux du moment de la publication. Pour une mise à jour automatique (à
   chaque envoi et toutes les 3 heures), activez le modèle `deploy/github-pages/workflow.yml` (instructions en tête du
   fichier) : GitHub demande pour cela une autorisation supplémentaire (« workflow »).
-- **Espace édition en ligne** : https://ilulsy.github.io/yoru/admin/ (mêmes écrans que la version complète). Le site étant
-  statique, chaque enregistrement est un commit dans le dépôt (`data/shop/catalog.json`, photos dans
-  `data/shop/uploads/`), fait depuis le navigateur avec une **clé GitHub personnelle** limitée au dépôt (permission
-  *Contents : Read and write*, et *Actions : Read-only* pour suivre les publications). À la première connexion, la clé est
-  vérifiée puis chiffrée dans le navigateur avec un mot de passe (PBKDF2 + AES-GCM, `lib/admin/vault.ts`) : ensuite, seul
-  le mot de passe est demandé. La vraie protection est la clé : sans elle, personne ne peut écrire dans le dépôt. Photos
-  préparées dans le navigateur (`lib/admin/image-client.ts`). Code : `lib/admin/github-backend.ts`,
-  `components/admin/static/`. Le site public est reconstruit par GitHub Actions après chaque enregistrement.
+- **Espace édition en ligne** : https://ilulsy.github.io/yoru/admin/ (mêmes écrans que la version complète), avec
+  **e-mail et mot de passe**. Le site étant statique, chaque enregistrement est un commit dans le dépôt
+  (`data/shop/catalog.json`, photos dans `data/shop/uploads/`), fait depuis le navigateur avec une **clé GitHub
+  personnelle** limitée au dépôt (*Contents : Read and write*, et *Actions : Read-only* pour suivre les publications).
+  Cette clé est saisie une seule fois (« Créer votre accès ») : elle est chiffrée avec le mot de passe (PBKDF2-SHA256
+  600 000 itérations + AES-GCM) et rangée dans `public/espace-edition.json`, avec seulement l'empreinte de l'e-mail. On
+  se connecte ensuite depuis n'importe quel appareil avec l'e-mail et le mot de passe (`lib/admin/vault.ts`). Ce fichier
+  étant public, le mot de passe doit être solide (12 caractères minimum, trois types de caractères ou 16 caractères) :
+  en cas de doute, révoquez la clé dans GitHub et recréez l'accès. Photos préparées dans le navigateur
+  (`lib/admin/image-client.ts`). Code : `lib/admin/github-backend.ts`, `components/admin/static/`.
 - Espace édition **en local** (`npm run dev` puis `/admin`) : toujours disponible ; ses modifications partent en ligne avec
   un envoi sur GitHub.
 - Un nom de domaine peut être branché dans Settings → Pages (pensez alors à adapter `PAGES_BASE_PATH`).

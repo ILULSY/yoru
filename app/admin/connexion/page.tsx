@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Lock, TriangleAlert } from "lucide-react";
 import { LogoMark } from "@/components/ui/Logo";
 import { absoluteUrl } from "@/lib/site";
-import { adminSetupProblems } from "@/lib/server/admin-session";
+import { adminEmailRequired, adminSetupProblems } from "@/lib/server/admin-session";
 import { LoginForm } from "@/components/admin/LoginForm";
 
 export const metadata: Metadata = { title: "Connexion" };
@@ -47,7 +47,7 @@ export default async function AdminLoginPage({ searchParams }: Props) {
               </p>
             </div>
           ) : (
-            <LoginForm suite={typeof suite === "string" ? suite : ""} />
+            <LoginForm suite={typeof suite === "string" ? suite : ""} withEmail={adminEmailRequired()} />
           )}
         </div>
 

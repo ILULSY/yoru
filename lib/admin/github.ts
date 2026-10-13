@@ -1,4 +1,6 @@
 import { StoreError } from "@/lib/shop/store/types";
+import { ACCOUNTS_PATH, type AccountsFile, type SealedAccount } from "@/lib/admin/vault";
+import { withBase } from "@/lib/static-site";
 
 /**
  * Accès au dépôt GitHub depuis le navigateur (espace édition de la version en
@@ -100,4 +102,54 @@ export async function latestPublication(token: string): Promise<{ status: string
   } catch {
     return null;
   }
+}
+
+/* ── Fichier des accès (e-mail + mot de passe), public mais chiffré : voir lib/admin/vault.ts ── */
+
+/** Lit les accès sans clé (dépôt public) ; null si aucun accès n'a encore été créé. */
+export async function fetchAccounts(): Promise<AccountsFile | null> {
+  let res: Response;
+  try {
+    res = await fetch(`${API}/repos/${REPO}/contents/${path(ACCOUNTS_PATH)}?ref=${encodeURIComponent(BRANCH)}`, {
+      cache: "no-store",
+      headers: { Accept: "application/vnd.github+json" },
+    });
+  } catch {
+    throw new StoreError("GitHub ne répond pas : vérifiez votre connexion internet.", "unavailable");
+  }
+  if (res.status === 404) return null;
+  if (res.ok) {
+    const file = (await res.json()) as { content: string };
+    return JSON.parse(new TextDecoder().decode(fromBase64(file.content))) as AccountsFile;
+  }
+  // Limite d'appels anonymes atteinte : copie publiée avec le site.
+  const copy = await fetch(withBase("/espace-edition.json"), { cache: "no-store" }).catch(() => null);
+  if (copy?.ok) return (await copy.json()) as AccountsFile;
+  throw new StoreError("Impossible de lire les accès pour le moment. Réessayez dans quelques minutes.", "unavailable");
+}
+
+/** Ajoute ou remplace l'accès d'un e-mail (commit dans le dépôt, avec la clé GitHub). */
+export async function saveAccount(token: string, account: SealedAccount) {
+  let file: AccountsFile = { v: 1, comptes: [] };
+  let sha: string | undefined;
+  try {
+    const res = await gh(token, `/repos/${REPO}/contents/${path(ACCOUNTS_PATH)}?ref=${encodeURIComponent(BRANCH)}`);
+    const current = (await res.json()) as { content: string; sha: string };
+    file = JSON.parse(new TextDecoder().decode(fromBase64(current.content))) as AccountsFile;
+    sha = current.sha;
+  } catch (e) {
+    // Fichier absent (premier accès) : GitHub répond 404, traduit en « readonly » par gh().
+    if (!(e instanceof StoreError && e.code === "readonly")) throw e;
+  }
+  file.comptes = [...file.comptes.filter((c) => c.id !== account.id), account];
+  const content = new TextEncoder().encode(JSON.stringify(file, null, 2) + "\n");
+  await gh(token, `/repos/${REPO}/contents/${path(ACCOUNTS_PATH)}`, {
+    method: "PUT",
+    body: JSON.stringify({
+      message: "Espace édition : accès ajouté ou modifié",
+      content: toBase64(content),
+      ...(sha ? { sha } : {}),
+      branch: BRANCH,
+    }),
+  });
 }
