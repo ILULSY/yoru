@@ -1,0 +1,9 @@
+:HL["/yoru/_next/static/chunks/36djsyq-o80a6.css","style"]
+:HL["/yoru/_next/static/chunks/38hzjc852f6x4.css","style"]
+:HL["/yoru/_next/static/media/017d9bea37084d9b-s.p.41rroleoq1br7.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/yoru/_next/static/media/26daee0352f50a5f-s.p.2e115y8-hourl.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/yoru/_next/static/media/9e9f04e3c37952ab-s.p.0pan85mumqyf3.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/yoru/_next/static/media/c52371ad357d63ab-s.p.1-9t2a8-y9qr7.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/yoru/_next/static/media/d622c970823c5a32-s.p.12zymgsojk14i.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/yoru/_next/static/media/daf789e4474d0d90-s.p.07wt1b-68kohk.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+0:{"tree":{"name":"","param":null,"prefetchHints":4112,"slots":{"children":{"name":"articles","param":null,"prefetchHints":4160,"slots":{"children":{"name":"slug","param":{"type":"d","key":"figurines-contrefaites-signaux-d-alerte","siblings":[]},"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}}}},"staleTime":300,"buildId":"BRjQVvLW11g-W0oqulY0t"}

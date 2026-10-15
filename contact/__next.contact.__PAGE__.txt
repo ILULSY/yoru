@@ -1,0 +1,47 @@
+1:"$Sreact.fragment"
+2:I[54350,["/yoru/_next/static/chunks/3sqv61fzmrat5.js","/yoru/_next/static/chunks/2js_fq38b49wl.js","/yoru/_next/static/chunks/3roih2fpfypd6.js","/yoru/_next/static/chunks/3onoynxproxu3.js","/yoru/_next/static/chunks/0-pl08lxvi1bn.js","/yoru/_next/static/chunks/39hzsxzmiil3c.js","/yoru/_next/static/chunks/2fg_cs2z0qw7y.js","/yoru/_next/static/chunks/1mu58-vg7nojd.js"],"Reveal"]
+3:I[67687,["/yoru/_next/static/chunks/3sqv61fzmrat5.js","/yoru/_next/static/chunks/2js_fq38b49wl.js","/yoru/_next/static/chunks/3roih2fpfypd6.js","/yoru/_next/static/chunks/3onoynxproxu3.js","/yoru/_next/static/chunks/0-pl08lxvi1bn.js","/yoru/_next/static/chunks/39hzsxzmiil3c.js","/yoru/_next/static/chunks/2fg_cs2z0qw7y.js","/yoru/_next/static/chunks/1mu58-vg7nojd.js"],"ContactForm"]
+4:I[22016,["/yoru/_next/static/chunks/3sqv61fzmrat5.js","/yoru/_next/static/chunks/2js_fq38b49wl.js","/yoru/_next/static/chunks/3roih2fpfypd6.js","/yoru/_next/static/chunks/3onoynxproxu3.js","/yoru/_next/static/chunks/0-pl08lxvi1bn.js","/yoru/_next/static/chunks/39hzsxzmiil3c.js","/yoru/_next/static/chunks/2fg_cs2z0qw7y.js","/yoru/_next/static/chunks/1mu58-vg7nojd.js"],""]
+5:I[97367,["/yoru/_next/static/chunks/0h2qsuyze9ds1.js"],"OutletBoundary"]
+6:"$Sreact.suspense"
+a:I[97367,["/yoru/_next/static/chunks/0h2qsuyze9ds1.js"],"ViewportBoundary"]
+b:I[97367,["/yoru/_next/static/chunks/0h2qsuyze9ds1.js"],"MetadataBoundary"]
+9:X
+26:X
+26:C
+0:{"buildId":"BRjQVvLW11g-W0oqulY0t","data":[{"rsc":["$","$1","c",{"children":[[["$","header",null,{"className":"relative isolate overflow-hidden border-b-[4px] border-ink bg-yellow text-ink","children":[["$","div",null,{"aria-hidden":true,"className":"pointer-events-none absolute inset-0 -z-10","children":["$","div",null,{"className":"halftone halftone-fade absolute -top-10 -right-10 size-[26rem] opacity-60 [--dot-gap:13px] [--fade-dir:225deg]","style":{"color":"var(--color-pink)"}}]}],["$","div",null,{"className":"mx-auto max-w-[88rem] px-4 pt-14 pb-12 sm:px-6 lg:px-8 lg:pt-20","children":[["$","p",null,{"className":"rise-in font-mono text-xs font-bold tracking-[0.3em] uppercase","children":"§ Écrire à la rédaction"}],["$","h1",null,{"className":"display mt-4 text-[clamp(3.2rem,11vw,9rem)]","children":[["$","$1","0",{"children":[["$","span",null,{"className":"word-mask","children":["$","span",null,{"className":"word-rise","style":{"--i":0},"children":"Contact"}]}],false]}]]}],["$","p",null,{"className":"rise-in mt-6 max-w-2xl text-lg leading-relaxed sm:text-xl","style":{"--d":"0.25s"},"children":"Une suggestion de sujet, une erreur à corriger, une proposition de partenariat ? Écrivez-nous."}],"$undefined"]}]]}],["$","section",null,{"className":"mx-auto grid max-w-[88rem] gap-12 px-4 pt-14 pb-24 sm:px-6 lg:grid-cols-[1fr_22rem] lg:px-8","children":[["$","$L2",null,{"className":"border-[4px] border-ink bg-paper p-6 shadow-pop-lg sm:p-10","children":[["$","p",null,{"className":"mb-6 border-[3px] border-dashed border-ink bg-paper-2 p-4 text-sm leading-relaxed","children":[["$","strong",null,{"children":"Information :"}]," l'envoi des messages n'est pas encore configuré sur ce site. Le formulaire fonctionne (validation comprise) mais vous indiquera honnêtement que le message n'a pas pu être transmis."]}],["$","$L3",null,{}]]}],["$","$L2",null,{"delay":0.1,"className":"space-y-6","children":[["$","div",null,{"className":"border-[3px] border-ink bg-cyan p-6","children":[["$","h2",null,{"className":"text-xl font-extrabold","children":"Signaler une erreur"}],["$","p",null,{"className":"mt-2 leading-relaxed","children":"Indiquez l'adresse de l'article et la correction proposée : nous mettons à jour les contenus et précisons la date de modification."}]]}],["$","div",null,{"className":"border-[3px] border-ink bg-pink p-6","children":[["$","h2",null,{"className":"text-xl font-extrabold","children":"Ayants droit"}],["$","p",null,{"className":"mt-2 leading-relaxed","children":["Pour toute question sur une image ou un contenu, choisissez « Autre demande ». Notre politique est détaillée dans la page"," ",["$","$L4",null,{"href":"/a-propos#images","className":"font-bold underline","children":"À propos"}],"."]}]]}],["$","div",null,{"className":"border-[3px] border-ink bg-paper-2 p-6 text-sm leading-relaxed","children":["Vos données servent uniquement à vous répondre et ne sont ni revendues ni utilisées à des fins publicitaires."," ",["$","$L4",null,{"href":"/confidentialite","className":"font-bold underline","children":"En savoir plus"}],"."]}]]}]]}]],[["$","script","script-0",{"src":"/yoru/_next/static/chunks/2fg_cs2z0qw7y.js","async":true}],["$","script","script-1",{"src":"/yoru/_next/static/chunks/1mu58-vg7nojd.js","async":true}]],["$","$L5",null,{"children":["$","$6",null,{"name":"Next.MetadataOutlet","children":"$@7"}]}]]}],"isPartial":"$@8","staleTime":"$9","varyParams":null},{"rsc":["$","$1","h",{"children":[null,["$","$La",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}],["$","meta","2",{"name":"theme-color","content":"#111114"}]]}],["$","div",null,{"hidden":true,"children":["$","$Lb",null,{"children":["$","$6",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Contact · YORU"}],["$","meta","1",{"name":"description","content":"Écrire à la rédaction de YORU : suggestion, correction, partenariat ou toute autre demande."}],["$","meta","2",{"name":"application-name","content":"YORU"}],["$","link","3",{"rel":"manifest","href":"/yoru/manifest.webmanifest"}],["$","meta","4",{"name":"robots","content":"index, follow"}],["$","link","5",{"rel":"canonical","href":"https://ilulsy.github.io/yoru/contact/"}],"$Lc","$Ld","$Le","$Lf","$L10","$L11","$L12","$L13","$L14","$L15","$L16","$L17","$L18","$L19","$L1a","$L1b","$L1c","$L1d","$L1e","$L1f","$L20","$L21"]}]}]}],"$L22"]}],"isPartial":"$@23","staleTime":"$9","varyParams":null},{"rsc":"$L24","isPartial":"$@25","staleTime":"$9","varyParams":"$26"}],"isUpgradeableISRFallback":false,"a":"$@27","rootVaryParams":null,"needsRuntimeRequest":"$@28"}
+29:I[27201,["/yoru/_next/static/chunks/0h2qsuyze9ds1.js"],"IconMark"]
+2a:I[39756,["/yoru/_next/static/chunks/0h2qsuyze9ds1.js"],"default"]
+2b:I[37457,["/yoru/_next/static/chunks/0h2qsuyze9ds1.js"],"default"]
+7:null
+c:["$","meta","6",{"name":"format-detection","content":"telephone=no"}]
+d:["$","meta","7",{"property":"og:title","content":"YORU — Collect the night."}]
+e:["$","meta","8",{"property":"og:description","content":"YORU, le média pop culture : cinéma, séries, anime, manga, jeux vidéo, comics, science-fiction, cartes à collectionner, figurines et culture geek."}]
+f:["$","meta","9",{"property":"og:url","content":"https://ilulsy.github.io/yoru/"}]
+10:["$","meta","10",{"property":"og:site_name","content":"YORU"}]
+11:["$","meta","11",{"property":"og:locale","content":"fr_FR"}]
+12:["$","meta","12",{"property":"og:image","content":"https://ilulsy.github.io/yoru/opengraph-image?7851f3d519614384"}]
+13:["$","meta","13",{"property":"og:image:type","content":"image/png"}]
+14:["$","meta","14",{"property":"og:image:width","content":"1200"}]
+15:["$","meta","15",{"property":"og:image:height","content":"630"}]
+16:["$","meta","16",{"property":"og:image:alt","content":"YORU — Collect the night."}]
+17:["$","meta","17",{"property":"og:type","content":"website"}]
+18:["$","meta","18",{"name":"twitter:card","content":"summary_large_image"}]
+19:["$","meta","19",{"name":"twitter:title","content":"YORU — Collect the night."}]
+1a:["$","meta","20",{"name":"twitter:description","content":"YORU, le média pop culture : cinéma, séries, anime, manga, jeux vidéo, comics, science-fiction, cartes à collectionner, figurines et culture geek."}]
+1b:["$","meta","21",{"name":"twitter:image","content":"https://ilulsy.github.io/yoru/opengraph-image?7851f3d519614384"}]
+1c:["$","meta","22",{"name":"twitter:image:alt","content":"YORU — Collect the night."}]
+1d:["$","meta","23",{"name":"twitter:image:type","content":"image/png"}]
+1e:["$","meta","24",{"name":"twitter:image:width","content":"1200"}]
+1f:["$","meta","25",{"name":"twitter:image:height","content":"630"}]
+20:["$","link","26",{"rel":"icon","href":"/yoru/icon.svg?icon.15_5c9dj70w13.svg","sizes":"any","type":"image/svg+xml"}]
+21:["$","$L29","27",{}]
+22:["$","meta",null,{"name":"next-size-adjust","content":""}]
+24:["$","$1","c",{"children":[null,["$","$L2a",null,{"parallelRouterKey":"children","template":["$","$L2b",null,{}]}]]}]
+28:true
+9:300
+9:C
+27:0
+23:"$undefined"
+25:"$undefined"
+8:"$undefined"

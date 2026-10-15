@@ -1,0 +1,9 @@
+User-Agent: *
+Allow: /
+Disallow: /api/
+Disallow: /recherche
+Disallow: /favoris
+Disallow: /panier
+Disallow: /boutique/merci
+
+Sitemap: https://ilulsy.github.io/yoru/sitemap.xml
