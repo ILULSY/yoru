@@ -96,7 +96,7 @@ export const LOGOS: Record<string, LogoAsset> = {
   },
   "one-piece": {
     src: "/images/logos/one-piece.png",
-    source: "https://commons.wikimedia.org/wiki/File:One_piece_logo.svg",
+    source: "https://commons.wikimedia.org/wiki/File:One_piece_logo_1.svg",
     license: "Wikimedia Commons : domaine public (droit d'auteur), marque déposée",
   },
   "pokemon": {
