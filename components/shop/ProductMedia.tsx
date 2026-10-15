@@ -17,7 +17,7 @@ export function ProductMedia({
   className,
   compact,
 }: {
-  product: Pick<Product, "slug" | "visual" | "license" | "character" | "name" | "image">;
+  product: Pick<Product, "slug" | "visual" | "license" | "character" | "name" | "image" | "brand">;
   sizes?: string;
   priority?: boolean;
   idSuffix?: string;

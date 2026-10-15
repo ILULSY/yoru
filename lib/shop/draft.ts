@@ -14,6 +14,8 @@ export interface ProductDraft {
   type: string;
   /** "" = sans licence (marque YORU, accessoires). */
   license: string;
+  /** "" = marque non précisée. */
+  brand: string;
   character: string;
   price: string;
   currency: Currency;
@@ -52,6 +54,7 @@ export function emptyDraft(): ProductDraft {
     category: "cartes",
     type: "",
     license: "",
+    brand: "",
     character: "",
     price: "",
     currency: "CHF",
@@ -87,6 +90,7 @@ export function productToDraft(p: Product): ProductDraft {
     category: p.category,
     type: p.type,
     license: p.license ?? "",
+    brand: p.brand ?? "",
     character: p.character ?? "",
     price: money(p.price),
     currency: p.currency ?? "EUR",
@@ -143,6 +147,7 @@ export function draftToProduct(d: ProductDraft, updatedAt: string): Product {
     category: d.category,
     type: d.type.trim(),
     license: d.license || null,
+    brand: d.brand || undefined,
     character: opt(d.character),
     price: parseMoney(d.price),
     currency: d.currency,

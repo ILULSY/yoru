@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Truck } from "lucide-react";
 import { CATEGORY_INFO } from "@/data/shop/licenses";
+import { brandOf } from "@/data/shop/brands";
 import { getLicense, getProduct, getProducts, pricingNow, relatedProducts } from "@/lib/shop/catalog";
 import { availabilityLabel } from "@/lib/shop/format";
 import { formatMoney } from "@/lib/shop/currency";
@@ -47,6 +48,7 @@ export default async function ProductPage({ params }: Props) {
   const product = await getProduct(slug);
   if (!product) notFound();
   const lic = getLicense(product.license);
+  const maker = brandOf(product.brand);
   const category = CATEGORY_INFO[product.category];
   const related = await relatedProducts(product, 4);
   const pricing = pricingNow(product);
@@ -60,7 +62,7 @@ export default async function ProductPage({ params }: Props) {
         name: product.name,
         description: product.description,
         sku: product.slug,
-        brand: { "@type": "Brand", name: lic.name },
+        brand: { "@type": "Brand", name: maker?.name ?? lic.name },
         offers: {
           "@type": "Offer",
           url: absoluteUrl(`/boutique/produit/${product.slug}`),
@@ -130,6 +132,15 @@ export default async function ProductPage({ params }: Props) {
                   {lic.name}
                 </Link>
               )}
+              {maker && (
+                <Link
+                  href={`/boutique/marque/${maker.slug}`}
+                  className="border-2 border-ink px-2 py-0.5 font-mono text-[11px] font-bold tracking-widest uppercase transition-transform hover:rotate-3"
+                  style={{ background: maker.color, color: maker.ink }}
+                >
+                  {maker.name}
+                </Link>
+              )}
               <span className="border-2 border-ink bg-paper px-2 py-0.5 font-mono text-[11px] font-bold tracking-widest uppercase">
                 {product.type}
               </span>
@@ -170,7 +181,7 @@ export default async function ProductPage({ params }: Props) {
               <Reveal className="mt-10">
                 <h2 className="font-mono text-xs font-bold tracking-[0.3em] uppercase">Caractéristiques</h2>
                 <dl className="mt-3 divide-y-2 divide-ink/10 border-y-[3px] border-ink">
-                  {[["Licence", lic.name] as [string, string], ["Catégorie", category.name] as [string, string], ...product.details].map(([k, v]) => (
+                  {[["Licence", lic.name] as [string, string], ...(maker ? [["Marque", maker.name] as [string, string]] : []), ["Catégorie", category.name] as [string, string], ...product.details].map(([k, v]) => (
                     <div key={k} className="grid grid-cols-[9rem_1fr] gap-4 py-2.5 text-sm sm:grid-cols-[12rem_1fr]">
                       <dt className="font-bold">{k}</dt>
                       <dd>{v}</dd>

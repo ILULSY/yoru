@@ -6,6 +6,7 @@ import { useMemo, useState, useTransition } from "react";
 import { RotateCcw, Search, SlidersHorizontal, X } from "lucide-react";
 import { PRODUCT_CATEGORIES, type Product, type ProductCategory } from "@/types/shop";
 import { CATEGORY_INFO, LICENSES } from "@/data/shop/licenses";
+import { BRAND_MAP, BRANDS } from "@/data/shop/brands";
 import { ProductCard } from "@/components/shop/ProductCard";
 import { Burst } from "@/components/ui/Decor";
 import { formatMoney, priceIn } from "@/lib/shop/currency";
@@ -37,10 +38,12 @@ export function ShopExplorer({
   products,
   lockedCategory,
   lockedLicense,
+  lockedBrand,
 }: {
   products: Product[];
   lockedCategory?: ProductCategory;
   lockedLicense?: string;
+  lockedBrand?: string;
 }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -52,6 +55,8 @@ export function ShopExplorer({
   const category = lockedCategory ?? (PRODUCT_CATEGORIES as readonly string[]).find((c) => c === params.get("categorie")) ?? "all";
   const licenseParam = params.get("licence");
   const license = lockedLicense ?? (licenseParam && LICENSES.some((l) => l.slug === licenseParam) ? licenseParam : "all");
+  const brandParam = params.get("marque");
+  const brand = lockedBrand ?? (brandParam && brandParam in BRAND_MAP ? brandParam : "all");
   const sort: Sort = (Object.keys(SORTS) as Sort[]).find((s) => s === params.get("tri")) ?? "populaire";
   const avail: Avail = (Object.keys(AVAIL) as Avail[]).find((a) => a === params.get("dispo")) ?? "tout";
   const currency = useCurrency();
@@ -81,13 +86,14 @@ export function ShopExplorer({
     const list = products.filter((p) => {
       if (category !== "all" && p.category !== category) return false;
       if (license !== "all" && p.license !== license) return false;
+      if (brand !== "all" && p.brand !== brand) return false;
       if (avail === "stock" && p.availability !== "in_stock") return false;
       if (avail === "precommande" && p.availability !== "preorder") return false;
       if (avail === "soldes" && !onSale(p)) return false;
       if (priceOf(p) > budget) return false;
       if (tokens.length) {
         const lic = LICENSES.find((l) => l.slug === p.license);
-        const hay = normalize(`${p.name} ${p.type} ${p.tags.join(" ")} ${lic?.name ?? ""} ${p.character ?? ""}`);
+        const hay = normalize(`${p.name} ${p.type} ${p.tags.join(" ")} ${lic?.name ?? ""} ${BRAND_MAP[p.brand ?? ""]?.name ?? ""} ${p.character ?? ""}`);
         return tokens.every((t) => hay.includes(t));
       }
       return true;
@@ -100,22 +106,23 @@ export function ShopExplorer({
     // Les ruptures passent en fin de liste.
     return sorted.sort((a, b) => Number(a.availability === "out_of_stock") - Number(b.availability === "out_of_stock"));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [products, category, license, avail, budget, sort, urlQuery, currency, rates, now]);
+  }, [products, category, license, brand, avail, budget, sort, urlQuery, currency, rates, now]);
 
   const counts = useMemo(() => {
     const c: Record<string, number> = {};
     for (const p of products) {
       c[p.category] = (c[p.category] ?? 0) + 1;
       if (p.license) c[p.license] = (c[p.license] ?? 0) + 1;
+      if (p.brand) c[`marque:${p.brand}`] = (c[`marque:${p.brand}`] ?? 0) + 1;
     }
     return c;
   }, [products]);
 
   const shown = filtered.slice(0, visible);
-  const hasFilters = (!lockedCategory && category !== "all") || (!lockedLicense && license !== "all") || avail !== "tout" || budget < maxAll || urlQuery;
+  const hasFilters = (!lockedCategory && category !== "all") || (!lockedLicense && license !== "all") || (!lockedBrand && brand !== "all") || avail !== "tout" || budget < maxAll || urlQuery;
   const reset = () => {
     setQuery("");
-    update({ categorie: null, licence: null, dispo: null, budget: null, q: null });
+    update({ categorie: null, licence: null, marque: null, dispo: null, budget: null, q: null });
   };
 
   const chip = "relative isolate inline-flex h-10 items-center gap-1.5 border-2 border-ink px-3 text-sm font-bold transition-transform duration-200 ease-[var(--ease-pop)] hover:-translate-y-0.5";
@@ -223,6 +230,35 @@ export function ShopExplorer({
                       <span className="size-2.5 rounded-full border border-ink" style={{ background: l.color }} aria-hidden />
                       {l.name}
                       <span className="font-mono text-[11px] opacity-60">{counts[l.slug]}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </fieldset>
+          )}
+
+          {!lockedBrand && BRANDS.some((b) => counts[`marque:${b.slug}`]) && (
+            <fieldset>
+              <legend className="font-mono text-[11px] font-bold tracking-[0.25em] text-muted uppercase">Marque</legend>
+              <div className="mt-2 flex flex-wrap gap-2">
+                <button type="button" aria-pressed={brand === "all"} onClick={() => update({ marque: null })} className={chip}>
+                  {brand === "all" && <m.span layoutId="shop-brand" className="absolute inset-0 -z-10 bg-ink" transition={SPRING.snappy} />}
+                  <span className={cn(brand === "all" && "text-paper")}>Toutes</span>
+                </button>
+                {BRANDS.filter((b) => counts[`marque:${b.slug}`]).map((b) => {
+                  const active = brand === b.slug;
+                  return (
+                    <button
+                      key={b.slug}
+                      type="button"
+                      aria-pressed={active}
+                      onClick={() => update({ marque: b.slug })}
+                      className={chip}
+                      style={active ? { color: b.ink } : undefined}
+                    >
+                      {active && <m.span layoutId="shop-brand" className="absolute inset-0 -z-10" style={{ background: b.color }} transition={SPRING.snappy} />}
+                      {b.name}
+                      <span className="font-mono text-[11px] opacity-60">{counts[`marque:${b.slug}`]}</span>
                     </button>
                   );
                 })}

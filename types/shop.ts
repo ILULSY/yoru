@@ -48,6 +48,16 @@ export interface ProductSale {
   endsAt?: string;
 }
 
+/** Marque ou fabricant (Funko, Bandai…), distinct de la licence (l'œuvre). */
+export interface Brand {
+  slug: string;
+  name: string;
+  /** Présentation factuelle. */
+  about: string;
+  color: string;
+  ink: string;
+}
+
 export interface License {
   slug: string;
   name: string;
@@ -75,6 +85,8 @@ export interface Product {
   image?: { src: string; width: number; height: number; alt: string };
   /** Slug de licence, ou null pour les accessoires et la marque YORU. */
   license: string | null;
+  /** Marque / fabricant du produit (Funko, Bandai…), slug de data/shop/brands.ts. */
+  brand?: string;
   /** Personnage (figurines) : affiché sur la boîte du visuel. */
   character?: string;
   /** Prix TTC en centimes, exprimé dans `currency`. */
@@ -110,7 +122,7 @@ export interface Product {
 /** Champs utiles au panier (affiché sur toutes les pages) : pas de description ni de fiche technique. */
 export type CartProduct = Pick<
   Product,
-  "slug" | "name" | "category" | "type" | "visual" | "image" | "license" | "character" | "price" | "currency" | "compareAtPrice" | "sale" | "availability" | "stock" | "demo"
+  "slug" | "name" | "category" | "type" | "visual" | "image" | "license" | "brand" | "character" | "price" | "currency" | "compareAtPrice" | "sale" | "availability" | "stock" | "demo"
 >;
 
 export interface CartLine {

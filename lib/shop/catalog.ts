@@ -2,6 +2,7 @@ import "server-only";
 import { cache } from "react";
 import type { CartProduct, Product, ProductCategory } from "@/types/shop";
 import { LICENSES } from "@/data/shop/licenses";
+import { BRANDS } from "@/data/shop/brands";
 import { getStore } from "@/lib/shop/store";
 import { currentPricing, saleStatus, type PriceFields } from "@/lib/shop/pricing";
 
@@ -46,6 +47,16 @@ export async function relatedProducts(product: Product, limit = 4) {
     .map((x) => x.p);
 }
 
+export async function productsByBrand(brand: string) {
+  return (await getProducts()).filter((p) => p.brand === brand);
+}
+
+/** Marques et fabricants présents dans le catalogue, avec leur nombre de produits. */
+export async function brandsWithCounts() {
+  const products = await getProducts();
+  return BRANDS.map((b) => ({ ...b, count: products.filter((p) => p.brand === b.slug).length })).filter((b) => b.count > 0);
+}
+
 /** Licences effectivement présentes dans le catalogue, avec leur nombre de produits. */
 export async function licensesWithCounts() {
   const products = await getProducts();
@@ -64,7 +75,7 @@ export function onSaleNow(p: PriceFields) {
 /** Catalogue allégé transmis au panier (layout racine), avec l'heure à laquelle il a été lu. */
 export async function getCartCatalog(): Promise<{ products: CartProduct[]; at: number }> {
   const products = (await getProducts()).map(
-    ({ slug, name, category, type, visual, image, license, character, price, currency, compareAtPrice, sale, availability, stock, demo }) => ({
+    ({ slug, name, category, type, visual, image, license, brand, character, price, currency, compareAtPrice, sale, availability, stock, demo }) => ({
       slug,
       name,
       category,
@@ -72,6 +83,7 @@ export async function getCartCatalog(): Promise<{ products: CartProduct[]; at: n
       visual,
       image,
       license,
+      brand,
       character,
       price,
       currency,

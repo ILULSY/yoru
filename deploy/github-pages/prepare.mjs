@@ -35,6 +35,7 @@ const PATCHES = [
   ["app/boutique/produit/[slug]/page.tsx", "export const revalidate = 900;", "export const dynamicParams = false;"],
   ["app/boutique/licence/[slug]/page.tsx", "export async function generateStaticParams() {", "export const dynamicParams = false;\n\nexport async function generateStaticParams() {"],
   ["app/articles/[slug]/page.tsx", "export async function generateStaticParams() {", "export const dynamicParams = false;\n\nexport async function generateStaticParams() {"],
+  ["app/boutique/marque/[slug]/page.tsx", "export async function generateStaticParams() {", "export const dynamicParams = false;\n\nexport async function generateStaticParams() {"],
 ];
 for (const [rel, from, to] of PATCHES) {
   const file = path.join(root, rel);

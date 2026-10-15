@@ -3,7 +3,7 @@ import { getAllArticles } from "@/lib/content";
 import { UNIVERSES } from "@/data/universes";
 import { absoluteUrl } from "@/lib/site";
 import { PRODUCT_CATEGORIES } from "@/types/shop";
-import { getProducts, licensesWithCounts } from "@/lib/shop/catalog";
+import { brandsWithCounts, getProducts, licensesWithCounts } from "@/lib/shop/catalog";
 
 // Généré au build (indispensable pour la version statique du site).
 export const dynamic = "force-static";
@@ -41,6 +41,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const shop: MetadataRoute.Sitemap = [
     ...PRODUCT_CATEGORIES.map((c) => ({ url: absoluteUrl(`/boutique/${c}`), changeFrequency: "weekly" as const, priority: 0.7 })),
+    { url: absoluteUrl("/boutique/marques"), changeFrequency: "weekly" as const, priority: 0.6 },
+    ...(await brandsWithCounts()).map((b) => ({ url: absoluteUrl(`/boutique/marque/${b.slug}`), changeFrequency: "weekly" as const, priority: 0.5 })),
     ...(await licensesWithCounts()).map((l) => ({ url: absoluteUrl(`/boutique/licence/${l.slug}`), changeFrequency: "weekly" as const, priority: 0.6 })),
     // Les fiches de démonstration (noindex) sont exclues.
     ...(await getProducts())

@@ -5,7 +5,7 @@ import { ArrowUpRight } from "lucide-react";
 import { PRODUCT_CATEGORIES } from "@/types/shop";
 import { CATEGORY_INFO } from "@/data/shop/licenses";
 import { getMedia } from "@/data/media";
-import { featuredProducts, getProducts, licensesWithCounts } from "@/lib/shop/catalog";
+import { brandsWithCounts, featuredProducts, getProducts, licensesWithCounts } from "@/lib/shop/catalog";
 import { ShopExplorer } from "@/components/shop/ShopExplorer";
 import { CurrencyToggle, Money } from "@/components/shop/Money";
 import { SHOP } from "@/lib/shop/config";
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ShopPage() {
-  const [products, featured, licenses] = await Promise.all([getProducts(), featuredProducts(4), licensesWithCounts()]);
+  const [products, featured, licenses, brands] = await Promise.all([getProducts(), featuredProducts(4), licensesWithCounts(), brandsWithCounts()]);
   const heroPicks = ["one-piece-card-game-op17-booster", "pokemon-30th-celebration-booster", "pokemon-30e-anniversaire-lot-de-boosters"].map((slug) => products.find((p) => p.slug === slug)).filter(Boolean) as typeof products;
 
   return (
@@ -40,8 +40,8 @@ export default async function ShopPage() {
             <p className="rise-in font-mono text-xs font-bold tracking-[0.3em] uppercase">§ Le shop YORU</p>
             <CssSplit text="La boutique" className="display mt-4 text-[clamp(4rem,13vw,10rem)]" />
             <p className="rise-in mt-5 max-w-xl text-lg leading-relaxed sm:text-xl" style={{ "--d": "0.3s" } as React.CSSProperties}>
-              Cartes à collectionner, figurines et produits dérivés de vos licences préférées : Dragon Ball Z, Hunter × Hunter,
-              One Piece, Pokémon, Naruto et bien d&apos;autres.
+              Cartes à collectionner, figurines et produits dérivés de vos univers préférés : Pokémon, One Piece, Dragon Ball Z,
+              Demon Slayer, Disney, Marvel, Star Wars, Harry Potter… et des marques comme Funko, Bandai ou Hasbro.
             </p>
             <div className="rise-in mt-6 flex items-center gap-3" style={{ "--d": "0.4s" } as React.CSSProperties}>
               <span className="font-mono text-xs font-bold tracking-[0.2em] uppercase">Prix en</span>
@@ -143,6 +143,32 @@ export default async function ShopPage() {
                 <span className="display relative text-[clamp(1.6rem,3vw,2.3rem)] leading-[0.95] transition-transform duration-300 group-hover:-translate-y-1">
                   {l.name}
                 </span>
+              </Link>
+            </RevealItem>
+          ))}
+        </RevealGroup>
+      </section>
+
+      {/* ── Marques ── */}
+      <section aria-labelledby="shop-brands" className="mx-auto max-w-[88rem] px-4 pt-16 sm:px-6 lg:px-8">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <h2 id="shop-brands" className="display text-[clamp(2.6rem,6vw,4.5rem)]">
+            Par marque
+          </h2>
+          <Link href="/boutique/marques" className="inline-flex items-center gap-1.5 font-bold underline decoration-[3px] underline-offset-4 hover:decoration-violet">
+            Toutes les marques et licences <ArrowUpRight className="size-5" aria-hidden />
+          </Link>
+        </div>
+        <RevealGroup as="ul" className="mt-8 flex flex-wrap gap-3" step={0.04}>
+          {brands.map((b) => (
+            <RevealItem as="li" key={b.slug}>
+              <Link
+                href={`/boutique/marque/${b.slug}`}
+                className="inline-flex h-14 items-center gap-3 border-[3px] border-ink px-5 transition-[transform,box-shadow] duration-300 ease-[var(--ease-pop)] hover:-translate-y-1 hover:-rotate-1 hover:shadow-pop"
+                style={{ background: b.color, color: b.ink }}
+              >
+                <span className="display text-2xl leading-none">{b.name}</span>
+                <span className="font-mono text-xs font-bold opacity-80">{b.count}</span>
               </Link>
             </RevealItem>
           ))}

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T17:47:38.954Z",
+  "updatedAt": "2026-10-15T11:07:33.917Z",
   "products": [
     {
       "slug": "pokemon-30th-celebration-booster",
@@ -54,7 +54,8 @@
       "popularity": 990,
       "addedAt": "2026-10-11",
       "demo": true,
-      "updatedAt": "2026-10-12T08:00:00.000Z"
+      "updatedAt": "2026-10-15T11:07:33.917Z",
+      "brand": "the-pokemon-company"
     },
     {
       "slug": "pokemon-30e-anniversaire-lot-de-boosters",
@@ -106,7 +107,8 @@
       "popularity": 960,
       "addedAt": "2026-10-11",
       "demo": true,
-      "updatedAt": "2026-10-12T08:00:00.000Z"
+      "updatedAt": "2026-10-15T11:07:33.917Z",
+      "brand": "the-pokemon-company"
     },
     {
       "slug": "pokemon-display-36-boosters",
@@ -146,7 +148,8 @@
       "popularity": 720,
       "addedAt": "2026-10-01",
       "demo": true,
-      "updatedAt": "2026-10-12T08:00:00.000Z"
+      "updatedAt": "2026-10-15T11:07:33.917Z",
+      "brand": "the-pokemon-company"
     },
     {
       "slug": "pokemon-coffret-dresseur-elite",
@@ -179,7 +182,8 @@
       "popularity": 610,
       "addedAt": "2026-08-20",
       "demo": true,
-      "updatedAt": "2026-10-12T08:00:00.000Z"
+      "updatedAt": "2026-10-15T11:07:33.917Z",
+      "brand": "the-pokemon-company"
     },
     {
       "slug": "one-piece-card-game-op17-booster",
@@ -240,7 +244,8 @@
       "popularity": 970,
       "addedAt": "2026-10-11",
       "demo": true,
-      "updatedAt": "2026-10-12T08:00:00.000Z"
+      "updatedAt": "2026-10-15T11:07:33.917Z",
+      "brand": "bandai"
     },
     {
       "slug": "one-piece-card-game-starter-deck",
@@ -273,7 +278,8 @@
       "popularity": 530,
       "addedAt": "2026-07-15",
       "demo": true,
-      "updatedAt": "2026-10-12T08:00:00.000Z"
+      "updatedAt": "2026-10-15T11:07:33.917Z",
+      "brand": "bandai"
     },
     {
       "slug": "dragon-ball-card-game-booster",
@@ -307,7 +313,8 @@
       "popularity": 610,
       "addedAt": "2026-08-28",
       "demo": true,
-      "updatedAt": "2026-10-12T08:00:00.000Z"
+      "updatedAt": "2026-10-15T11:07:33.917Z",
+      "brand": "bandai"
     },
     {
       "slug": "dragon-ball-card-game-starter-deck",
@@ -340,7 +347,8 @@
       "popularity": 380,
       "addedAt": "2026-06-30",
       "demo": true,
-      "updatedAt": "2026-10-12T08:00:00.000Z"
+      "updatedAt": "2026-10-15T11:07:33.917Z",
+      "brand": "bandai"
     },
     {
       "slug": "yu-gi-oh-booster",
@@ -374,7 +382,8 @@
       "popularity": 470,
       "addedAt": "2026-09-05",
       "demo": true,
-      "updatedAt": "2026-10-12T08:00:00.000Z"
+      "updatedAt": "2026-10-15T11:07:33.917Z",
+      "brand": "konami"
     },
     {
       "slug": "yu-gi-oh-structure-deck",
@@ -406,7 +415,8 @@
       "popularity": 310,
       "addedAt": "2026-07-01",
       "demo": true,
-      "updatedAt": "2026-10-12T08:00:00.000Z"
+      "updatedAt": "2026-10-15T11:07:33.917Z",
+      "brand": "konami"
     },
     {
       "slug": "pochettes-protection-x100",
@@ -1358,6 +1368,686 @@
       "addedAt": "2026-09-28",
       "demo": true,
       "updatedAt": "2026-10-12T17:47:38.953Z"
+    },
+    {
+      "slug": "funko-pop-harry-potter",
+      "name": "Figurine Funko Pop! Harry Potter",
+      "status": "published",
+      "category": "figurines",
+      "type": "Figurine Funko Pop!",
+      "license": "harry-potter",
+      "brand": "funko",
+      "character": "Harry Potter",
+      "price": 1599,
+      "currency": "EUR",
+      "availability": "in_stock",
+      "stock": 40,
+      "visual": "figure",
+      "badges": [
+        "best-seller"
+      ],
+      "description": "La figurine en vinyle au style Funko Pop! : grosse tête, regard noir et boîte-fenêtre à exposer. Harry Potter rejoint votre collection, à poser sur une étagère ou à garder en boîte.",
+      "details": [
+        [
+          "Matière",
+          "Vinyle"
+        ],
+        [
+          "Hauteur",
+          "Environ 9,5 cm"
+        ],
+        [
+          "Conditionnement",
+          "Boîte-fenêtre"
+        ]
+      ],
+      "tags": [
+        "Funko",
+        "Pop!",
+        "vinyle",
+        "Harry Potter"
+      ],
+      "popularity": 640,
+      "addedAt": "2026-10-15",
+      "demo": true,
+      "updatedAt": "2026-10-15T11:07:33.917Z"
+    },
+    {
+      "slug": "funko-pop-grogu",
+      "name": "Figurine Funko Pop! Grogu",
+      "status": "published",
+      "category": "figurines",
+      "type": "Figurine Funko Pop!",
+      "license": "star-wars",
+      "brand": "funko",
+      "character": "Grogu",
+      "price": 1599,
+      "currency": "EUR",
+      "availability": "in_stock",
+      "stock": 40,
+      "visual": "figure",
+      "badges": [],
+      "description": "La figurine en vinyle au style Funko Pop! : grosse tête, regard noir et boîte-fenêtre à exposer. Grogu rejoint votre collection, à poser sur une étagère ou à garder en boîte.",
+      "details": [
+        [
+          "Matière",
+          "Vinyle"
+        ],
+        [
+          "Hauteur",
+          "Environ 9,5 cm"
+        ],
+        [
+          "Conditionnement",
+          "Boîte-fenêtre"
+        ]
+      ],
+      "tags": [
+        "Funko",
+        "Pop!",
+        "vinyle",
+        "Grogu"
+      ],
+      "popularity": 610,
+      "addedAt": "2026-10-15",
+      "demo": true,
+      "updatedAt": "2026-10-15T11:07:33.917Z"
+    },
+    {
+      "slug": "funko-pop-spider-man",
+      "name": "Figurine Funko Pop! Spider-Man",
+      "status": "published",
+      "category": "figurines",
+      "type": "Figurine Funko Pop!",
+      "license": "marvel",
+      "brand": "funko",
+      "character": "Spider-Man",
+      "price": 1599,
+      "currency": "EUR",
+      "availability": "in_stock",
+      "stock": 40,
+      "visual": "figure",
+      "badges": [],
+      "description": "La figurine en vinyle au style Funko Pop! : grosse tête, regard noir et boîte-fenêtre à exposer. Spider-Man rejoint votre collection, à poser sur une étagère ou à garder en boîte.",
+      "details": [
+        [
+          "Matière",
+          "Vinyle"
+        ],
+        [
+          "Hauteur",
+          "Environ 9,5 cm"
+        ],
+        [
+          "Conditionnement",
+          "Boîte-fenêtre"
+        ]
+      ],
+      "tags": [
+        "Funko",
+        "Pop!",
+        "vinyle",
+        "Spider-Man"
+      ],
+      "popularity": 590,
+      "addedAt": "2026-10-15",
+      "demo": true,
+      "updatedAt": "2026-10-15T11:07:33.917Z"
+    },
+    {
+      "slug": "funko-pop-stitch",
+      "name": "Figurine Funko Pop! Stitch",
+      "status": "published",
+      "category": "figurines",
+      "type": "Figurine Funko Pop!",
+      "license": "disney",
+      "brand": "funko",
+      "character": "Stitch",
+      "price": 1599,
+      "currency": "EUR",
+      "availability": "in_stock",
+      "stock": 40,
+      "visual": "figure",
+      "badges": [
+        "nouveau"
+      ],
+      "description": "La figurine en vinyle au style Funko Pop! : grosse tête, regard noir et boîte-fenêtre à exposer. Stitch rejoint votre collection, à poser sur une étagère ou à garder en boîte.",
+      "details": [
+        [
+          "Matière",
+          "Vinyle"
+        ],
+        [
+          "Hauteur",
+          "Environ 9,5 cm"
+        ],
+        [
+          "Conditionnement",
+          "Boîte-fenêtre"
+        ]
+      ],
+      "tags": [
+        "Funko",
+        "Pop!",
+        "vinyle",
+        "Stitch"
+      ],
+      "popularity": 600,
+      "addedAt": "2026-10-15",
+      "demo": true,
+      "updatedAt": "2026-10-15T11:07:33.917Z"
+    },
+    {
+      "slug": "funko-pop-tanjiro",
+      "name": "Figurine Funko Pop! Tanjirō",
+      "status": "published",
+      "category": "figurines",
+      "type": "Figurine Funko Pop!",
+      "license": "demon-slayer",
+      "brand": "funko",
+      "character": "Tanjirō",
+      "price": 1599,
+      "currency": "EUR",
+      "availability": "in_stock",
+      "stock": 40,
+      "visual": "figure",
+      "badges": [],
+      "description": "La figurine en vinyle au style Funko Pop! : grosse tête, regard noir et boîte-fenêtre à exposer. Tanjirō rejoint votre collection, à poser sur une étagère ou à garder en boîte.",
+      "details": [
+        [
+          "Matière",
+          "Vinyle"
+        ],
+        [
+          "Hauteur",
+          "Environ 9,5 cm"
+        ],
+        [
+          "Conditionnement",
+          "Boîte-fenêtre"
+        ]
+      ],
+      "tags": [
+        "Funko",
+        "Pop!",
+        "vinyle",
+        "Tanjirō"
+      ],
+      "popularity": 520,
+      "addedAt": "2026-10-15",
+      "demo": true,
+      "updatedAt": "2026-10-15T11:07:33.917Z"
+    },
+    {
+      "slug": "funko-pop-luffy",
+      "name": "Figurine Funko Pop! Luffy",
+      "status": "published",
+      "category": "figurines",
+      "type": "Figurine Funko Pop!",
+      "license": "one-piece",
+      "brand": "funko",
+      "character": "Luffy",
+      "price": 1599,
+      "currency": "EUR",
+      "availability": "in_stock",
+      "stock": 40,
+      "visual": "figure",
+      "badges": [],
+      "description": "La figurine en vinyle au style Funko Pop! : grosse tête, regard noir et boîte-fenêtre à exposer. Luffy rejoint votre collection, à poser sur une étagère ou à garder en boîte.",
+      "details": [
+        [
+          "Matière",
+          "Vinyle"
+        ],
+        [
+          "Hauteur",
+          "Environ 9,5 cm"
+        ],
+        [
+          "Conditionnement",
+          "Boîte-fenêtre"
+        ]
+      ],
+      "tags": [
+        "Funko",
+        "Pop!",
+        "vinyle",
+        "Luffy"
+      ],
+      "popularity": 560,
+      "addedAt": "2026-10-15",
+      "demo": true,
+      "updatedAt": "2026-10-15T11:07:33.917Z"
+    },
+    {
+      "slug": "funko-pop-pikachu",
+      "name": "Figurine Funko Pop! Pikachu",
+      "status": "published",
+      "category": "figurines",
+      "type": "Figurine Funko Pop!",
+      "license": "pokemon",
+      "brand": "funko",
+      "character": "Pikachu",
+      "price": 1599,
+      "currency": "EUR",
+      "availability": "in_stock",
+      "stock": 40,
+      "visual": "figure",
+      "badges": [],
+      "description": "La figurine en vinyle au style Funko Pop! : grosse tête, regard noir et boîte-fenêtre à exposer. Pikachu rejoint votre collection, à poser sur une étagère ou à garder en boîte.",
+      "details": [
+        [
+          "Matière",
+          "Vinyle"
+        ],
+        [
+          "Hauteur",
+          "Environ 9,5 cm"
+        ],
+        [
+          "Conditionnement",
+          "Boîte-fenêtre"
+        ]
+      ],
+      "tags": [
+        "Funko",
+        "Pop!",
+        "vinyle",
+        "Pikachu"
+      ],
+      "popularity": 580,
+      "addedAt": "2026-10-15",
+      "demo": true,
+      "updatedAt": "2026-10-15T11:07:33.917Z"
+    },
+    {
+      "slug": "funko-pop-deku",
+      "name": "Figurine Funko Pop! Deku",
+      "status": "published",
+      "category": "figurines",
+      "type": "Figurine Funko Pop!",
+      "license": "my-hero-academia",
+      "brand": "funko",
+      "character": "Deku",
+      "price": 1599,
+      "currency": "EUR",
+      "availability": "in_stock",
+      "stock": 40,
+      "visual": "figure",
+      "badges": [],
+      "description": "La figurine en vinyle au style Funko Pop! : grosse tête, regard noir et boîte-fenêtre à exposer. Deku rejoint votre collection, à poser sur une étagère ou à garder en boîte.",
+      "details": [
+        [
+          "Matière",
+          "Vinyle"
+        ],
+        [
+          "Hauteur",
+          "Environ 9,5 cm"
+        ],
+        [
+          "Conditionnement",
+          "Boîte-fenêtre"
+        ]
+      ],
+      "tags": [
+        "Funko",
+        "Pop!",
+        "vinyle",
+        "Deku"
+      ],
+      "popularity": 430,
+      "addedAt": "2026-10-15",
+      "demo": true,
+      "updatedAt": "2026-10-15T11:07:33.917Z"
+    },
+    {
+      "slug": "funko-pop-batman",
+      "name": "Figurine Funko Pop! Batman",
+      "status": "published",
+      "category": "figurines",
+      "type": "Figurine Funko Pop!",
+      "license": "dc-comics",
+      "brand": "funko",
+      "character": "Batman",
+      "price": 1599,
+      "currency": "EUR",
+      "availability": "in_stock",
+      "stock": 40,
+      "visual": "figure",
+      "badges": [],
+      "description": "La figurine en vinyle au style Funko Pop! : grosse tête, regard noir et boîte-fenêtre à exposer. Batman rejoint votre collection, à poser sur une étagère ou à garder en boîte.",
+      "details": [
+        [
+          "Matière",
+          "Vinyle"
+        ],
+        [
+          "Hauteur",
+          "Environ 9,5 cm"
+        ],
+        [
+          "Conditionnement",
+          "Boîte-fenêtre"
+        ]
+      ],
+      "tags": [
+        "Funko",
+        "Pop!",
+        "vinyle",
+        "Batman"
+      ],
+      "popularity": 470,
+      "addedAt": "2026-10-15",
+      "demo": true,
+      "updatedAt": "2026-10-15T11:07:33.917Z"
+    },
+    {
+      "slug": "disney-lorcana-booster",
+      "name": "Booster Disney Lorcana",
+      "status": "published",
+      "category": "cartes",
+      "type": "Booster",
+      "license": "disney",
+      "brand": "ravensburger",
+      "price": 699,
+      "currency": "EUR",
+      "availability": "in_stock",
+      "stock": 120,
+      "visual": "booster",
+      "badges": [
+        "nouveau"
+      ],
+      "description": "Un booster du jeu de cartes à collectionner Disney Lorcana : de quoi compléter votre deck ou votre classeur avec les héros et les méchants de Disney.",
+      "details": [
+        [
+          "Contenu",
+          "12 cartes"
+        ],
+        [
+          "Langue",
+          "Français"
+        ],
+        [
+          "Âge conseillé",
+          "8 ans et plus"
+        ]
+      ],
+      "tags": [
+        "TCG",
+        "Lorcana",
+        "booster",
+        "Disney"
+      ],
+      "popularity": 540,
+      "addedAt": "2026-10-15",
+      "demo": true,
+      "updatedAt": "2026-10-15T11:07:33.917Z"
+    },
+    {
+      "slug": "star-wars-black-series-dark-vador",
+      "name": "Figurine Star Wars: The Black Series Dark Vador",
+      "status": "published",
+      "category": "figurines",
+      "type": "Figurine articulée",
+      "license": "star-wars",
+      "brand": "hasbro",
+      "character": "Dark Vador",
+      "price": 2999,
+      "currency": "EUR",
+      "availability": "in_stock",
+      "stock": 15,
+      "visual": "figure",
+      "badges": [],
+      "description": "Une figurine articulée de collection à l'échelle 15 cm, avec accessoires, pour mettre en scène le Seigneur Sith sur votre étagère.",
+      "details": [
+        [
+          "Échelle",
+          "15 cm"
+        ],
+        [
+          "Articulations",
+          "Multiples points d'articulation"
+        ],
+        [
+          "Gamme",
+          "The Black Series"
+        ]
+      ],
+      "tags": [
+        "Star Wars",
+        "Black Series",
+        "Dark Vador",
+        "Hasbro"
+      ],
+      "popularity": 500,
+      "addedAt": "2026-10-15",
+      "demo": true,
+      "updatedAt": "2026-10-15T11:07:33.917Z"
+    },
+    {
+      "slug": "marvel-legends-iron-man",
+      "name": "Figurine Marvel Legends Iron Man",
+      "status": "published",
+      "category": "figurines",
+      "type": "Figurine articulée",
+      "license": "marvel",
+      "brand": "hasbro",
+      "character": "Iron Man",
+      "price": 2999,
+      "currency": "EUR",
+      "availability": "in_stock",
+      "stock": 12,
+      "visual": "figure",
+      "badges": [],
+      "description": "Une figurine articulée de la gamme Marvel Legends, à l'échelle 15 cm, avec mains interchangeables pour reproduire les poses de l'armure.",
+      "details": [
+        [
+          "Échelle",
+          "15 cm"
+        ],
+        [
+          "Articulations",
+          "Multiples points d'articulation"
+        ],
+        [
+          "Gamme",
+          "Marvel Legends"
+        ]
+      ],
+      "tags": [
+        "Marvel",
+        "Marvel Legends",
+        "Iron Man",
+        "Hasbro"
+      ],
+      "popularity": 480,
+      "addedAt": "2026-10-15",
+      "demo": true,
+      "updatedAt": "2026-10-15T11:07:33.917Z"
+    },
+    {
+      "slug": "mug-harry-potter-poudlard",
+      "name": "Mug Harry Potter « Poudlard »",
+      "status": "published",
+      "category": "produits-derives",
+      "type": "Mug",
+      "license": "harry-potter",
+      "price": 1290,
+      "currency": "EUR",
+      "availability": "in_stock",
+      "stock": 60,
+      "visual": "mug",
+      "badges": [],
+      "description": "Un mug en céramique aux couleurs de l'école de sorcellerie, pour un thé ou un chocolat chaud entre deux chapitres.",
+      "details": [
+        [
+          "Contenance",
+          "320 ml"
+        ],
+        [
+          "Matière",
+          "Céramique"
+        ],
+        [
+          "Entretien",
+          "Lave-vaisselle et micro-ondes"
+        ]
+      ],
+      "tags": [
+        "Harry Potter",
+        "Poudlard",
+        "mug"
+      ],
+      "popularity": 450,
+      "addedAt": "2026-10-15",
+      "demo": true,
+      "updatedAt": "2026-10-15T11:07:33.917Z"
+    },
+    {
+      "slug": "peluche-studio-ghibli-totoro",
+      "name": "Peluche Totoro (Studio Ghibli)",
+      "status": "published",
+      "category": "produits-derives",
+      "type": "Peluche",
+      "license": "studio-ghibli",
+      "character": "Totoro",
+      "price": 2990,
+      "currency": "EUR",
+      "availability": "in_stock",
+      "stock": 25,
+      "visual": "plush",
+      "badges": [
+        "best-seller"
+      ],
+      "description": "Le gardien de la forêt de Mon voisin Totoro en version toute douce, à câliner ou à exposer.",
+      "details": [
+        [
+          "Hauteur",
+          "Environ 25 cm"
+        ],
+        [
+          "Matière",
+          "Polyester doux"
+        ]
+      ],
+      "tags": [
+        "Ghibli",
+        "Totoro",
+        "peluche",
+        "Miyazaki"
+      ],
+      "popularity": 620,
+      "addedAt": "2026-10-15",
+      "demo": true,
+      "updatedAt": "2026-10-15T11:07:33.917Z"
+    },
+    {
+      "slug": "poster-attaque-des-titans",
+      "name": "Poster L'Attaque des Titans « Bataillon d'exploration »",
+      "status": "published",
+      "category": "produits-derives",
+      "type": "Poster",
+      "license": "l-attaque-des-titans",
+      "price": 1490,
+      "currency": "EUR",
+      "availability": "in_stock",
+      "stock": 40,
+      "visual": "poster",
+      "badges": [],
+      "description": "Une affiche grand format pour afficher les ailes de la liberté au-dessus de votre bureau.",
+      "details": [
+        [
+          "Format",
+          "61 × 91,5 cm"
+        ],
+        [
+          "Papier",
+          "Couché brillant"
+        ]
+      ],
+      "tags": [
+        "L'Attaque des Titans",
+        "poster",
+        "Bataillon d'exploration"
+      ],
+      "popularity": 380,
+      "addedAt": "2026-10-15",
+      "demo": true,
+      "updatedAt": "2026-10-15T11:07:33.917Z"
+    },
+    {
+      "slug": "t-shirt-chainsaw-man",
+      "name": "T-shirt Chainsaw Man « Pochita »",
+      "status": "published",
+      "category": "produits-derives",
+      "type": "T-shirt",
+      "license": "chainsaw-man",
+      "character": "Pochita",
+      "price": 2490,
+      "currency": "EUR",
+      "availability": "in_stock",
+      "stock": 30,
+      "visual": "tshirt",
+      "badges": [],
+      "description": "Un t-shirt en coton avec l'adorable démon-tronçonneuse, pour afficher votre passion sans faire de bruit.",
+      "details": [
+        [
+          "Matière",
+          "100 % coton"
+        ],
+        [
+          "Tailles",
+          "S à XXL"
+        ]
+      ],
+      "tags": [
+        "Chainsaw Man",
+        "Pochita",
+        "t-shirt"
+      ],
+      "popularity": 410,
+      "addedAt": "2026-10-15",
+      "demo": true,
+      "updatedAt": "2026-10-15T11:07:33.917Z"
+    },
+    {
+      "slug": "peluche-spy-x-family-anya",
+      "name": "Peluche Anya (Spy × Family)",
+      "status": "published",
+      "category": "produits-derives",
+      "type": "Peluche",
+      "license": "spy-x-family",
+      "character": "Anya",
+      "price": 2490,
+      "currency": "EUR",
+      "availability": "preorder",
+      "stock": 20,
+      "releaseDate": "2026-12-04",
+      "visual": "plush",
+      "badges": [
+        "nouveau"
+      ],
+      "description": "La petite télépathe la plus célèbre de l'animation en peluche, avec son sourire en coin inimitable.",
+      "details": [
+        [
+          "Hauteur",
+          "Environ 22 cm"
+        ],
+        [
+          "Matière",
+          "Polyester doux"
+        ]
+      ],
+      "tags": [
+        "Spy × Family",
+        "Anya",
+        "peluche"
+      ],
+      "popularity": 460,
+      "addedAt": "2026-10-15",
+      "demo": true,
+      "updatedAt": "2026-10-15T11:07:33.917Z"
     }
   ]
 }

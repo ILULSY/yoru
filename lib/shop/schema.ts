@@ -10,6 +10,7 @@ import {
   type VisualKind,
 } from "@/types/shop";
 import { LICENSE_MAP } from "@/data/shop/licenses";
+import { BRAND_MAP } from "@/data/shop/brands";
 
 /**
  * Règles d'un produit du catalogue, partagées par la lecture du stockage et
@@ -60,6 +61,10 @@ export const productSchema = z
       .string()
       .nullable()
       .refine((l) => l === null || l in LICENSE_MAP, { error: "Licence inconnue." }),
+    brand: z
+      .string()
+      .refine((b) => b in BRAND_MAP, { error: "Marque inconnue." })
+      .optional(),
     character: text(1, 60, "Personnage").optional(),
     price: cents("Prix"),
     currency: z.enum(CURRENCIES).optional(),

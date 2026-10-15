@@ -16,6 +16,7 @@ import {
   type VisualKind,
 } from "@/types/shop";
 import { CATEGORY_INFO, LICENSES } from "@/data/shop/licenses";
+import { BRANDS } from "@/data/shop/brands";
 import { BADGE_LABELS } from "@/lib/shop/format";
 import { draftSalePrice, draftToProduct, parseMoney, slugify, type ProductDraft } from "@/lib/shop/draft";
 import { formatSaleDate, saleStatus, zurichInputToIso } from "@/lib/shop/pricing";
@@ -264,6 +265,16 @@ export function ProductForm({ mode, initial, previousSlug, expectedUpdatedAt, ty
                   {LICENSES.map((l) => (
                     <option key={l.slug} value={l.slug}>
                       {l.name}
+                    </option>
+                  ))}
+                </select>
+              </Field>
+              <Field id={id("brand")} label="Marque / fabricant" error={errors.brand} hint="Funko, Bandai, Hasbro… Facultatif.">
+                <select {...a11y("brand", true)} value={draft.brand} onChange={(e) => set("brand", e.target.value)} className={input("brand")}>
+                  <option value="">Non précisée</option>
+                  {BRANDS.map((b) => (
+                    <option key={b.slug} value={b.slug}>
+                      {b.name}
                     </option>
                   ))}
                 </select>

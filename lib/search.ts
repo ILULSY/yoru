@@ -5,6 +5,7 @@ import { UNIVERSE_MAP, UNIVERSES } from "@/data/universes";
 import { normalize } from "@/lib/text";
 import { getProducts } from "@/lib/shop/catalog";
 import { licenseOf } from "@/data/shop/licenses";
+import { brandOf } from "@/data/shop/brands";
 import { priceFields } from "@/lib/shop/pricing";
 import { runSearch, type IndexEntry, type SearchIndex, type SearchResponse } from "@/lib/search-core";
 
@@ -36,7 +37,7 @@ export async function buildSearchIndex(): Promise<SearchIndex> {
         ...priceFields(p),
         slug: p.slug,
         name: p.name,
-        hay: normalize(`${p.name} ${p.type} ${p.tags.join(" ")} ${lic.name} ${lic.short} ${p.character ?? ""}`),
+        hay: normalize(`${p.name} ${p.type} ${p.tags.join(" ")} ${lic.name} ${lic.short} ${brandOf(p.brand)?.name ?? ""} ${p.character ?? ""}`),
         popularity: p.popularity,
         license: lic.name,
         color: lic.color,

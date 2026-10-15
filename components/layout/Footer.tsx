@@ -15,6 +15,7 @@ const MEDIA_LINKS = [
   { href: "/actualites?type=critique", label: "Critiques" },
   { href: "/actualites?type=guide", label: "Guides" },
   { href: "/boutique", label: "Boutique" },
+  { href: "/boutique/marques", label: "Marques" },
   { href: "/favoris", label: "Mes favoris" },
 ];
 

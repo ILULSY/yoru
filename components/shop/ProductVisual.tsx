@@ -21,10 +21,12 @@ function accentFor(color: string, seed: string) {
 
 const display = { fontFamily: "var(--font-display), Impact, sans-serif" } as const;
 
-type Pose = "spiky" | "hat" | "blade" | "critter";
+type Pose = "spiky" | "hat" | "blade" | "critter" | "pop";
 
 /** Pose de la silhouette selon la licence (aucun personnage n'est reproduit). */
-function poseFor(license: string | null): Pose {
+function poseFor(license: string | null, brand?: string): Pose {
+  // Figurines en vinyle à grosse tête : silhouette générique, sans reproduire de personnage.
+  if (brand === "funko") return "pop";
   if (license === "one-piece") return "hat";
   if (license === "demon-slayer" || license === "jujutsu-kaisen") return "blade";
   if (license === "pokemon") return "critter";
@@ -33,6 +35,20 @@ function poseFor(license: string | null): Pose {
 
 /** Silhouette stylisée, dessinée dans un cadre 130 × 190. */
 function Hero({ x, y, s = 1, fill = K, pose = "spiky" }: { x: number; y: number; s?: number; fill?: string; pose?: Pose }) {
+  if (pose === "pop") {
+    return (
+      <g transform={`translate(${x} ${y}) scale(${s})`} fill={fill}>
+        <rect x="18" y="4" width="94" height="84" rx="30" />
+        <rect x="42" y="90" width="46" height="54" rx="12" />
+        <rect x="22" y="94" width="20" height="40" rx="9" />
+        <rect x="88" y="94" width="20" height="40" rx="9" />
+        <rect x="44" y="142" width="18" height="42" rx="7" />
+        <rect x="68" y="142" width="18" height="42" rx="7" />
+        <circle cx="46" cy="52" r="9" fill={P} />
+        <circle cx="84" cy="52" r="9" fill={P} />
+      </g>
+    );
+  }
   if (pose === "critter") {
     return (
       <g transform={`translate(${x} ${y}) scale(${s})`} fill={fill}>
@@ -367,7 +383,7 @@ export function ProductVisual({
   className,
   priorityLabel,
 }: {
-  product: Pick<Product, "slug" | "visual" | "license" | "character" | "name">;
+  product: Pick<Product, "slug" | "visual" | "license" | "character" | "name" | "brand">;
   className?: string;
   /** Variante pour éviter les doublons d'identifiants SVG quand un produit apparaît deux fois. */
   priorityLabel?: string;
@@ -421,7 +437,7 @@ export function ProductVisual({
       </text>
       <ellipse cx="200" cy="356" rx="120" ry="16" fill={K} opacity="0.25" />
       <g filter={`url(#pop-${id})`}>
-        <Shape kind={product.visual} c={c} a={a} label={lic.short.toUpperCase()} character={product.character} id={id} pose={poseFor(product.license)} />
+        <Shape kind={product.visual} c={c} a={a} label={lic.short.toUpperCase()} character={product.character} id={id} pose={poseFor(product.license, product.brand)} />
       </g>
     </svg>
   );
