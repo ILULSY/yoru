@@ -4,7 +4,8 @@ import type { License } from "@/types/shop";
  * Licences proposées dans la boutique. Les noms d'œuvres sont des marques
  * appartenant à leurs ayants droit : la boutique doit uniquement vendre des
  * produits officiels achetés auprès de distributeurs agréés.
- * Aucun logo officiel n'est utilisé : les noms sont composés en typographie YORU.
+ * Les noms sont composés en typographie YORU ; les logos, quand ils sont disponibles,
+ * n'apparaissent qu'en filigrane pour identifier la licence (data/shop/logos.ts).
  */
 export const LICENSES: License[] = [
   {

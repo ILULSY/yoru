@@ -18,6 +18,7 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/motion/Reveal";
 import { VelocityMarquee } from "@/components/motion/Scroll";
 import { TiltCard } from "@/components/motion/Interactive";
 import { Sparkle } from "@/components/ui/Decor";
+import { LogoBackdrop } from "@/components/shop/LogoBackdrop";
 
 export const metadata: Metadata = {
   title: "Boutique",
@@ -139,7 +140,8 @@ export default async function ShopPage() {
                 style={{ background: l.color, color: l.ink }}
               >
                 <span className="halftone pointer-events-none absolute -right-6 -bottom-6 size-24 opacity-30 [--dot-gap:9px]" aria-hidden />
-                <span className="font-mono text-xs font-bold">{l.count} produit{l.count > 1 ? "s" : ""}</span>
+                <LogoBackdrop slug={l.slug} className="inset-x-4 inset-y-5 transition-transform duration-500 group-hover:scale-110" opacity={0.22} />
+                <span className="relative font-mono text-xs font-bold">{l.count} produit{l.count > 1 ? "s" : ""}</span>
                 <span className="display relative text-[clamp(1.6rem,3vw,2.3rem)] leading-[0.95] transition-transform duration-300 group-hover:-translate-y-1">
                   {l.name}
                 </span>
@@ -164,11 +166,12 @@ export default async function ShopPage() {
             <RevealItem as="li" key={b.slug}>
               <Link
                 href={`/boutique/marque/${b.slug}`}
-                className="inline-flex h-14 items-center gap-3 border-[3px] border-ink px-5 transition-[transform,box-shadow] duration-300 ease-[var(--ease-pop)] hover:-translate-y-1 hover:-rotate-1 hover:shadow-pop"
+                className="relative inline-flex h-14 items-center gap-3 overflow-hidden border-[3px] border-ink px-5 transition-[transform,box-shadow] duration-300 ease-[var(--ease-pop)] hover:-translate-y-1 hover:-rotate-1 hover:shadow-pop"
                 style={{ background: b.color, color: b.ink }}
               >
-                <span className="display text-2xl leading-none">{b.name}</span>
-                <span className="font-mono text-xs font-bold opacity-80">{b.count}</span>
+                <LogoBackdrop slug={b.slug} className="inset-1.5" opacity={0.2} />
+                <span className="display relative text-2xl leading-none">{b.name}</span>
+                <span className="relative font-mono text-xs font-bold opacity-80">{b.count}</span>
               </Link>
             </RevealItem>
           ))}

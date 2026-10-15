@@ -5,7 +5,8 @@ import type { Brand } from "@/types/shop";
  * œuvres : un Funko Pop! Harry Potter a pour licence Harry Potter et pour
  * marque Funko). Ce sont des marques déposées de leurs propriétaires : seuls des
  * produits officiels, achetés auprès de distributeurs agréés, doivent être vendus.
- * Aucun logo n'est reproduit ; les noms sont composés en typographie YORU.
+ * Les noms sont composés en typographie YORU ; les logos, quand ils sont disponibles,
+ * n'apparaissent qu'en filigrane pour identifier la marque (data/shop/logos.ts).
  */
 export const BRANDS: Brand[] = [
   {

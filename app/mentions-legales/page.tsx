@@ -53,6 +53,12 @@ export default function LegalNoticePage() {
         Dans la boutique, certains produits sont illustrés par les visuels de leurs éditeurs (Bandai, The Pokémon Company…),
         utilisés pour présenter les produits mis en vente ; les autres visuels sont des illustrations créées par YORU.
       </p>
+      <p>
+        Les logos de licences et de marques affichés en filigrane dans la boutique proviennent de Wikimedia Commons (fichiers
+        versés au domaine public pour le droit d&apos;auteur) et restent des marques déposées de leurs propriétaires. Ils servent
+        uniquement à identifier les produits proposés et n&apos;impliquent aucun partenariat. La liste des fichiers et leur
+        provenance figurent dans le code du site (data/shop/logos.ts).
+      </p>
 
       <h2>Contenus de démonstration</h2>
       <p>

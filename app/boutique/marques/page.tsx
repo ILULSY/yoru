@@ -4,6 +4,7 @@ import { brandsWithCounts, licensesWithCounts } from "@/lib/shop/catalog";
 import { ShopDemoNotice, ShopPerks } from "@/components/shop/ShopParts";
 import { CssSplit } from "@/components/motion/CssSplit";
 import { RevealGroup, RevealItem } from "@/components/motion/Reveal";
+import { LogoBackdrop } from "@/components/shop/LogoBackdrop";
 
 export const metadata: Metadata = {
   title: "Marques et licences",
@@ -25,7 +26,8 @@ function TileGrid({ items, base }: { items: Tile[]; base: string }) {
             style={{ background: t.color, color: t.ink }}
           >
             <span className="halftone pointer-events-none absolute -right-6 -bottom-6 size-24 opacity-30 [--dot-gap:9px]" aria-hidden />
-            <span className="font-mono text-xs font-bold">
+            <LogoBackdrop slug={t.slug} className="inset-x-4 inset-y-5 transition-transform duration-500 group-hover:scale-110" opacity={0.22} />
+            <span className="relative font-mono text-xs font-bold">
               {t.count} produit{t.count > 1 ? "s" : ""}
             </span>
             <span className="display relative text-[clamp(1.5rem,2.8vw,2.2rem)] leading-[0.95] transition-transform duration-300 group-hover:-translate-y-1">
@@ -82,8 +84,10 @@ export default async function BrandsPage() {
 
       <section className="mx-auto max-w-[88rem] px-4 pt-14 pb-24 sm:px-6 lg:px-8">
         <p className="max-w-3xl text-sm text-muted">
-          Les noms cités sont des marques déposées de leurs propriétaires respectifs. Ils servent uniquement à identifier les
-          produits ; YORU n&apos;est affilié à aucune de ces sociétés et n&apos;utilise pas leurs logos.
+          Les noms et logos cités sont des marques déposées de leurs propriétaires respectifs. Ils servent uniquement à
+          identifier les produits ; YORU n&apos;est affilié à aucune de ces sociétés. Les logos affichés en filigrane proviennent
+          de Wikimedia Commons, où ils sont versés au domaine public pour le droit d&apos;auteur ; ils restent des marques
+          protégées.
         </p>
         <ShopPerks className="mt-10" />
       </section>

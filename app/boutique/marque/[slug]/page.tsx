@@ -8,6 +8,8 @@ import { ShopExplorer } from "@/components/shop/ShopExplorer";
 import { ProductMedia } from "@/components/shop/ProductMedia";
 import { ProductGrid, ShopDemoNotice, ShopPerks } from "@/components/shop/ShopParts";
 import { CssSplit } from "@/components/motion/CssSplit";
+import { LogoBackdrop } from "@/components/shop/LogoBackdrop";
+import { logoOf } from "@/data/shop/logos";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -40,9 +42,13 @@ export default async function BrandPage({ params }: Props) {
     <>
       <header className="relative isolate overflow-hidden border-b-[4px] border-ink" style={{ background: brand.color, color: brand.ink }}>
         <div aria-hidden className="speedlines absolute inset-0 -z-10 opacity-20 [--line:currentColor]" />
-        <span aria-hidden className="text-outline pointer-events-none absolute -bottom-10 -left-4 -z-10 font-display text-[clamp(8rem,26vw,22rem)] leading-none whitespace-nowrap opacity-25 [--stroke:currentColor] [--stroke-w:3px]">
-          {brand.name}
-        </span>
+        {logoOf(slug) ? (
+          <LogoBackdrop slug={slug} className="top-[10%] right-[-3%] -z-10 h-[80%] w-[62%] -rotate-6" opacity={0.18} />
+        ) : (
+          <span aria-hidden className="text-outline pointer-events-none absolute -bottom-10 -left-4 -z-10 font-display text-[clamp(8rem,26vw,22rem)] leading-none whitespace-nowrap opacity-25 [--stroke:currentColor] [--stroke-w:3px]">
+            {brand.name}
+          </span>
+        )}
         <div className="mx-auto grid max-w-[88rem] items-center gap-10 px-4 pt-10 pb-14 sm:px-6 lg:grid-cols-2 lg:px-8">
           <div>
             <nav aria-label="Fil d'Ariane" className="font-mono text-xs font-bold tracking-wider uppercase">

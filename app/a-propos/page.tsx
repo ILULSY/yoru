@@ -147,7 +147,8 @@ export default function AboutPage() {
             <p>
               Les motifs graphiques (trames, rayons, pixels, bulles) sont créés en CSS pour YORU. Le logo et la mise en page sont
               originaux. Dans la boutique, les produits sont présentés soit avec les visuels de leurs éditeurs, soit avec des illustrations
-              générées par YORU (sans logo ni visuel officiel) en attendant ces photos.
+              générées par YORU (sans visuel officiel) en attendant ces photos. Les logos de licences et de marques, en filigrane,
+              servent uniquement à les identifier.
             </p>
             <p>
               Vous êtes ayant droit et souhaitez signaler un contenu ? <Link href="/contact" className="font-bold underline decoration-pink decoration-[3px]">Contactez-nous</Link>, nous
